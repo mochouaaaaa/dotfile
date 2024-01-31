@@ -1,0 +1,22 @@
+
+# Application specific files
+venv/
+node_modules/
+
+# github merge file
+*.orig
+
+#vscode 
+.vscode/
+
+# Folder view configuration files
+.DS_Store
+Desktop.ini
+
+.idea/
+
+# env version
+.python-version
+.lua-version
+.go-version
+

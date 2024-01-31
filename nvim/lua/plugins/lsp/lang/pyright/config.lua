@@ -1,0 +1,49 @@
+local M = {}
+
+function M.on_attach(client, buffer)
+	vim.g.syntastic_python_checkers = { "mypy" }
+
+	-- local rc = client.resolver_capabilities()
+	--
+	-- if client.name == "pyright" then
+	-- 	rc.hover = false
+	-- end
+	--
+	-- if client.name == "pylsp" then
+	-- 	rc.rename = false
+	-- 	rc.signature_help = false
+	-- end
+end
+
+local util = require("lspconfig/util")
+M.extra = function(config)
+	return {
+		single_file_support = true,
+		root_dir = function(fname)
+			local root_files = {
+				"pyproject.toml",
+				"setup.py",
+				"setup.cfg",
+				"requirements.txt",
+				"Pipfile",
+				"pyrightconfig.json",
+				".python-version",
+			}
+			return util.root_pattern(unpack(root_files))(fname) or util.find_git_ancestor(fname) or util.path.dirname(fname)
+		end,
+	}
+end
+
+M.capapilities = {
+	textDocument = {
+		publishDiagnostics = {
+			tagSupport = {
+				valueSet = {
+					2,
+				},
+			},
+		},
+	},
+}
+
+return M
