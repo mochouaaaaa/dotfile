@@ -116,11 +116,10 @@ local default_source = {
 	{ name = "copilot", group_index = 2 },
 	{ name = "codeium", group_index = 2, max_item_count = 5 },
 	-- Other source
-	{ name = "nvim_lsp", priority = 1000 },
-	{ name = "luasnip", priority = 750, max_item_count = 4 },
-	{ name = "buffer", priority = 500, max_item_count = 5 },
+	{ name = "nvim_lsp", priority = 1000, keyword_length = 1 },
+	{ name = "luasnip", keyword_length = 2 },
+	{ name = "buffer", priority = 500, keyword_length = 3 },
 	{ name = "path", priority = 250 },
-	{ name = "emoji", priority = 50 },
 }
 
 nvim_cmp.opts = function()
@@ -187,8 +186,6 @@ nvim_cmp.opts = function()
 			["<Tab>"] = vim.schedule_wrap(function(fallback)
 				if cmp.visible() and has_words_before() then
 					cmp.select_next_item { behavior = cmp.SelectBehavior.Select }
-				-- elseif has_words_before() then
-				-- 	cmp.complete()
 				else
 					fallback()
 				end

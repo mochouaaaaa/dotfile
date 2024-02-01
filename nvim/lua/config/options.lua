@@ -129,9 +129,6 @@ g.loaded_perl_provider = 0
 -- Diagnostic
 opt.updatetime = 300
 
--- move autocmd file and use lua complete
--- vim.cmd([[autocmd CursorHold * lua vim.diagnostic.open_float()]])
-
 vim.fn.sign_define("DiagnosticSignError", { text = " ", texthl = "DiagnosticSignError" })
 vim.fn.sign_define("DiagnosticSignWarn", { text = " ", texthl = "DiagnosticSignWarn" })
 vim.fn.sign_define("DiagnosticSignInfo", { text = " ", texthl = "DiagnosticSignInfo" })
@@ -139,7 +136,7 @@ vim.fn.sign_define("DiagnosticSignHint", { text = "󰌵", texthl = "DiagnosticSi
 
 vim.diagnostic.config {
 	virtual_text = false,
-	float = { header = "", prefix = "", focusable = false },
+	float = { header = "", prefix = "", focusable = false, border = "rounded", source = "always" },
 	update_in_insert = true,
 	severity_sort = true,
 }

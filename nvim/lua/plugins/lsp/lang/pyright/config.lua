@@ -29,7 +29,7 @@ M.extra = function(config)
 				"pyrightconfig.json",
 				".python-version",
 			}
-			return util.root_pattern(unpack(root_files))(fname) or util.find_git_ancestor(fname) or util.path.dirname(fname)
+			return util.root_pattern(unpack(root_files))(fname) or util.find_git_ancestor(fname) or nil
 		end,
 	}
 end
