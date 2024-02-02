@@ -7,6 +7,7 @@ keymap = [
     { keys = [","], command = "set_mode" },
     { keys = ["H"], command = "toggle_hidden" },
     { keys = ["w"], command = "show_tasks --exit-key=w" },
+    { keys = ["o"], command = "open" },
 
     # Remapped in kitty.conf
     { keys = ["q"], command = "close_tab" },
