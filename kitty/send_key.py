@@ -8,6 +8,9 @@ def main(args):
     pass
 
 
+KEY_MAPPINGS = {"cmd+r": {"-zsh": "joshuto"}, "cmd+l": {"-zsh": "clear"}}
+
+
 def encode_key_mapping(window, key_mapping):
     mods, key = parse_shortcut(key_mapping)
     event = KeyEvent(
@@ -24,6 +27,11 @@ def encode_key_mapping(window, key_mapping):
     return window.encoded_key(event)
 
 
+def send_keymap(window, keymap):
+    encoded = encode_key_mapping(window, keymap)
+    window.write_to_child(encoded)
+
+
 @result_handler(no_ui=True)
 def handle_result(args, answer, target_window_id, boss):
     window = boss.active_window
@@ -34,10 +42,23 @@ def handle_result(args, answer, target_window_id, boss):
 
     key_mapping = args[-1]
 
-    if cmd == "nvim" or cmd == "tmux":
-        for keymap in key_mapping.split(">"):
-            encoded = encode_key_mapping(window, keymap)
-            window.write_to_child(encoded)
+    for keymap in key_mapping.split(">"):
+        cmd_key = KEY_MAPPINGS.get(keymap, None)
+
+        if cmd_key is not None:
+            send_command = cmd_key.get(cmd, None)
+            if send_command is None:
+                send_keymap(window, keymap)
+
+            else:
+                window.write_to_child(send_command + "\n")
+        else:
+            send_keymap(window, keymap)
+
+    # if cmd == "nvim" or cmd == "tmux":
+    #     for keymap in key_mapping.split(">"):
+    #         encoded = encode_key_mapping(window, keymap)
+    #         window.write_to_child(encoded)
 
     # if args[1] == "C-i":
     #     # Move cursor to the end of line, specific to zsh
