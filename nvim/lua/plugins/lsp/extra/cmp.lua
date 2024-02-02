@@ -65,14 +65,18 @@ local nvim_cmp = {
 
 				local copilot_suggestion = require("copilot.suggestion")
 
+				local autopairs = require("nvim-autopairs")
+
 				vim.keymap.set("i", "<Tab>", function()
 					if copilot_suggestion.is_visible() then
+						autopairs.disable()
 						copilot_suggestion.accept()
+						autopairs.enable()
 					else
 						vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes("<Tab>", true, false, true), "n", false)
 						-- vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes("<Tab>", true, true, true), "n", true)
 					end
-				end, { silent = true, buffer = bufnr, desc = "copilot accept" })
+				end, { silent = true, desc = "copilot accept" })
 
 				-- hide copilot suggestions when cmp menu is open
 				-- to prevent odd behavior/garbled up suggestions

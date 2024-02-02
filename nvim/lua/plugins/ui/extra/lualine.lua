@@ -23,6 +23,7 @@ return {
 		{ "nvim-tree/nvim-web-devicons", lazy = true },
 		{ "meuter/lualine-so-fancy.nvim", lazy = true },
 		{ "SmiteshP/nvim-navic", lazy = true },
+		{ "linux-cultist/venv-selector.nvim", lazy = true },
 	},
 	enabled = true,
 	config = function()
@@ -98,7 +99,16 @@ return {
 
 			lualine_c = {
 				{ "fancy_cwd", substitute_home = true },
-				-- { require("auto-session.lib").current_session_name },
+				{
+					"venv-selector",
+					cond = function() return vim.bo.filetype == "python" end,
+				},
+				-- {
+				-- 	"filename",
+				-- 	file_status = true,
+				-- 	path = 1,
+				-- 	cond = function() return vim.fn.expand("%:t") ~= "" end,
+				-- },
 			},
 			lualine_x = {
 				{
