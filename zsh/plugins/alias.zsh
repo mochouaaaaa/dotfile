@@ -1,5 +1,4 @@
 export BAT_THEME="Catppuccin-macchiato"
-alias icat="kitty +kitten icat"
 alias cat="bat --paging=never"
 # brew install gtop
 alias top="btop"
