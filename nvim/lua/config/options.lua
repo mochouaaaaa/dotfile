@@ -67,15 +67,6 @@ vim.api.nvim_create_autocmd("FileType", {
 	callback = function() opt.formatoptions:remove { "c", "r", "o" } end,
 })
 
--- TODO: remove this once https://github.com/nvim-telescope/telescope.nvim/issues/699 is fixed
-vim.api.nvim_create_autocmd("BufEnter", {
-	callback = function()
-		if vim.opt.foldmethod:get() == "expr" then
-			vim.schedule(function() vim.opt.foldmethod = "expr" end)
-		end
-	end,
-})
-
 o.virtualedit = "block" -- Allow cursor to move where there is no text in visual block mode
 
 -- UI

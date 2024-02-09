@@ -31,22 +31,10 @@ M.opts = {
 	},
 	select = {
 		backend = {
-			"telescope",
+			"fzf_lua",
+			"fzf",
 			"builtin",
 		},
-		get_config = function(opts)
-			if opts.kind == "codeaction" then
-				return {
-					backend = "telescope",
-					telescope = require("telescope.themes").get_cursor {
-						-- initial_mode = "normal",
-						layout_config = { height = 15 },
-					},
-				}
-			end
-
-			return { backend = "telescope", telescope = nil }
-		end,
 	},
 }
 

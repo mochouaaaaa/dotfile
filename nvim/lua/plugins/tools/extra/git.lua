@@ -4,15 +4,9 @@ return {
 		event = "VeryLazy",
 		lazy = true,
 		dependencies = {
-			{ "nvim-telescope/telescope.nvim", lazy = true },
-			{ "nvim-lua/plenary.nvim", lazy = true },
 			{ "sindrets/diffview.nvim", lazy = true },
 		},
 		enabled = vim.fn.executable("git") == 1,
-		config = function()
-			local Util = require("lazyvim.util")
-			Util.on_load("telescope.nvim", function() require("telescope").load_extension("lazygit") end)
-		end,
 		keys = {
 			{
 				"<leader>gg",

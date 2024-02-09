@@ -172,16 +172,13 @@ return {
 			local wk = require("which-key")
 			wk.register {
 				["<leader>f"] = {
-					name = "Telescope",
+					name = "fzf",
 					n = {
-						function() noice.cmd("telescope") end,
+						function() noice.cmd("fzf") end,
 						"opens message history",
 					},
 				},
 			}
-
-			local Util = require("lazyvim.util")
-			Util.on_load("telescope.nvim", function() require("telescope").load_extension("noice") end)
 		end,
 	},
 }
