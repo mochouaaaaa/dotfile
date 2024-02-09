@@ -28,17 +28,9 @@ return {
 	enabled = true,
 	config = function()
 		local navic = require("nvim-navic")
+		navic.setup({highlight = true})
 		local winbar = {
-			-- lualine_a = {
-			-- 	{
-			-- 		function() -- return " " .. os.date("%A %H:%M")
-			-- 			return "吾日三省"
-			-- 		end,
-			-- 		separator = { left = "", right = "" },
-			-- 		right_padding = 2,
-			-- 	},
-			-- },
-			lualine_b = {
+			lualine_a = {
 				{
 					function() return navic.get_location() end,
 					cond = function() return navic.is_available() end,
@@ -47,6 +39,7 @@ return {
 					},
 				},
 			},
+			lualine_b = {},
 			lualine_x = {
 				{
 					memory_use,
@@ -75,7 +68,6 @@ return {
 			lualine_a = {
 				{
 					"fancy_mode",
-					right_padding = 2,
 					separator = { left = "" },
 				},
 			},
@@ -85,15 +77,13 @@ return {
 					icon = "",
 					color = {
 						fg = "#69bbae",
-						-- bg = "#1e1e2e",
+						bg = "#1e1e2e",
 					},
 				},
 				{
 					"fancy_diff",
 					source = diff_source,
 					separator = { right = "" },
-					draw_empty = true,
-					right_padding = 2,
 				},
 			},
 
@@ -103,21 +93,14 @@ return {
 					"venv-selector",
 					cond = function() return vim.bo.filetype == "python" end,
 				},
-				-- {
-				-- 	"filename",
-				-- 	file_status = true,
-				-- 	path = 1,
-				-- 	cond = function() return vim.fn.expand("%:t") ~= "" end,
-				-- },
 			},
 			lualine_x = {
 				{
 					"copilot",
 					show_colors = true,
 					show_loading = true,
-					separator = { right = "|" },
+					separator = { right = "" },
 				},
-
 				{
 					"filetype",
 					colored = true, -- Displays filetype icon in color if set to true

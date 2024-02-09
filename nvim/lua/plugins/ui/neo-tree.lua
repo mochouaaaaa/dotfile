@@ -7,13 +7,12 @@ local function init_keys()
 	local wk = require("which-key")
 	wk.register {
 		["<leader>e"] = {
-			name = "+neo-tree",
-			"📁Toggle File Explorer",
-			b = { "<Cmd>Neotree buffers<CR>", "📁Neo-tree Buffers" },
-			g = { "<Cmd>Neotree git_status<CR>", "📁Neo-tree Git Status" },
+			name = "neo-tree",
+			b = { "<Cmd>Neotree buffers<CR>", "Neo-tree Buffers" },
+			g = { "<Cmd>Neotree git_status<CR>", "Neo-tree Git Status" },
 			d = {
 				"<Cmd>Neotree reveal_force_cwd dir=%:h toggle<CR>",
-				"📁Toggle File Explorer in buffer dir",
+				"Toggle File Explorer in buffer dir",
 			},
 		},
 	}

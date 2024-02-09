@@ -46,7 +46,7 @@ bufferline.keys = {
 	},
      -- stylua: ignore
     { "<leader>bD", function() require("mini.bufremove").delete(0, true) end, desc = "Delete Buffer (Force)" },
-	{ "<D-o>", "<Cmd>BufferLineCloseOthers<CR>", desc = "close all other visible buffers" },
+	{ "<leader>bo", "<Cmd>BufferLineCloseOthers<CR>", desc = "close all other visible buffers" },
 	-- 左右切换
 	{ "<S-h>", "<Cmd>BufferLineCyclePrev<CR>" },
 	{ "<S-l>", "<Cmd>BufferLineCycleNext<CR>" },

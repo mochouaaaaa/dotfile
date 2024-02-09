@@ -3,7 +3,6 @@ return {
 	name = "catppuccin",
 	priority = 1000,
 	build = ":CatppuccinCompile",
-	enabled = true,
 	config = function()
 		require("catppuccin").setup {
 			-- compile_path = vim.fn.stdpath("cache") .. "/catppuccin",
@@ -18,18 +17,19 @@ return {
 			},
 			integrations = {
 				cmp = true,
+				dap=true,
+				dap_ui = true,
 				dashboard = true,
 				flash = true,
-				notify = true,
-				noice = true,
+				notify = false,
+				noice = false,
 				neotree = false,
 				gitsigns = true,
 				markdown = true,
 				headlines = true,
 				telekasten = true,
-				ts_rainbow2 = true,
-				lsp_trouble = true,
-				lsp_saga = false,
+				ts_rainbow2 = false,
+				lsp_trouble = false,
 				native_lsp = {
 					enabled = true,
 					virtual_text = {
@@ -50,21 +50,22 @@ return {
 				},
 				rainbow_delimiters = true,
 				treesitter = true,
-				treesitter_context = true,
+				treesitter_context = false,
 				telescope = {
 					enabled = true,
 				},
-				-- dropbar = { enabled = true, color_mode = true },
 
-				navic = { enabled = true },
+				navic = { enabled = false
+			 },
 				-- leap               = true,
-				mason = true,
+				mason = false,
 				indent_blankline = {
 					enable = true,
 					colored_indent_levels = true,
 				},
-				window_picker = true,
-				which_key = true,
+				window_picker = false,
+				which_key = false,
+				symbols_outline = false
 			},
 		}
 		vim.cmd.colorscheme("catppuccin")
