@@ -86,4 +86,12 @@ return {
 		event = { "BufRead", "BufNewFile" },
 		config = function() require("smartyank").setup() end,
 	},
+	{
+		"m42e/lgh.nvim",
+		config = function()
+			require("lgh").setup {
+				fix_dangling = true,
+			}
+		end,
+	},
 }

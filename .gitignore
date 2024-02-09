@@ -3,6 +3,12 @@
 venv/
 node_modules/
 
+./btop/
+./clash*
+./github-copilot*
+./iterm2/
+./tmux/plugins/
+
 # github merge file
 *.orig
 
