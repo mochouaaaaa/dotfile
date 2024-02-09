@@ -16,7 +16,7 @@ function M.config()
 			project = {
 				limit = 8,
 				-- label = '',
-				action = "Telescope find_files cwd=",
+				action = "FzfLua files cwd=",
 			},
 			footer = { "岂能尽如人意，但求无愧我心。" }, -- footer
 			shortcut = {
@@ -29,19 +29,19 @@ function M.config()
 				{
 					desc = " Files",
 					group = "Label",
-					action = "Telescope find_files",
+					action = "FzfLua files",
 					key = "f",
 				},
-				{
-					desc = " Apps",
-					group = "Special",
-					action = "Telescope app",
-					key = "a",
-				},
+				-- {
+				-- 	desc = " Apps",
+				-- 	group = "Special",
+				-- 	action = "Telescope app",
+				-- 	key = "a",
+				-- },
 				{
 					desc = " dotfiles",
 					group = "Number",
-					action = "Telescope find_files cwd=~/.config/nvim",
+					action = "FzfLua files cwd=~/.config",
 					key = "d",
 				},
 			},

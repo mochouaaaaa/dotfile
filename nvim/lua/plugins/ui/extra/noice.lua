@@ -168,17 +168,6 @@ return {
 		config = function(_, opts)
 			local noice = require("noice")
 			noice.setup(opts)
-
-			local wk = require("which-key")
-			wk.register {
-				["<leader>f"] = {
-					name = "fzf",
-					n = {
-						function() noice.cmd("fzf") end,
-						"opens message history",
-					},
-				},
-			}
 		end,
 	},
 }
