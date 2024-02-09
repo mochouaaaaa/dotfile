@@ -2,7 +2,6 @@ local Util = require("lazyvim.util")
 
 local M = {
 	"nvim-telescope/telescope.nvim",
-	optional = true,
 	dependencies = {
 		{
 			"debugloop/telescope-undo.nvim",
@@ -10,7 +9,12 @@ local M = {
 				Util.on_load("telescope.nvim", function() require("telescope").load_extension("undo") end)
 			end,
 		},
-		{ "nvim-lua/plenary.nvim", lazy = true },
+		{
+			"gbrlsnchs/telescope-lsp-handlers.nvim",
+			config = function()
+				Util.on_load("telescope.nvim", function() require("telescope").load_extension("lsp_handlers") end)
+			end,
+		},
 		{
 			"nvim-telescope/telescope-fzf-native.nvim",
 			build = "make",

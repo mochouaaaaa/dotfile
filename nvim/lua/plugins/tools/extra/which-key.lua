@@ -1,7 +1,5 @@
 return {
 	"folke/which-key.nvim",
-	event = "VeryLazy",
-	lazy = true,
 	opts = {
 		popup_mappings = {
 			scroll_up = "<c-i>", -- binding to scroll up inside the popup
@@ -21,9 +19,6 @@ return {
 		window = {
 			border = "single", -- none, single, double, shadow
 		},
-		-- operators = {
-		--     gc = "Comments",
-		-- },
 		plugins = {
 			marks = true, -- shows a list of your marks on ' and `
 			registers = true, -- shows your registers on " in NORMAL or <C-r> in INSERT mode
@@ -46,4 +41,25 @@ return {
 			buftypes = { "TelescopePrompt" },
 		},
 	},
+	config = function(_, opts)
+		local wk = require("which-key")
+		wk.setup(opts)
+		wk.register({
+			["<leader>"] = {
+				name = "WhichKey",
+				["?"] = { "<cmd>WhichKey<CR>", "WhichKey" },
+				["b"] = { name = "buffer + conversion" },
+				["c"] = { name = "code action + cd" },
+				["d"] = { name = "debug + dagang" },
+				["f"] = { name = "telescope" },
+				["g"] = { name = "git" },
+				["v"] = { name = "virtual venv" },
+				["s"] = { name = "search replace" },
+				["w"] = { name = "lsp workspace" },
+				["r"] = { name = "code rename" },
+				["n"] = { name = "annotation" },
+				["x"] = { name = "lsp diagnostics" },
+			},
+		})		
+	end
 }

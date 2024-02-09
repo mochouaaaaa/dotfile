@@ -1,5 +1,11 @@
 return {
 	{
+		"smjonas/inc-rename.nvim",
+		config = function()
+			require("inc_rename").setup()
+		end,
+	},
+	{
 		"windwp/nvim-autopairs",
 		dependencies = "hrsh7th/nvim-cmp",
 		event = "InsertEnter",

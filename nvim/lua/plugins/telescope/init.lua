@@ -1,9 +1,6 @@
 local config = function()
 	local telescope = require("telescope")
 	local actions = require("telescope.actions")
-	local trouble = require("trouble.providers.telescope")
-
-	local open_with_trouble = function(...) return require("trouble.providers.telescope").open_with_trouble(...) end
 
 	require("telescope").setup {
 		defaults = {
@@ -40,7 +37,6 @@ local config = function()
 					["<M-q>"] = actions.send_selected_to_qflist + actions.open_qflist,
 					["<C-l>"] = actions.complete_tag,
 					["<C-_>"] = actions.which_key, -- keys from pressing <C-/>
-					["<c-t>"] = open_with_trouble,
 				},
 
 				n = {
@@ -73,7 +69,6 @@ local config = function()
 					["<PageDown>"] = actions.results_scrolling_down,
 
 					["?"] = actions.which_key,
-					["<c-t>"] = trouble.open_with_trouble,
 				},
 			},
 			buffer_previewer_maker = function(filepath, bufnr, opts)
@@ -105,10 +100,8 @@ local config = function()
 			},
 		},
 		extensions = {
-			-- ["ui-select"] = { require("telescope.themes").get_dropdown() },
 			["ui-select"] = {
 				require("telescope.themes").get_cursor {
-					-- borderchars = { " ", " ", " ", " ", " ", " ", " ", " " },
 					borderchars = {
 						prompt = { "─", "│", " ", "│", "┌", "┐", "│", "│" },
 						results = { "─", "│", "─", "│", "├", "┤", "┘", "└" },
@@ -117,7 +110,6 @@ local config = function()
 				},
 			},
 			project = {
-				-- theme = "dropdown",
 				theme = "catppuccin",
 				hidden_files = false,
 			},
@@ -131,7 +123,6 @@ local config = function()
 		},
 	}
 
-	require("telescope-all-recent")
 end
 
 local M = {

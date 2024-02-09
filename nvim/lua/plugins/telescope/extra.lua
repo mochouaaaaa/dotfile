@@ -11,8 +11,8 @@ return {
 		event = "TextYankPost",
 		lazy = true,
 		keys = {
-			{ "<leader><C-p>", "<Cmd>Telescope neoclip<cr>", desc = "📋Clipboard History" },
-			{ "<leader>P", "<Cmd>Telescope neoclip unnamed<cr>", desc = "📋Clipboard History for system" },
+			{ "<leader><C-p>", "<Cmd>Telescope neoclip<cr>", desc = "Clipboard History" },
+			{ "<leader>P", "<Cmd>Telescope neoclip unnamed<cr>", desc = "Clipboard History for system" },
 		},
 		dependencies = "kkharji/sqlite.lua",
 		version = false,
