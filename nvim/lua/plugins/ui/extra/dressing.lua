@@ -33,20 +33,22 @@ M.opts = {
 		backend = {
 			"telescope",
 			"builtin",
+			"nui",
 		},
-		get_config = function(opts)
-			if opts.kind == "codeaction" then
-				return {
-					backend = "telescope",
-					telescope = require("telescope.themes").get_cursor {
-						-- initial_mode = "normal",
-						layout_config = { height = 15 },
-					},
-				}
-			end
+		-- get_config = function(opts)
+		-- if opts.kind == "codeaction" then
+		-- 	return {
+		-- 		backend = "telescope",
+		-- 		-- telescope = require("telescope.themes").get_cursor {
+		-- 		-- 	-- initial_mode = "normal",
+		-- 		-- 	layout_config = { height = 15 },
+		-- 		-- },
+		-- 		telescope = require("telescope.themes").get_dropdown(),
+		-- 	}
+		-- end
 
-			return { backend = "telescope", telescope = nil }
-		end,
+		-- return { backend = "telescope", telescope = nil }
+		-- end,
 	},
 }
 

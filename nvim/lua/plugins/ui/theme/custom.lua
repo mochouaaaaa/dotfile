@@ -17,7 +17,7 @@ return {
 			},
 			integrations = {
 				cmp = true,
-				dap=true,
+				dap = true,
 				dap_ui = true,
 				dashboard = true,
 				flash = true,
@@ -55,8 +55,7 @@ return {
 					enabled = true,
 				},
 
-				navic = { enabled = false
-			 },
+				navic = { enabled = false },
 				-- leap               = true,
 				mason = false,
 				indent_blankline = {
@@ -65,7 +64,7 @@ return {
 				},
 				window_picker = false,
 				which_key = false,
-				symbols_outline = false
+				symbols_outline = false,
 			},
 		}
 		vim.cmd.colorscheme("catppuccin")

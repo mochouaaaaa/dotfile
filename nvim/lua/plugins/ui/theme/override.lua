@@ -59,10 +59,10 @@ local override = {
 	Cursor = {
 		bg = c.light_blue,
 	},
-
-	CursorLine = {
-		bg = c.base,
-	},
+	--
+	-- CursorLine = {
+	-- 	bg = c.base,
+	-- },
 	TermCursor = {
 		link = "Cursor",
 	},
@@ -132,9 +132,9 @@ local override = {
 		link = "CmpItemAbbrMatch",
 	},
 
-	-- MiniIndentscopeSymbol                  = {
-	--     link = 'MoreMsg',
-	-- },
+	MiniIndentscopeSymbol = {
+		link = "MoreMsg",
+	},
 
 	BufferLineBufferSelected = {
 		fg = c.sapphire,
@@ -149,25 +149,25 @@ local override = {
 		bold = true,
 	},
 
-	-- IndentBlanklineContextChar  = {
-	--     fg = '#89e051'
-	-- },
-	-- IndentBlanklineContextStart = {
-	--     underline = true,
-	--     sp = '#89e051',
-	-- },
-	--     fg = "#E6C384",
-	--     -- fg = "#b392f0",
+	IndentBlanklineContextChar = {
+		fg = "#89e051",
+	},
+	IndentBlanklineContextStart = {
+		underline = true,
+		sp = "#89e051",
+	},
+	-- fg = "#E6C384",
+	-- fg = "#b392f0",
 	-- },
 
-	-- FloatBorder                 = {
-	--     fg = '#89B4FA',
-	--     bg = 'NONE',
-	-- },
-	-- FloatTitle                  = {
-	--     fg = '#938aa9',
-	--     bg = 'NONE',
-	-- },
+	FloatBorder = {
+		fg = "#89B4FA",
+		bg = "NONE",
+	},
+	FloatTitle = {
+		fg = "#938aa9",
+		bg = "NONE",
+	},
 }
 
 if vim.g.neovide then

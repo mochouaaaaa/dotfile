@@ -91,24 +91,15 @@ local config = function()
 			find_files = { previewer = false },
 			live_grep = { theme = "ivy" },
 
-			lsp_references = { theme = "ivy" },
-			lsp_definitions = { theme = "ivy" },
-			lsp_type_definitions = { theme = "ivy" },
-			lsp_implementations = { theme = "ivy" },
-			lsp_dynamic_workspace_symbols = {
-				sorter = telescope.extensions.fzf.native_fzf_sorter(nil),
-			},
+			-- lsp_references = { theme = "ivy" },
+			-- lsp_definitions = { theme = "ivy" },
+			-- lsp_type_definitions = { theme = "ivy" },
+			-- lsp_implementations = { theme = "ivy" },
+			-- lsp_dynamic_workspace_symbols = {
+			-- 	sorter = telescope.extensions.fzf.native_fzf_sorter(nil),
+			-- },
 		},
 		extensions = {
-			["ui-select"] = {
-				require("telescope.themes").get_cursor {
-					borderchars = {
-						prompt = { "─", "│", " ", "│", "┌", "┐", "│", "│" },
-						results = { "─", "│", "─", "│", "├", "┤", "┘", "└" },
-						preview = { "─", "│", "─", "│", "┌", "┐", "┘", "└" },
-					},
-				},
-			},
 			project = {
 				theme = "catppuccin",
 				hidden_files = false,
@@ -118,11 +109,9 @@ local config = function()
 				override_generic_sorter = true, -- override the generic sorter
 				override_file_sorter = true, -- override the file sorter
 				case_mode = "smart_case", -- or "ignore_case" or "respect_case"
-				-- the default case_mode is "smart_case"
 			},
 		},
 	}
-
 end
 
 local M = {
