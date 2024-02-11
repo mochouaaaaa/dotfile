@@ -11,7 +11,7 @@ opt.conceallevel = 0
 opt.updatetime = 100
 
 -- 行号
-opt.relativenumber = false
+opt.relativenumber = true
 opt.number = true
 
 -- 缩进

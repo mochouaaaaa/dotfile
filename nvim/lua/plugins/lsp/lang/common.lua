@@ -47,6 +47,15 @@ function M.setup(client, bufnr)
 	vim.api.nvim_buf_set_option(bufnr, "omnifunc", "v:lua.vim.lsp.omnifunc")
 	-- keymap settings
 
+	-- if client.config ~= nil and client.config.root_dir then
+	-- 	basedir = client.config.root_dir .. "/.githistory/"
+	-- else
+	-- 	basedir = vim.fn.stdpath("data") .. "/.githistory/"
+	-- end
+	-- require("lgh").setup {
+	-- 	basedir = basedir,
+	-- }
+
 	vim.keymap.set("n", "<leader>wl", function() vim.notify(vim.inspect(vim.lsp.buf.list_workspace_folders())) end, {
 		buffer = bufnr,
 		noremap = true,
@@ -88,12 +97,13 @@ function M.setup(client, bufnr)
 	end
 
 	if client.supports_method("textDocument/codeAction") then
-		vim.keymap.set(
-			{ "n", "v" },
-			"<leader>ca",
-			vim.lsp.buf.code_action,
-			{ buffer = bufnr, desc = "Code Action Diagnostic" }
-		)
+		local code_actions
+		if Util.has("actions-preview.nvim") then
+			code_actions = require("actions-preview").code_actions
+		else
+			code_actions = vim.lsp.buf.code_action
+		end
+		vim.keymap.set({ "n", "v" }, "<leader>ca", code_actions, { buffer = bufnr, desc = "Code Action Diagnostic" })
 	end
 
 	if client.supports_method("textDocument/hover") then
