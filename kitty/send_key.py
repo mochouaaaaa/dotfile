@@ -8,7 +8,7 @@ def main(args):
     pass
 
 
-KEY_MAPPINGS = {"cmd+r": {"-zsh": "joshuto"}, "cmd+l": {"-zsh": "clear"}}
+KEY_MAPPINGS = {"cmd+r": {"-zsh": "joshuto"}}
 
 
 def encode_key_mapping(window, key_mapping):
