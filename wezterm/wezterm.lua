@@ -4,4 +4,5 @@ return Config:init()
 	:append(require("config.theme"))
 	:append(require("config.keys"))
 	:append(require("config.general"))
+	:append(require("config.base"))
 	:append(require("config.launch")).options

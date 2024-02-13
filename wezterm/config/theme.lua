@@ -11,17 +11,31 @@ return {
 	max_fps = 60,
 
 	-- font
+	-- font = wezterm.font_with_fallback {
+	-- 	font,
+	-- 	"Symbols Nerd Font Mono",
+	-- },
+
+	-- wezterm ls-fonts --text "" 应该是正方框
 	font = wezterm.font_with_fallback {
 		font,
-		{ family = "Symbols Nerd Font Mono", assume_emoji_presentation = true },
+		{
+			family = "JetBrains Mono",
+			weight = "Regular",
+		},
+		"Symbols Nerd Font Mono",
+		-- "Hack Nerd Font Mono",
 	},
+	harfbuzz_features = { "calt=0", "clig=0", "liga=0" },
+	use_ime = true,
 	font_size = font_size,
 	line_height = 1.25,
 	underline_position = 5,
-	strikenthrough_position = 5,
+	strikethrough_position = 5,
 
-	freetype_load_target = "Normal",
-	freetype_render_target = "Normal",
+	freetype_load_target = "Light",
+	freetype_render_target = "HorizontalLcd",
+	-- freetype_load_flags = "NO_BITMAP",
 
 	-- theme
 	color_scheme = "Catppuccin Mocha",
@@ -33,7 +47,7 @@ return {
 	window_background_opacity = 0.75,
 	-- mac blur
 	macos_window_background_blur = 20,
-	text_background_opacity = 0.75,
+	-- text_background_opacity = 0.75,
 	adjust_window_size_when_changing_font_size = false,
 
 	window_padding = {
