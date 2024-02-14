@@ -4,8 +4,6 @@ return {
 		event = "VeryLazy",
 		lazy = true,
 		dependencies = {
-			{ "nvim-telescope/telescope.nvim", lazy = true },
-			{ "nvim-lua/plenary.nvim", lazy = true },
 			{ "sindrets/diffview.nvim", lazy = true },
 		},
 		enabled = vim.fn.executable("git") == 1,
@@ -35,47 +33,81 @@ return {
 				local keys = {
 					["<leader>g"] = {
 						name = "Git Manager",
-						p = {
-							function() gitsigns.preview_hunk() end,
-							"Preview hunk",
+						a = {
+							name = "add",
+							b = {
+								gs.stage_hunk,
+								"hunk",
+							},
+							f = {
+								gs.stage_buffer,
+								"file",
+							},
 						},
-						r = { gs.reset_hunk, "Revert hunk" },
-						U = {
+						t = {
+							name = "toggle",
+							h = {
+								function() gs.diffthis("~") end,
+								"diff file",
+							},
+							d = {
+								gs.toggle_deleted,
+								"deleted",
+							},
+						},
+						h = {
+							name = "hunk",
+							p = {
+								function() gitsigns.preview_hunk() end,
+								"preview ",
+							},
+							k = {
+								function()
+									if vim.wo.diff then
+										return "g["
+									end
+									vim.schedule(function() gs.prev_hunk() end)
+									return "<Ignore>"
+								end,
+								"previous",
+							},
+							j = {
+								function()
+									if vim.wo.diff then
+										return "g]"
+									end
+									vim.schedule(function() gs.next_hunk() end)
+									return "<Ignore>"
+								end,
+								"next",
+							},
+						},
+						r = {
+							name = "undo",
+							b = { gs.reset_hunk, "revert hunk" },
+							f = {
 
-							gs.undo_stage_hunk,
-							"Undo stage file",
-						},
-						["["] = {
-							function()
-								if vim.wo.diff then
-									return "g["
-								end
-								vim.schedule(function() gs.prev_hunk() end)
-								return "<Ignore>"
-							end,
-							"Previous hunk",
-						},
-						["]"] = {
-							function()
-								if vim.wo.diff then
-									return "g]"
-								end
-								vim.schedule(function() gs.next_hunk() end)
-								return "<Ignore>"
-							end,
-							"Next hunk",
+								gs.reset_buffer_index,
+								"stage file",
+							},
 						},
 					},
 				}
 				local visual = {
 					["<leader>g"] = {
 						a = {
-							function() gs.stage_hunk { vim.fn.line("."), vim.fn.line("v") } end,
-							"Stage hunk",
+							name = "add",
+							b = {
+								function() gs.stage_hunk { vim.fn.line("."), vim.fn.line("v") } end,
+								"stage hunk",
+							},
 						},
 						r = {
-							function() gs.reset_hunk { vim.fn.line("."), vim.fn.line("v") } end,
-							"undo reset hunk",
+							name = "undo",
+							b = {
+								function() gs.reset_hunk { vim.fn.line("."), vim.fn.line("v") } end,
+								"reset hunk",
+							},
 						},
 					},
 				}
@@ -91,7 +123,7 @@ return {
 					text = "~",
 				},
 				delete = {
-					text = "_",
+					text = "x",
 				},
 				topdelete = {
 					text = "‾",
@@ -99,6 +131,7 @@ return {
 				changedelete = {
 					text = "~",
 				},
+				untracked = { text = "┆" },
 			},
 			worktrees = vim.g.git_worktrees,
 			signcolumn = true, -- Toggle with `:Gitsigns toggle_signs`
@@ -112,7 +145,7 @@ return {
 				ignore_whitespace = false,
 			},
 			current_line_blame_formatter_opts = { relative_time = true },
-			current_line_blame_formatter = "      <author>, <author_time:%R> - <summary>",
+			current_line_blame_formatter = "   <author>, <author_time:%R> - <summary>",
 			sign_priority = 6,
 			update_debounce = 100,
 			status_formatter = nil, -- Use default
@@ -127,5 +160,9 @@ return {
 			},
 			yadm = { enable = false },
 		},
+	},
+	{
+		"pwntester/octo.nvim",
+		config = function() require("octo").setup() end,
 	},
 }
