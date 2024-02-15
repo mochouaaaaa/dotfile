@@ -50,7 +50,7 @@ return {
 				["?"] = { "<cmd>WhichKey<CR>", "WhichKey" },
 				["b"] = { name = "buffer + conversion" },
 				["c"] = { name = "code action + cd" },
-				["d"] = { name = "debug + dagang" },
+				["d"] = { name = "docker + debug + dagang" },
 				["f"] = { name = "telescope" },
 				["g"] = { name = "git" },
 				["v"] = { name = "virtual venv" },

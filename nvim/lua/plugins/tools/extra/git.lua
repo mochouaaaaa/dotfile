@@ -1,25 +1,5 @@
 return {
 	{
-		"kdheepak/lazygit.nvim",
-		event = "VeryLazy",
-		lazy = true,
-		dependencies = {
-			{ "sindrets/diffview.nvim", lazy = true },
-		},
-		enabled = vim.fn.executable("git") == 1,
-		config = function()
-			local Util = require("lazyvim.util")
-			Util.on_load("telescope.nvim", function() require("telescope").load_extension("lazygit") end)
-		end,
-		keys = {
-			{
-				"<leader>gg",
-				"<cmd>LazyGit<CR>",
-				desc = "git manager",
-			},
-		},
-	},
-	{
 		"lewis6991/gitsigns.nvim",
 		event = "VeryLazy",
 		lazy = true,

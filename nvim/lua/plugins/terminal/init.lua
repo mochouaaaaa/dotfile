@@ -70,7 +70,6 @@ local flatten = {
 
 local toggleterm = {
 	"akinsho/toggleterm.nvim",
-	version = "*",
 	enabled = true,
 	opts = {
 		size = function(term)
@@ -90,8 +89,21 @@ local toggleterm = {
 		float_opts = {
 			border = "rounded",
 		},
+		-- function to run on opening the terminal
+		on_open = function(term)
+			vim.cmd("set mouse=")
+			vim.cmd("startinsert!")
+		end,
+		-- function to run on closing the terminal
+		on_close = function(term)
+			vim.cmd("set mouse=a")
+			vim.cmd("startinsert!")
+		end,
 	},
-	config = function(_, opts) require("toggleterm").setup(opts) end,
+	config = function(_, opts)
+		require("toggleterm").setup(opts)
+		require("plugins.terminal.lazygit")
+	end,
 }
 
 return {

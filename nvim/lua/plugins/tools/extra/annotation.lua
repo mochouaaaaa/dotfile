@@ -15,15 +15,9 @@ return {
 	},
 	{
 		"folke/todo-comments.nvim",
-		dependencies = { "nvim-lua/plenary.nvim" },
 		config = function()
 			require("todo-comments").setup {}
-			vim.keymap.set(
-				"n",
-				"<leader>fd",
-				"<Cmd>TodoTelescope<CR>",
-				{ desc = "Search through all project todos with Telescope" }
-			)
+			vim.keymap.set("n", "<leader>ft", "<Cmd>TodoTelescope<CR>", { desc = "project all todo" })
 		end,
 	},
 }
