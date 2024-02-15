@@ -113,12 +113,10 @@ def handle_result(args, result, target_window_id, boss):
 
     cmd = window.child.foreground_cmdline[0]
 
-    # keyboard_mode_name(window.screen) == "kitty"  You can get kitty.
-    # result: -zsh, tmux, nvim
-    print(window.child.foreground_cmdline)
     if cmd == "nvim":
         for keymap in key_mapping.split(">"):
             encoded = encode_key_mapping(window, keymap)
+            print(encoded)
             window.write_to_child(encoded)
     elif action == "neighboring_window":
         boss.active_tab.neighboring_window(direction)

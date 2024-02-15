@@ -110,8 +110,6 @@ local nvim_cmp = {
 		{ "hrsh7th/cmp-buffer" },
 		{ "hrsh7th/cmp-nvim-lsp" },
 		{ "hrsh7th/cmp-path" },
-		{ "hrsh7th/cmp-cmdline", event = { "InsertEnter", "LspAttach" } },
-		{ "dmitmel/cmp-cmdline-history", event = { "InsertEnter", "LspAttach" } },
 	},
 }
 
@@ -147,17 +145,6 @@ nvim_cmp.opts = function()
 		local line, col = unpack(vim.api.nvim_win_get_cursor(0))
 		return col ~= 0 and vim.api.nvim_buf_get_text(0, line - 1, 0, line - 1, col, {})[1]:match("^%s*$") == nil
 	end
-
-	cmp.setup.cmdline(":", {
-		completion = {
-			completeopt = "menu,menuone,noselect",
-		},
-		mapping = cmp.mapping.preset.cmdline(),
-		sources = cmp.config.sources {
-			{ name = "path" },
-			{ name = "cmdline" },
-		},
-	})
 
 	cmp.setup.cmdline("/", {
 		mapping = cmp.mapping.preset.cmdline(),

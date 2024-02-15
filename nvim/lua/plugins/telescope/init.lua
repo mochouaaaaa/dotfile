@@ -1,5 +1,4 @@
 local config = function()
-	local telescope = require("telescope")
 	local actions = require("telescope.actions")
 
 	require("telescope").setup {
@@ -88,7 +87,7 @@ local config = function()
 			end,
 		},
 		pickers = {
-			find_files = { previewer = false },
+			find_files = { previewer = false, theme = "dropdown" },
 			live_grep = { theme = "ivy" },
 
 			-- lsp_references = { theme = "ivy" },
@@ -100,10 +99,6 @@ local config = function()
 			-- },
 		},
 		extensions = {
-			project = {
-				theme = "catppuccin",
-				hidden_files = false,
-			},
 			fzf = {
 				fuzzy = true, -- false will only do exact matching
 				override_generic_sorter = true, -- override the generic sorter

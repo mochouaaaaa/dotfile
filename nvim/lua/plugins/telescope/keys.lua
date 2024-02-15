@@ -9,7 +9,7 @@ return {
 	{
 		"<leader>fg",
 		"<Cmd>Telescope git_files<CR>",
-		desc = "[]Search Git File",
+		desc = "Search Git File",
 	},
 	{
 		"<D-S-f>",
@@ -29,7 +29,7 @@ return {
 	{
 		"<leader>fs",
 		"<Cmd>Telescope spell_suggest<CR>",
-		desc = "益spell suggestions about cursor word",
+		desc = "spell suggestions about cursor word",
 	},
 	{
 		"<leader>fb",
@@ -39,6 +39,6 @@ return {
 	{
 		"<leader>fk",
 		"<Cmd>Telescope keymaps<CR>",
-		desc = " Check out keymaps[S-C-/]",
+		desc = "Check out keymaps[S-C-/]",
 	},
 }

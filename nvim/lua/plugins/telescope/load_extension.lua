@@ -4,12 +4,35 @@ local M = {
 	"nvim-telescope/telescope.nvim",
 	dependencies = {
 		{
+			"jonarrien/telescope-cmdline.nvim",
+			config = function()
+				Util.on_load("telescope.nvim", function() require("telescope").load_extension("cmdline") end)
+			end,
+		},
+		{
+			"catgoose/telescope-helpgrep.nvim",
+			config = function()
+				Util.on_load("telescope.nvim", function() require("telescope").load_extension("helpgrep") end)
+			end,
+		},
+		{
+			"tsakirist/telescope-lazy.nvim",
+			config = function()
+				Util.on_load("telescope.nvim", function() require("telescope").load_extension("lazy") end)
+			end,
+		},
+		{
+			"ryanmsnyder/toggleterm-manager.nvim",
+		},
+		{
+			-- file history undo
 			"debugloop/telescope-undo.nvim",
 			config = function()
 				Util.on_load("telescope.nvim", function() require("telescope").load_extension("undo") end)
 			end,
 		},
 		{
+			-- hook lsp ui
 			"gbrlsnchs/telescope-lsp-handlers.nvim",
 			config = function()
 				Util.on_load("telescope.nvim", function() require("telescope").load_extension("lsp_handlers") end)
@@ -23,9 +46,24 @@ local M = {
 			end,
 		},
 		{
+			-- dap config
 			"nvim-telescope/telescope-dap.nvim",
 			config = function()
 				Util.on_load("telescope.nvim", function() require("telescope").load_extension("dap") end)
+			end,
+		},
+		{
+			-- read file
+			"nvim-telescope/telescope-media-files.nvim",
+			config = function()
+				Util.on_load("telescope.nvim", function() require("telescope").load_extension("media_files") end)
+			end,
+		},
+		{
+			-- hook git commit
+			"olacin/telescope-cc.nvim",
+			config = function()
+				Util.on_load("telescope.nvim", function() require("telescope").load_extension("conventional_commits") end)
 			end,
 		},
 		{
@@ -34,10 +72,22 @@ local M = {
 				Util.on_load("telescope.nvim", function() require("telescope").load_extension("file_browser") end)
 			end,
 		},
+		{
+			"lpoto/telescope-docker.nvim",
+			config = function()
+				Util.on_load("telescope.nvim", function() require("telescope").load_extension("docker") end)
+			end,
+		},
 	},
 }
 
+M.keys = require("plugins.telescope.extensions_keys")
+
 function M.opts(_, opts)
+	require("telescope").setup {
+		extensions = require("plugins.telescope.extensions"),
+	}
+
 	if not Util.has("flash.nvim") then
 		return
 	end
