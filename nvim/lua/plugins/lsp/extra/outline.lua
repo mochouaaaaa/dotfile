@@ -8,8 +8,7 @@ local outline = {
 			filter = {
 				default = {
 					"String",
-					"Variable",
-					exclude = true,
+					"Function",
 				},
 				python = { "Function", "Class", "Method" },
 			},

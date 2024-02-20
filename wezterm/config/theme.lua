@@ -2,7 +2,7 @@ local wezterm = require("wezterm")
 
 local platform = require("utils.platform")
 
-local font = "Monaco"
+local font = "Monaco Nerd Font"
 local font_size = platform().is_mac and 16 or 14
 
 return {
@@ -10,23 +10,11 @@ return {
 	animation_fps = 60,
 	max_fps = 60,
 
-	-- font
-	-- font = wezterm.font_with_fallback {
-	-- 	font,
-	-- 	"Symbols Nerd Font Mono",
-	-- },
-
-	-- wezterm ls-fonts --text "" 应该是正方框
-	font = wezterm.font_with_fallback {
-		font,
-		{
-			family = "JetBrains Mono",
-			weight = "Regular",
-		},
-		"Symbols Nerd Font Mono",
-		-- "Hack Nerd Font Mono",
+	font = wezterm.font {
+		family = font,
+		assume_emoji_presentation = false,
+		harfbuzz_features = { "calt=0", "clig=0", "liga=0" },
 	},
-	harfbuzz_features = { "calt=0", "clig=0", "liga=0" },
 	use_ime = true,
 	font_size = font_size,
 	line_height = 1.25,

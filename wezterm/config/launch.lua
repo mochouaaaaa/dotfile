@@ -8,7 +8,7 @@ local options = {
 if platform.is_mac then
 	options.default_prog = {
 		"/usr/local/bin/zsh",
-		"--login",
+		"-l",
 	}
 	options.launch_menu = {}
 end

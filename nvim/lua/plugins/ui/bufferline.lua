@@ -24,10 +24,11 @@ local bufferline = {
 	end,
 }
 
+local utils = require("config.utils")
+
 bufferline.keys = {
-	-- { "<D-w>", "<Cmd>BDelete this<CR>", desc = "close current buffer" },
 	{
-		"<D-w>",
+		utils.platform_key("cmd") .. "-w>",
 		function()
 			local bd = require("mini.bufremove").delete
 			if vim.bo.modified then

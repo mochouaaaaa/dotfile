@@ -1,6 +1,8 @@
 local M = {
 	"nvim-neo-tree/neo-tree.nvim",
 	cond = not vim.g.vscode,
+	cmd = "Neotree",
+	init = function() vim.g.neo_tree_remove_legacy_commands = true end,
 }
 
 local function init_keys()
@@ -18,10 +20,12 @@ local function init_keys()
 	}
 end
 
+local utils = require("config.utils")
+
 function M.opts()
 	vim.g.neo_tree_remove_legacy_commands = 1
 	-- mac system cmd keymap
-	vim.api.nvim_set_keymap("n", "<D-e>", "<Cmd>Neotree toggle<CR>", {})
+	vim.api.nvim_set_keymap("n", utils.platform_key("cmd") .. "-e>", "<Cmd>Neotree toggle<CR>", {})
 	init_keys()
 
 	vim.api.nvim_create_autocmd("TermClose", {
@@ -318,7 +322,7 @@ function M.opts()
 					-- Status type
 					untracked = "",
 					ignored = "",
-					unstaged = "",
+					unstaged = " ",
 					staged = "",
 					conflict = "",
 				},

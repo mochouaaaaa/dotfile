@@ -4,8 +4,9 @@
 -- * override the configuration of LazyVim plugins
 return {
 	{
-		"mrjones2014/smart-splits.nvim",
+		"mochouaaaaa/smart-splits.nvim",
 		build = "./kitty/install-kittens.bash",
+		lazy = false,
 		config = function()
 			local smart_splits = require("smart-splits")
 
@@ -43,22 +44,24 @@ return {
 				-- see https://sw.kovidgoyal.net/kitty/conf/#opt-kitty.remote_control_password
 				kitty_password = "kitty",
 			}
+			local utils = require("config.utils")
+			local cmd = utils.platform_key("cmd")
 
 			vim.keymap.set("n", "<C-S-k>", function() smart_splits.resize_up() end)
 			vim.keymap.set("n", "<C-S-j>", function() smart_splits.resize_down() end)
 			vim.keymap.set("n", "<C-S-h>", function() smart_splits.resize_left() end)
 			vim.keymap.set("n", "<C-S-l>", function() smart_splits.resize_right() end)
 
-			vim.keymap.set("n", "<D-k>", function() smart_splits.move_cursor_up() end)
-			vim.keymap.set("n", "<D-j>", function() smart_splits.move_cursor_down() end)
-			vim.keymap.set("n", "<D-h>", function() smart_splits.move_cursor_left() end)
-			vim.keymap.set("n", "<D-l>", function() smart_splits.move_cursor_right() end)
+			vim.keymap.set("n", cmd .. "-k>", function() smart_splits.move_cursor_up() end)
+			vim.keymap.set("n", cmd .. "-j>", function() smart_splits.move_cursor_down() end)
+			vim.keymap.set("n", cmd .. "-h>", function() smart_splits.move_cursor_left() end)
+			vim.keymap.set("n", cmd .. "-l>", function() smart_splits.move_cursor_right() end)
 
 			local mux = require("smart-splits.mux").get()
-			vim.keymap.set("n", "<D-C-k>", function() mux.split_pane("up") end)
-			vim.keymap.set("n", "<D-C-j>", function() mux.split_pane("down") end)
-			vim.keymap.set("n", "<D-C-h>", function() mux.split_pane("left") end)
-			vim.keymap.set("n", "<D-C-l>", function() mux.split_pane("right") end)
+			vim.keymap.set("n", cmd .. "-C-k>", function() mux.split_pane("up") end)
+			vim.keymap.set("n", cmd .. "-C-j>", function() mux.split_pane("down") end)
+			vim.keymap.set("n", cmd .. "-C-h>", function() mux.split_pane("left") end)
+			vim.keymap.set("n", cmd .. "-C-l>", function() mux.split_pane("right") end)
 		end,
 	},
 	{

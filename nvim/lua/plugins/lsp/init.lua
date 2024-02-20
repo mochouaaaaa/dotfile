@@ -33,63 +33,38 @@ return {
 	{
 		"Wansmer/symbol-usage.nvim",
 		config = function()
-			vim.api.nvim_create_autocmd({ "LspDetach" }, {
-				callback = function(ev) vim.fn.sign_unplace("SymbolUsage") end,
-			})
+			local function text_format(symbol)
+				local fragments = {}
 
-			vim.fn.sign_define("SymbolUsageRef", { text = "󰌹", texthl = "", linehl = "", numhl = "" })
-			vim.fn.sign_define("SymbolUsageDef", { text = "󰳽", texthl = "", linehl = "", numhl = "" })
-			vim.fn.sign_define("SymbolUsageImpl", { text = "", texthl = "", linehl = "", numhl = "" })
-
-			local function signcolumn_format(symbol)
-				local ns_id = vim.api.nvim_get_namespaces()["__symbol__"]
-				local emark = vim.api.nvim_buf_get_extmark_by_id(0, ns_id, symbol.mark_id, { details = false })
-				local buf = vim.api.nvim_get_current_buf()
-
-				vim.fn.sign_unplace("SymbolUsage", { buffer = buf, id = symbol.mark_id }) -- not sure if it's necessary
-
-				if #emark > 0 then
-					if symbol.references then
-						vim.fn.sign_place(
-							symbol.mark_id,
-							"SymbolUsage",
-							"SymbolUsageRef",
-							buf,
-							{ lnum = emark[1] + 1, priority = 11 }
-						)
-					end
-
-					if symbol.definition then
-						vim.fn.sign_place(
-							symbol.mark_id,
-							"SymbolUsage",
-							"SymbolUsageDef",
-							buf,
-							{ lnum = emark[1] + 1, priority = 11 }
-						)
-					end
-
-					if symbol.implementation > 0 then
-						vim.fn.sign_place(
-							symbol.mark_id,
-							"SymbolUsage",
-							"SymbolUsageImpl",
-							buf,
-							{ lnum = emark[1] + 1, priority = 11 }
-						)
-					end
+				if symbol.references then
+					local usage = symbol.references <= 1 and "usage" or "usages"
+					local num = symbol.references == 0 and "no" or symbol.references
+					table.insert(fragments, ("%s %s"):format(num, usage))
 				end
 
-				return ""
+				if symbol.definition then
+					table.insert(fragments, symbol.definition .. " defs")
+				end
+
+				if symbol.implementation then
+					table.insert(fragments, symbol.implementation .. " impls")
+				end
+
+				return table.concat(fragments, ", ")
 			end
 			require("symbol-usage").setup {
 				request_pending_text = "",
 				implementation = { enabled = true },
-				definition = { enabled = false },
-				references = { enabled = false },
-				text_format = signcolumn_format,
-				vt_position = "end_of_line",
-				symbol_request_pos = "end",
+				definition = { enabled = true },
+				references = { enabled = true },
+				text_format = text_format,
+				disable = {
+					cond = {
+						function() return vim.fn.expand("%:p"):find(vim.fn.getcwd()) end,
+						function() return vim.fn.expand("%:p"):find("/site_packages/") end,
+						function() return vim.fn.expand("%:p"):find("/venv/") end,
+					},
+				},
 			}
 		end,
 	},

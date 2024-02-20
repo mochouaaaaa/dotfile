@@ -1,6 +1,8 @@
 local Util = require("lazyvim.util")
 local extr_args = require("plugins.configs.fzf").extr_args
 
+local utils = require("config.utils")
+
 return {
 	{
 		"/",
@@ -12,12 +14,12 @@ return {
 		desc = "Search Git File",
 	},
 	{
-		"<D-S-f>",
+		utils.platform_key("cmd") .. "-S-f>",
 		Util.telescope("live_grep", { additional_args = extr_args }),
 		desc = "Grep (root dir)",
 	},
 	{
-		"<D-f>",
+		utils.platform_key("cmd") .. "-f>",
 		function()
 			Util.telescope(
 				"find_files",

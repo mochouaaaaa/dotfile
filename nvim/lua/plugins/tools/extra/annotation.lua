@@ -1,3 +1,5 @@
+local utils = require("config.utils")
+
 return {
 	{
 		"numToStr/Comment.nvim",
@@ -5,10 +7,10 @@ return {
 			-- gcc和gc注释修改为D-/
 			require("Comment").setup {
 				toggler = {
-					line = "<D-/>",
+					line = utils.platform_key("cmd") .. "-/>",
 				},
 				opleader = {
-					line = "<D-/>",
+					line = utils.platform_key("cmd") .. "-/>",
 				},
 			}
 		end,
