@@ -28,7 +28,6 @@ function M.is_inside_vim(pane)
 end
 
 local direction_keys = {
-
 	h = "Left",
 	j = "Down",
 	k = "Up",
@@ -44,12 +43,15 @@ function M.wezterm_nvim(operation, key, mods)
 				-- pass the keys through to vim/nvim
 				-- win:perform_action(act.SendKey { key = key, mods = mods }, pane)
 				w.log_info("Sending keys to vim: " .. key .. " " .. mods)
-				win:perform_action(act.SendKey { key = "\x1bl" }, pane)
+				win:perform_action({ SendKey = { key = key, mods = mods } }, pane)
+				act.SendKey { key = key, mods = mods }
 			else
 				if operation == "resize" then
 					win:perform_action({ AdjustPaneSize = { direction_keys[key], 3 } }, pane)
 				elseif operation == "move" then
 					win:perform_action({ ActivatePaneDirection = direction_keys[key] }, pane)
+				elseif operation == "close_tab" then
+					win:perform_action({ CloseCurrentTab = { confirm = false } }, pane)
 				end
 			end
 		end),
