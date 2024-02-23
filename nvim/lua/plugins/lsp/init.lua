@@ -112,6 +112,14 @@ return {
 			cmp.event:on("confirm_done", cmp_autopairs.on_confirm_done())
 		end,
 	},
+	{
+		"MarcHamamji/runner.nvim",
+		dependencies = {
+			"nvim-telescope/telescope.nvim",
+			dependencies = { "nvim-lua/plenary.nvim" },
+		},
+		config = function() require("runner").setup() end,
+	},
 	{ "folke/neodev.nvim" },
 	{ import = "plugins.lsp.extra" },
 	{ import = "plugins.lsp.extra_lang" },

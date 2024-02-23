@@ -10,15 +10,29 @@ M.keys = {
 		"s",
 		mode = { "n", "x", "o" },
 		function()
-			require("flash").jump({
+			require("flash").jump {
+				-- search = {
+				-- 	mode = function(str) return "\\<" .. str end,
+				-- },
+				pattern = ".",
 				search = {
-					mode = function(str)
-						return "\\<" .. str
+					mode = function(pattern)
+						-- remove leading dot
+						if pattern:sub(1, 1) == "." then
+							pattern = pattern:sub(2)
+						end
+						return ([[%s\w*\>]]):format(pattern), ([[%s]]):format(pattern)
 					end,
 				},
-			})
+			}
 		end,
-		desc = "Flash Jump",
+		desc = "flash jump",
+	},
+	{
+		"S",
+		mode = { "n", "x", "o" },
+		function() require("flash").treesitter() end,
+		desc = "flash jump treesitter",
 	},
 }
 

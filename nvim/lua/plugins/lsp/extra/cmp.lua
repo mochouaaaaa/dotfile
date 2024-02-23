@@ -13,6 +13,8 @@ local LuaSnip = {
 	config = require("plugins.configs.luasnip"),
 }
 
+local utils = require("config.utils")
+
 local nvim_cmp = {
 	"hrsh7th/nvim-cmp",
 	event = { "InsertEnter", "CmdlineEnter" },
@@ -49,6 +51,8 @@ local nvim_cmp = {
 						hgcommit = false,
 						svn = false,
 						cvs = false,
+						plaintext = false,
+						scminput = false,
 					},
 					suggestion = {
 						enabled = true,
@@ -56,10 +60,13 @@ local nvim_cmp = {
 						debounce = 75,
 						keymap = {
 							accept = false,
-							next = "<A-j>",
-							prev = "<A-k>",
+							next = utils.platform_key("cmd") .. "-j>",
+							prev = utils.platform_key("cmd") .. "-k>",
 							dismiss = false,
 						},
+					},
+					server_opts_overrides = {
+						-- root_dir = require("lspconfig.util")
 					},
 				}
 
@@ -96,15 +103,34 @@ local nvim_cmp = {
 			config = function() require("copilot_cmp").setup() end,
 		},
 		{
-			"Exafunction/codeium.nvim",
-			event = { "InsertEnter", "LspAttach" },
+			"BlazeMCworld/open-codeium.nvim",
 			dependencies = {
-				"hrsh7th/nvim-cmp",
+				"MunifTanjim/nui.nvim",
+				-- {
+				-- 	"Exafunction/codeium.nvim",
+				-- 	event = { "InsertEnter", "LspAttach" },
+				-- 	dependencies = {
+				-- 		"hrsh7th/nvim-cmp",
+				-- 	},
+				-- 	build = "Codeium Auth",
+				-- },
 			},
-			build = "Codeium Auth",
 			config = function()
-				vim.g.codeium_disable_bindings = 1
-				require("codeium").setup {}
+				if require("lazyvim.util").has("copilot-lualine") then
+					local i = require("copilot-lualine")
+					if i.is_error() then
+						local codeium = require("codeium").setup()
+						vim.keymap.set("i", "<Tab>", function()
+							if codeium.completions.is_shown() then
+								codeium.completions.accept()
+							else
+								vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes("<Tab>", true, false, true), "n", false)
+							end
+						end)
+						vim.keymap.set("i", utils.platform_key("cmd") .. "-j>", codeium.completions.next)
+						vim.keymap.set("i", utils.platform_key("cmd") .. "-k>", codeium.completions.prev)
+					end
+				end
 			end,
 		},
 		{ "hrsh7th/cmp-buffer" },
@@ -170,7 +196,7 @@ nvim_cmp.opts = function()
 				behavior = cmp.ConfirmBehavior.Replace,
 				select = true,
 			},
-			["<A-e>"] = cmp.mapping {
+			[utils.platform_key("cmd") .. "-e>"] = cmp.mapping {
 				i = cmp.mapping.abort(),
 				c = cmp.mapping.close(),
 			},
@@ -188,8 +214,8 @@ nvim_cmp.opts = function()
 					fallback()
 				end
 			end, { "i", "s" }),
-			["<A-k>"] = cmp.mapping.select_prev_item { behavior = cmp.SelectBehavior.Select },
-			["<A-j>"] = cmp.mapping.select_next_item { behavior = cmp.SelectBehavior.Select },
+			[utils.platform_key("cmd") .. "-k>"] = cmp.mapping.select_prev_item { behavior = cmp.SelectBehavior.Select },
+			[utils.platform_key("cmd") .. "-j>"] = cmp.mapping.select_next_item { behavior = cmp.SelectBehavior.Select },
 		},
 		window = {
 			completion = cmp.config.window.bordered(border_opts),

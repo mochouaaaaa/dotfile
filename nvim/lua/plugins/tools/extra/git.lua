@@ -75,6 +75,7 @@ return {
 				}
 				local visual = {
 					["<leader>g"] = {
+						name = "Git Manager",
 						a = {
 							name = "add",
 							b = {

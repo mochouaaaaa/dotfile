@@ -1,7 +1,6 @@
 require("lazyvim.config.autocmds")
 
 local Util = require("lazyvim.util")
-
 -- copilot proxy
 local ok, _ = pcall(require, "copilot")
 if ok then

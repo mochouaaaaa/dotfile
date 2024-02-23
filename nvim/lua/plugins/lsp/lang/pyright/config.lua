@@ -15,7 +15,7 @@ function M.on_attach(client, buffer)
 	-- end
 end
 
-local util = require("lspconfig/util")
+local util = require("lspconfig.util")
 M.extra = function(config)
 	return {
 		single_file_support = true,
