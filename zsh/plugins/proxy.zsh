@@ -1,6 +1,6 @@
 
 function proxy_on(){
-   export https_proxy=http://127.0.0.1:7890 http_proxy=http://127.0.0.1:7890 all_proxy=socks5://127.0.0.1:7890
+   export https_proxy=http://127.0.0.1:7890 http_proxy=http://127.0.0.1:7890 all_proxy=socks5://127.0.0.1:7891
    echo -e "\e[91m 已开启代理 \e[0m"
 }
 

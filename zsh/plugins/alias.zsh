@@ -22,5 +22,5 @@ alias ssh="kitty +kitten ssh"
 alias rg="rg --hyperlink-format=kitty"
 
 alias vim="nvim"
-alias astro_nvim="NVIM_APPNAME=AstroNvim nvim"
-alias lazy_nvim="NVIM_APPNAME=lazynvim nvim"
+# alias astro_nvim="NVIM_APPNAME=AstroNvim nvim"
+# alias lazy_nvim="NVIM_APPNAME=lazynvim nvim"
