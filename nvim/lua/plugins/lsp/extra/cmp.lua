@@ -141,8 +141,8 @@ local nvim_cmp = {
 
 local default_source = {
 	-- Copilot source
-	{ name = "copilot", group_index = 2 },
-	{ name = "codeium", group_index = 2, max_item_count = 5 },
+	-- { name = "copilot", group_index = 2 },
+	-- { name = "codeium", group_index = 2, max_item_count = 5 },
 	-- Other source
 	{ name = "nvim_lsp", priority = 1000, keyword_length = 1 },
 	{ name = "luasnip", keyword_length = 2 },

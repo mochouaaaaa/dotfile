@@ -16,8 +16,30 @@ function M.on_attach(client, buffer)
 end
 
 local util = require("lspconfig.util")
+
+local function organize_imports()
+	local params = {
+		command = "pyright.organizeimports",
+		arguments = { vim.uri_from_bufnr(0) },
+	}
+
+	local clients = vim.lsp.get_active_clients {
+		bufnr = vim.api.nvim_get_current_buf(),
+		name = "pyright",
+	}
+	for _, client in ipairs(clients) do
+		client.request("workspace/executeCommand", params, nil, 0)
+	end
+end
+
 M.extra = function(config)
 	return {
+		commands = {
+			PyrightOrganizeImports = {
+				organize_imports,
+				description = "Organize Imports",
+			},
+		},
 		single_file_support = true,
 		root_dir = function(fname)
 			local root_files = {

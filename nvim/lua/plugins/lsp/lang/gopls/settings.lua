@@ -1,5 +1,6 @@
 return {
 	gopls = {
+		experimentalPostfixCompletions = true,
 		gofumpt = true,
 		codelenses = {
 			gc_details = false,
@@ -27,6 +28,7 @@ return {
 			unusedwrite = true,
 			useany = true,
 		},
+		staticcheck = true,
 		usePlaceholders = true,
 		completeUnimported = true,
 		-- staticcheck = true,

@@ -101,7 +101,12 @@ function M.setup(client, bufnr)
 		if Util.has("actions-preview.nvim") then
 			code_actions = require("actions-preview").code_actions
 		else
-			code_actions = vim.lsp.buf.code_action
+			code_actions = function()
+				local context = { diagnostic = vim.lsp.diagnostic.get_line_diagnostics() }
+				local params = vim.lsp.util.make_range_params()
+				params.context = context
+				vim.lsp.buf_request(0, "textDocument/codeAction", params, function(err, result, ctx, config) end)
+			end
 		end
 		vim.keymap.set({ "n", "v" }, "<leader>ca", code_actions, { buffer = bufnr, desc = "Code Action Diagnostic" })
 	end
@@ -115,7 +120,12 @@ function M.setup(client, bufnr)
 	end
 
 	if client.supports_method("textDocument/definition") then
-		vim.keymap.set("n", "gd", vim.lsp.buf.definition, { buffer = bufnr, desc = "Go to definition" })
+		vim.keymap.set(
+			"n",
+			"gd",
+			function() vim.lsp.buf.definition { jump_to_single_result = true } end,
+			{ buffer = bufnr, desc = "Go to definition" }
+		)
 	end
 
 	if client.supports_method("textDocument/typeDefinition") then
@@ -123,7 +133,13 @@ function M.setup(client, bufnr)
 	end
 
 	if client.supports_method("textDocument/references") then
-		vim.keymap.set("n", "gr", vim.lsp.buf.references, { buffer = bufnr, desc = "Go to references" })
+		local context = { ignore_current_line = true, includeDeclaration = false }
+		vim.keymap.set(
+			"n",
+			"gr",
+			function() vim.lsp.buf.references { context, nil } end,
+			{ buffer = bufnr, desc = "Go to references" }
+		)
 	end
 
 	if client.supports_method("textDocument/rename") then

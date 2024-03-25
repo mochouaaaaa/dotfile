@@ -5,7 +5,10 @@ vim.g.loaded_python3_provider = 1
 return {
 	pyright = {
 		disableLanguageServices = false,
-		disableOrganizeImports = false,
+		disableOrganizeImports = true,
+		completion = {
+			importSupport = true,
+		},
 	},
 	python = {
 		analysis = {
@@ -13,21 +16,15 @@ return {
 			autoImportCompletions = true,
 			useLibraryCodeForTypes = true,
 			diagnosticMode = "workspace",
-			-- diagnosticMode = "openFilesOnly",
-			diagnosticSeverityOverrides = {
-				-- https://microsoft.github.io/pyright/#/configuration?id=diagnostic-rule-defaults
-				reportMissingImports = "error",
-				reportUndefinedVariable = "none",
-			},
 			strictListInference = true,
 			strictDictionaryInference = true,
 			strictSetInference = true,
-			typeCheckingMode = "basic",
+			typeCheckingMode = "off",
 		},
 		inlayHints = {
 			functionReturnTypes = true,
 			variableTypes = true,
 		},
-		pythonPath = { env.python_env() },
+		-- pythonPath = { env.python_env() },
 	},
 }

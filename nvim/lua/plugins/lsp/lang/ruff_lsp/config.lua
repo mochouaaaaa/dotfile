@@ -16,6 +16,11 @@ M.extra = function(config)
 				args = {
 					filetypes = { "python" },
 				},
+				codeAction = {
+					disableRuleComment = {
+						enable = false,
+					},
+				},
 			},
 		},
 	}

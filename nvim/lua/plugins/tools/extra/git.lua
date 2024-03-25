@@ -142,8 +142,14 @@ return {
 			yadm = { enable = false },
 		},
 	},
-	{
-		"pwntester/octo.nvim",
-		config = function() require("octo").setup() end,
-	},
+	-- {
+	-- 	"pwntester/octo.nvim",
+	-- 	config = function()
+	-- 		require("octo").setup {
+	-- 			suppress_missing_scope = {
+	-- 				project_v2 = false,
+	-- 			},
+	-- 		}
+	-- 	end,
+	-- },
 }
