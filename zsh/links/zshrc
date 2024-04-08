@@ -19,6 +19,9 @@ export CPPFLAGS="-I/usr/local/opt/tcl-tk/include"
 
 # mysql-client
 export PATH="/usr/local/opt/mysql-client/bin:$PATH"
+export LDFLAGS="-L/usr/local/opt/mysql-client/lib"
+export CPPFLAGS="-I/usr/local/opt/mysql-client/include"
+export PKG_CONFIG_PATH="/usr/local/opt/mysql-client/lib/pkgconfig"
 
 export LDFLAGS="-L/usr/local/opt/openssl/lib"
 export CPPFLAGS="-I/usr/local/opt/openssl/include"

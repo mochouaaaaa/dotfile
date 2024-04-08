@@ -18,7 +18,7 @@ alias la='ls -a'
 alias lla='ls -la'
 alias lt='ls --tree'
 
-alias ssh="kitty +kitten ssh"
+# alias ssh="kitty +kitten ssh"
 alias rg="rg --hyperlink-format=kitty"
 
 alias vim="nvim"

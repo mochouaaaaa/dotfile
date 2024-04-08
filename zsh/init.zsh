@@ -14,3 +14,9 @@ for i ($PLUGIN_PATH/*.zsh) {
 # Completion for kitty
 kitty +complete setup zsh | source /dev/stdin
 
+
+function restart_icloud() {
+    killall bird
+    killall cloudd
+    echo "iCloud restarted"
+}
