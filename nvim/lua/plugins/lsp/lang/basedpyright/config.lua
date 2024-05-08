@@ -1,15 +1,10 @@
 local M = {}
 
-function M.on_attach(client, buffer)
-    vim.g.syntastic_python_checkers = { "mypy" }
-end
-
 local util = require("lspconfig.util")
 
 M.extra = function(config)
     return {
-        enabled = vim.g.python_lsp == "pyright",
-        single_file_support = true,
+        enabled = vim.g.python_lsp == "basedpyright",
         root_dir = function(fname)
             local root_files = {
                 "pyproject.toml",
@@ -41,17 +36,5 @@ M.extra = function(config)
         end,
     }
 end
-
-M.capapilities = {
-    textDocument = {
-        publishDiagnostics = {
-            tagSupport = {
-                valueSet = {
-                    2,
-                },
-            },
-        },
-    },
-}
 
 return M

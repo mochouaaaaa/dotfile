@@ -1,30 +1,34 @@
-local env = require("plugins.configs.virtual_env")
-
 vim.g.loaded_python3_provider = 1
 
 return {
-    pyright = {
+    basedpyright = {
         disableLanguageServices = false,
         disableOrganizeImports = false,
         completion = {
             importSupport = true,
         },
+        typeCheckingMode = "standard",
+        reportAttributeAccessIssue = "none",
     },
     python = {
         analysis = {
             autoSearchPaths = true,
             autoImportCompletions = true,
-            useLibraryCodeForTypes = true,
             diagnosticMode = "workspace",
             strictListInference = true,
             strictDictionaryInference = true,
             strictSetInference = true,
-            typeCheckingMode = "off",
+            useLibraryCodeForTypes = true,
+            reportAny = "off",
+            reportMissingTypeStubs = "off",
+            reportUnusedCallResult = "off",
+            reportUnknownValerType = "off",
+            reportImplicitStringConcatenation = "off",
+            reportAttributeAccessIssue = "none",
         },
         inlayHints = {
             functionReturnTypes = true,
             variableTypes = true,
         },
-        -- pythonPath = { env.python_env() },
     },
 }
