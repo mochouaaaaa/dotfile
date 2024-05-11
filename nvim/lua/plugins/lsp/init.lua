@@ -93,10 +93,12 @@ return {
                 ts_config = {
                     lua = { "string", "source" },
                     javascript = { "string", "template_string" },
+                    java = false,
                 },
                 fast_wrap = {
                     chars = { "{", "(", "[", "<", '"', "'", "`" },
                     pattern = [=[[%'%"%)%>%]%)%}%,]]=],
+                    offset = 0,
                     end_key = "$",
                     keys = "qwertyuiopzxcvbnmasdfghjkl",
                     check_comma = true,

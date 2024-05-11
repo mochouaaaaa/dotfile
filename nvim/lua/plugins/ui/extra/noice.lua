@@ -164,7 +164,7 @@ return {
         dependencies = {
             { "MunifTanjim/nui.nvim", lazy = true },
         },
-        enabled = true,
+        enabled = false,
         opts = opts,
         config = function(_, opts)
             local noice = require("noice")
