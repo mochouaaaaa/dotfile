@@ -1,9 +1,18 @@
-from kittens.tui.handler import result_handler
-from kittens.tui.loop import debug
+import re
 
+from kittens.tui.handler import result_handler
 from kitty.key_encoding import KeyEvent, parse_shortcut
 
-# from kitty.keys import keyboard_mode_name
+
+def is_window_vim(window, vim_id):
+    from kittens.tui.loop import debug
+
+    debug(vim_id)
+    fp = window.child.foreground_processes
+    return any(
+        re.search(vim_id, p["cmdline"][0] if len(p["cmdline"]) else "", re.I)
+        for p in fp
+    )
 
 
 def encode_key_mapping(window, key_mapping):
@@ -97,26 +106,16 @@ def handle_result(args, result, target_window_id, boss):
     window = boss.window_id_map.get(target_window_id)
     action = args[1]
     direction = args[2]
-
-    key_mapping = ""
-    amount = 0
-    if action == "neighboring_window":
-        key_mapping = args[3]
-    elif action == "relative_resize":
-        amount = int(args[3])
-        key_mapping = args[4]
-    elif action == "split_window":
-        key_mapping = args[3]
+    key_mapping = args[3] if action == "neighboring_window" else args[4]
+    amount = int(args[3]) if action == "relative_resize" else None
+    vim_id_idx = 4 if action == "neighboring_window" else 5
+    vim_id = args[vim_id_idx] if len(args) > vim_id_idx else "n?vim"
 
     if window is None:
         return
-
-    cmd = window.child.foreground_cmdline[0]
-
-    if cmd == "nvim":
+    if is_window_vim(window, vim_id):
         for keymap in key_mapping.split(">"):
             encoded = encode_key_mapping(window, keymap)
-            print(encoded)
             window.write_to_child(encoded)
     elif action == "neighboring_window":
         boss.active_tab.neighboring_window(direction)
