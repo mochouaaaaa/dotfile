@@ -1,5 +1,5 @@
 
-export LUAENV_ROOT="/Volumes/Code/tools/.luaenv"
+export LUAENV_ROOT="$HOME/.config/env/luaenv"
 
 # git clone https://github.com/cehoffman/luaenv.git $LUAENV_ROOT
 # git clone https://github.com/cehoffman/lua-build.git $LUAENV_ROOT/plugins/lua-build

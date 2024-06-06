@@ -35,7 +35,7 @@ M.extra = function(config)
                 notify_user_on_activate = false,
             })
 
-            require("venv-selector").retrieve_from_cache()
+            -- require("venv-selector").retrieve_from_cache()
 
             return cwd
         end,

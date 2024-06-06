@@ -24,52 +24,7 @@ end
 
 local utils = require("config.utils")
 
-local autocmds = function()
-    utils.autocmd("BufEnter", {
-        desc = "Open Neo-Tree on startup with directory",
-        group = utils.augroup("neotree_start", { clear = true }),
-        callback = function()
-            if package.loaded["neo-tree"] then
-                return true
-            else
-                local stats = (vim.uv or vim.loop).fs_stat(vim.api.nvim_buf_get_name(0)) -- TODO: REMOVE vim.loop WHEN DROPPING SUPPORT FOR Neovim v0.9
-                if stats and stats.type == "directory" then
-                    require("lazy").load({ plugins = { "neo-tree.nvim" } })
-                    return true
-                end
-            end
-        end,
-    })
-
-    utils.autocmd("TermClose", {
-        pattern = "*lazygit*",
-        group = utils.augroup("neotree_refresh", { clear = true }),
-        desc = "Refresh Neo-Tree sources when closing lazygit",
-        callback = function()
-            local manager_avail, manager = pcall(require, "neo-tree.sources.manager")
-            if manager_avail then
-                for _, source in ipairs({ "filesystem", "git_status", "document_symbols" }) do
-                    local module = "neo-tree.sources." .. source
-                    if package.loaded[module] then
-                        manager.refresh(require(module).name)
-                    end
-                end
-            end
-        end,
-    })
-
-    utils.autocmd("TermClose", {
-        pattern = "*lazygit",
-        callback = function()
-            if package.loaded["neo-tree.sources.git_status"] then
-                require("neo-tree.sources.git_status").refresh()
-            end
-        end,
-    })
-end
-
 function M.opts()
-    autocmds()
     vim.g.neo_tree_remove_legacy_commands = 1
     -- mac system cmd keymap
     vim.api.nvim_set_keymap("n", utils.platform_key("cmd") .. "-e>", "<Cmd>Neotree toggle<CR>", {})

@@ -46,12 +46,12 @@ return {
             lualine_b = {},
             lualine_x = {
                 {
-                    memory_use,
-                    color = {
-                        fg = "#69bbae",
-                        bg = "#304263",
-                    },
-                    separator = { left = "" },
+                    --     memory_use,
+                    --     color = {
+                    --         fg = "#69bbae",
+                    --         bg = "#304263",
+                    --     },
+                    -- separator = { left = "" },
                 },
             },
             lualine_y = {},
@@ -62,7 +62,7 @@ return {
                         fg = "#1e1e2e",
                         bg = "#986FEC",
                     },
-                    separator = { right = "" },
+                    separator = { left = "", right = "" },
                     left_padding = 2,
                 },
             },
@@ -117,8 +117,6 @@ return {
                 { "fancy_location", separator = { right = "" }, left_padding = 2 },
             },
         }
-
-        table.insert(sections.lualine_x, 1, require("lazyvim.util").lualine.cmp_source("codeium"))
 
         local opts = {
             options = {

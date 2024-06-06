@@ -24,13 +24,13 @@ M.extra = function(config)
             end
             cache_cwd = cache_cwd .. "/.cache/venv-selector/"
             require("venv-selector").setup({
-                pyenv_path = "/Volumes/Code/tools/.pyenv/versions",
+                pyenv_path = vim.env.HOME .. "/.config/env/pyenv/versions",
                 cache_dir = cache_cwd,
                 cache_file = cache_cwd .. "/venvs.json",
                 notify_user_on_activate = false,
             })
 
-            require("venv-selector").retrieve_from_cache()
+            -- require("venv-selector").retrieve_from_cache()
 
             return cwd
         end,

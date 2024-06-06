@@ -8,7 +8,42 @@ def main(args):
     pass
 
 
-KEY_MAPPINGS = {"cmd+r": {"-zsh": "joshuto"}}
+# keymap reflex
+KEY_MAPPINGS = {
+    "cmd+r": {"-zsh": "text:joshuto", "tmux": "text:joshuto"},
+    "cmd+t": {"-zsh": "def:getattr(boss, 'new_tab')()", "tmux": "ctrl+a->c"},
+    # wndow switching
+    "cmd+1": {"-zsh": "def:getattr(boss, 'goto_tab')(1)", "tmux": "ctrl+a->1"},
+    "cmd+2": {"-zsh": "def:getattr(boss, 'goto_tab')(2)", "tmux": "ctrl+a->2"},
+    "cmd+3": {"-zsh": "def:getattr(boss, 'goto_tab')(3)", "tmux": "ctrl+a->3"},
+    "cmd+4": {"-zsh": "def:getattr(boss, 'goto_tab')(4)", "tmux": "ctrl+a->4"},
+    "cmd+5": {"-zsh": "def:getattr(boss, 'goto_tab')(5)", "tmux": "ctrl+a->5"},
+    "cmd+6": {"-zsh": "def:getattr(boss, 'goto_tab')(6)", "tmux": "ctrl+a->6"},
+    # window next or prev
+    "cmd+[": {"-zsh": "def:getattr(boss, 'next_tab')()", "tmux": "ctrl+a->n"},
+    "cmd+]": {"-zsh": "def:getattr(boss, 'previous_tab')()", "tmux": "ctrl+a->p"},
+    # window closing
+    "cmd+shift+w": {"-zsh": "def:getattr(boss, 'close_tab')()", "tmux": "ctrl+a->x"},
+    # window title rename
+    "cmd+shift+k": {
+        "-zsh": "def:getattr(boss, 'set_tab_title')()",
+        "tmux": "ctrl+a->,",
+    },
+    # window switch
+    "cmd+alt+[": {
+        "-zsh": "def:getattr(boss.active_tab, 'move_window_forward')()",
+        "tmux": "ctrl+a->{",
+    },
+    "cmd+alt+]": {
+        "-zsh": "def:getattr(boss.active_tab, 'move_window_backward')()",
+        "tmux": "ctrl+a->}",
+    },
+    # window max
+    "cmd+enter": {
+        "-zsh": "def:getattr(boss.active_tab, 'toggle_layout')('stack')",
+        "tmux": "ctrl+a->z",
+    },
+}
 
 
 def encode_key_mapping(window, key_mapping):
@@ -40,44 +75,30 @@ def handle_result(args, answer, target_window_id, boss):
 
     cmd = window.child.foreground_cmdline[0]
 
-    key_mapping = args[-1]
+    print(args)
+    print(cmd)
 
-    for keymap in key_mapping.split(">"):
-        cmd_key = KEY_MAPPINGS.get(keymap, None)
+    keymap = args[1]
 
-        if cmd_key is not None:
-            send_command = cmd_key.get(cmd, None)
-            if send_command is None:
-                send_keymap(window, keymap)
+    event = KEY_MAPPINGS.get(keymap, {})
 
-            else:
-                window.write_to_child(send_command + "\n")
-        else:
+    print(event)
+    if not event:
+        print("not event")
+        if cmd != "tmux":
+            keymap = keymap.replace("cmd", "alt")
+        send_keymap(window, keymap)
+        return
+
+    operate = event.get(cmd, "")
+    if operate.startswith("def:"):
+        eval(operate[4:])
+    elif operate.startswith("text:"):
+        window.write_to_child(operate[5:] + "\n")
+    elif "->" in operate:
+        keymap_list = operate.split("->")
+        for keymap in keymap_list:
             send_keymap(window, keymap)
-
-    # if cmd == "nvim" or cmd == "tmux":
-    #     for keymap in key_mapping.split(">"):
-    #         encoded = encode_key_mapping(window, keymap)
-    #         window.write_to_child(encoded)
-
-    # if args[1] == "C-i":
-    #     # Move cursor to the end of line, specific to zsh
-    #     if cmd[-3:] == "zsh":
-    #         window.write_to_child("\x1b[105;5u")
-    #
-    #     # A workaround for tmux to fix its bug of Ctrl+i recognition, sending a Ctrl-; instead
-    #     elif cmd[-4:] == "tmux":
-    #         window.write_to_child("\x1b[59;5u")
-    #         return
-    #
-    #     # Other programs that support CSI u
-    #     elif keyboard_mode_name(window.screen) == "kitty":
-    #         window.write_to_child("\x1b[105;5u")
-    #
-    #     # Otherwise send a ^I
-    #     else:
-    #         window.write_to_child("\x09")
-    #
-    # elif args[1] == "S-s":
-    #     if cmd[-4:] == "nvim":
-    #         window.write_to_child("\x1b[115;8u")
+    else:
+        keymap = keymap.replace("cmd", "alt")
+        send_keymap(window, keymap)

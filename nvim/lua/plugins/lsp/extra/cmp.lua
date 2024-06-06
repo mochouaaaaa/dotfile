@@ -109,39 +109,22 @@ local nvim_cmp = {
             end,
         },
         {
-            "BlazeMCworld/open-codeium.nvim",
-            dependencies = {
-                "MunifTanjim/nui.nvim",
-                -- {
-                -- 	"Exafunction/codeium.nvim",
-                -- 	event = { "InsertEnter", "LspAttach" },
-                -- 	dependencies = {
-                -- 		"hrsh7th/nvim-cmp",
-                -- 	},
-                -- 	build = "Codeium Auth",
-                -- },
-            },
+            "Exafunction/codeium.vim",
             config = function()
-                -- if require("lazyvim.util").has("copilot-lualine") then
-                -- local i = require("copilot-lualine")
-                -- if i.is_error() then
-                local codeium = require("codeium")
-                local autopairs = require("nvim-autopairs")
-
+                vim.g.codeium_disable_bindings = 1
                 vim.keymap.set("i", "<Tab>", function()
-                    if codeium.completions.is_shown() then
-                        autopairs.disable()
-                        codeium.completions.accept()
-                        autopairs.enable()
-                    else
-                        vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes("<Tab>", true, false, true), "n", false)
-                    end
-                end)
-                vim.keymap.set("i", utils.platform_key("cmd") .. "-j>", codeium.completions.next)
-                vim.keymap.set("i", utils.platform_key("cmd") .. "-k>", codeium.completions.prev)
+                    return vim.fn["codeium#Accept"]()
+                end, { expr = true, silent = true })
+                vim.keymap.set("i", utils.platform_key("cmd") .. "-j>", function()
+                    return vim.fn["codeium#CycleCompletions"](1)
+                end, { expr = true, silent = true })
+                vim.keymap.set("i", utils.platform_key("cmd") .. "-k>", function()
+                    return vim.fn["codeium#CycleCompletions"](-1)
+                end, { expr = true, silent = true })
+                vim.keymap.set("i", utils.platform_key("cmd") .. "-e>", function()
+                    return vim.fn["codeium#Clear"]()
+                end, { expr = true, silent = true })
             end,
-            -- end
-            -- end,
         },
         { "hrsh7th/cmp-buffer" },
         { "hrsh7th/cmp-nvim-lsp" },

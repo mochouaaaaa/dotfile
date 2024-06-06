@@ -10,8 +10,7 @@ end
 local autocmd = vim.api.nvim_create_autocmd
 local augroup = vim.api.nvim_create_augroup
 
--- Restore cursor position when opening a file
--- https://github.com/neovim/neovim/issues/16339#issuecomment-1457394370
+-- Restore cursor position when opening a file -- https://github.com/neovim/neovim/issues/16339#issuecomment-1457394370
 vim.api.nvim_create_autocmd("BufRead", {
     callback = function(opts)
         vim.api.nvim_create_autocmd("BufWinEnter", {
@@ -81,3 +80,45 @@ autocmd("BufEnter", {
         end
     end,
 })
+
+autocmd("BufEnter", {
+        desc = "Open Neo-Tree on startup with directory",
+        group = augroup("neotree_start", { clear = true }),
+        callback = function()
+            if package.loaded["neo-tree"] then
+                return true
+            else
+                local stats = (vim.uv or vim.loop).fs_stat(vim.api.nvim_buf_get_name(0)) -- TODO: REMOVE vim.loop WHEN DROPPING SUPPORT FOR Neovim v0.9
+                if stats and stats.type == "directory" then
+                    require("lazy").load({ plugins = { "neo-tree.nvim" } })
+                    return true
+                end
+            end
+        end,
+    })
+
+    autocmd("TermClose", {
+        pattern = "*lazygit*",
+        group = augroup("neotree_refresh", { clear = true }),
+        desc = "Refresh Neo-Tree sources when closing lazygit",
+        callback = function()
+            local manager_avail, manager = pcall(require, "neo-tree.sources.manager")
+            if manager_avail then
+                for _, source in ipairs({ "filesystem", "git_status", "document_symbols" }) do
+                    local module = "neo-tree.sources." .. source
+                    if package.loaded[module] then
+                        manager.refresh(require(module).name)
+                    end
+                end
+            end
+        end,
+    })
+
+    autocmd("TermClose", {
+        pattern = "*lazygit",
+        callback = function()
+            if package.loaded["neo-tree.sources.git_status"] then
+                require("neo-tree.sources.git_status").refresh()
+            end
+        end,
+    })

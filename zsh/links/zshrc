@@ -26,6 +26,8 @@ export PKG_CONFIG_PATH="/usr/local/opt/mysql-client/lib/pkgconfig"
 export LDFLAGS="-L/usr/local/opt/openssl/lib"
 export CPPFLAGS="-I/usr/local/opt/openssl/include"
 
+# boots
+
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
 ### Added by Zinit's installer
@@ -54,4 +56,4 @@ zinit light zsh-users/zsh-completions
 #
 source $HOME/.config/zsh/init.zsh
 export PATH="/usr/local/sbin:$PATH"
-export PATH="/Volumes/Code/tools/nvim-macos/bin:$PATH"
+export PATH="$HOME/.config/env/nvim/bin:$PATH"
