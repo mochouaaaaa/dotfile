@@ -74,7 +74,7 @@ local flatten = {
 
 local toggleterm = {
     "akinsho/toggleterm.nvim",
-    cmd = { "ToggleTerm", "TermExec" },
+    -- cmd = { "ToggleTerm", "TermExec" },
     opts = {
         size = function(term)
             return ({

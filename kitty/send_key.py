@@ -10,7 +10,7 @@ def main(args):
 
 # keymap reflex
 KEY_MAPPINGS = {
-    "cmd+r": {"-zsh": "text:joshuto", "tmux": "text:joshuto"},
+    "cmd+r": {"-zsh": "text:joshuto"},
     "cmd+t": {"-zsh": "def:getattr(boss, 'new_tab')()", "tmux": "ctrl+a->c"},
     # wndow switching
     "cmd+1": {"-zsh": "def:getattr(boss, 'goto_tab')(1)", "tmux": "ctrl+a->1"},
@@ -23,7 +23,7 @@ KEY_MAPPINGS = {
     "cmd+[": {"-zsh": "def:getattr(boss, 'next_tab')()", "tmux": "ctrl+a->n"},
     "cmd+]": {"-zsh": "def:getattr(boss, 'previous_tab')()", "tmux": "ctrl+a->p"},
     # window closing
-    "cmd+shift+w": {"-zsh": "def:getattr(boss, 'close_tab')()", "tmux": "ctrl+a->x"},
+    "cmd+w": {"-zsh": "def:getattr(boss, 'close_tab')()", "tmux": "ctrl+a->x"},
     # window title rename
     "cmd+shift+k": {
         "-zsh": "def:getattr(boss, 'set_tab_title')()",

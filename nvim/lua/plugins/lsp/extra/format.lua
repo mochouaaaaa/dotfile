@@ -225,6 +225,7 @@ function M.opts()
         },
         format_after_save = {
             lsp_fallback = true,
+            timeout_ms = 500,
         },
         notify_on_error = false,
         format_on_save = {
