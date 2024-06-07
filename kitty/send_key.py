@@ -1,7 +1,6 @@
 from kittens.tui.handler import result_handler
 
 from kitty.key_encoding import KeyEvent, parse_shortcut
-from kitty.keys import keyboard_mode_name
 
 
 def main(args):
@@ -74,19 +73,11 @@ def handle_result(args, answer, target_window_id, boss):
         return
 
     cmd = window.child.foreground_cmdline[0]
-
-    print(args)
-    print(cmd)
-
     keymap = args[1]
 
     event = KEY_MAPPINGS.get(keymap, {})
 
-    print(event)
     if not event:
-        print("not event")
-        # if cmd != "tmux":
-        #    keymap = keymap.replace("cmd", "alt")
         send_keymap(window, keymap)
         return
 
@@ -100,5 +91,4 @@ def handle_result(args, answer, target_window_id, boss):
         for keymap in keymap_list:
             send_keymap(window, keymap)
     else:
-        # keymap = keymap.replace("cmd", "alt")
         send_keymap(window, keymap)
