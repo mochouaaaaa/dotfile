@@ -11,7 +11,7 @@ return {
     -- @return string
     platform_key = function(key)
         local _m = {
-            cmd = is_mac() and "<M" or "<A",
+            cmd = is_mac() and "<D" or "<A",
             option = is_mac() and "<A" or "<M",
         }
         return _m[key]
