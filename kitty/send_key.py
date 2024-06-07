@@ -23,7 +23,7 @@ KEY_MAPPINGS = {
     "cmd+[": {"-zsh": "def:getattr(boss, 'next_tab')()", "tmux": "ctrl+a->n"},
     "cmd+]": {"-zsh": "def:getattr(boss, 'previous_tab')()", "tmux": "ctrl+a->p"},
     # window closing
-    "cmd+w": {"-zsh": "def:getattr(boss, 'close_tab')()", "tmux": "ctrl+a->x"},
+    "cmd+w": {"-zsh": "def:getattr(boss, 'close_tab')()"},
     # window title rename
     "cmd+shift+k": {
         "-zsh": "def:getattr(boss, 'set_tab_title')()",
@@ -85,8 +85,8 @@ def handle_result(args, answer, target_window_id, boss):
     print(event)
     if not event:
         print("not event")
-        if cmd != "tmux":
-            keymap = keymap.replace("cmd", "alt")
+        # if cmd != "tmux":
+        #    keymap = keymap.replace("cmd", "alt")
         send_keymap(window, keymap)
         return
 
@@ -100,5 +100,5 @@ def handle_result(args, answer, target_window_id, boss):
         for keymap in keymap_list:
             send_keymap(window, keymap)
     else:
-        keymap = keymap.replace("cmd", "alt")
+        # keymap = keymap.replace("cmd", "alt")
         send_keymap(window, keymap)
