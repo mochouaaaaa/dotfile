@@ -6,7 +6,6 @@ return {
 	{
 		"mrjones2014/smart-splits.nvim",
 		build = "./kitty/install-kittens.bash",
-		lazy = false,
 		config = function()
 			local smart_splits = require("smart-splits")
 
@@ -58,10 +57,12 @@ return {
 			vim.keymap.set("n", cmd .. "-l>", function() smart_splits.move_cursor_right() end)
 
 			local mux = require("smart-splits.mux").get()
-			vim.keymap.set("n", cmd .. "-C-k>", function() mux.split_pane("up") end)
-			vim.keymap.set("n", cmd .. "-C-j>", function() mux.split_pane("down") end)
-			vim.keymap.set("n", cmd .. "-C-h>", function() mux.split_pane("left") end)
-			vim.keymap.set("n", cmd .. "-C-l>", function() mux.split_pane("right") end)
+			if mux ~= nil then
+				vim.keymap.set("n", cmd .. "-C-k>", function() mux.split_pane("up") end)
+				vim.keymap.set("n", cmd .. "-C-j>", function() mux.split_pane("down") end)
+				vim.keymap.set("n", cmd .. "-C-h>", function() mux.split_pane("left") end)
+				vim.keymap.set("n", cmd .. "-C-l>", function() mux.split_pane("right") end)
+			end
 		end,
 	},
 	{
