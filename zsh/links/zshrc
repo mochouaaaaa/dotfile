@@ -56,4 +56,4 @@ zinit light zsh-users/zsh-completions
 #
 source $HOME/.config/zsh/init.zsh
 export PATH="/usr/local/sbin:$PATH"
-export PATH="$HOME/.config/env/nvim/bin:$PATH"
+

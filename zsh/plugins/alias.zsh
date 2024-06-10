@@ -1,5 +1,5 @@
 export BAT_THEME="Catppuccin-macchiato"
-alias cat="bat --paging=never"
+# alias cat="bat --paging=never"
 # brew install gtop
 alias top="btop"
 # brew install fd
@@ -18,7 +18,6 @@ alias la='ls -a'
 alias lla='ls -la'
 alias lt='ls --tree'
 
-# alias ssh="kitty +kitten ssh"
 alias rg="rg --hyperlink-format=kitty"
 
 alias vim="nvim"
