@@ -23,12 +23,12 @@ def encode_key_mapping(window, key_mapping):
 
 
 def split_window(boss, direction):
-    if direction == "up" or direction == "down":
-        boss.launch("--cwd=current", "--location=hsplit")
+    if direction == 'up' or direction == 'down':
+        boss.launch('--cwd=current', '--location=hsplit')
     else:
-        boss.launch("--cwd=current", "--location=vsplit")
+        boss.launch('--cwd=current', '--location=vsplit')
 
-    if direction == "up" or direction == "left":
+    if direction == 'up' or direction == 'left':
         boss.active_tab.move_window(direction)
 
 
@@ -41,7 +41,7 @@ def handle_result(args, result, target_window_id, boss):
 
     direction = args[1]
     cmd = window.child.foreground_cmdline[0]
-    if cmd == "tmux":
+    if cmd == 'tmux':
         keymap = args[2]
         encoded = encode_key_mapping(window, keymap)
         window.write_to_child(encoded)
