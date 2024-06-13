@@ -1,5 +1,5 @@
 from kittens.tui.handler import result_handler
-
+from kitty.boss import Boss
 from kitty.key_encoding import KeyEvent, parse_shortcut
 
 
@@ -7,41 +7,103 @@ def main(args):
     pass
 
 
+def select_pane_id(boss: Boss, target_window_id):
+    tab = boss.active_tab
+    # boss.switch_focus_to(1)
+    # print(boss.active_tab.swap_with_window())
+
+    # def callback(tab, window):
+    #     if window and window.id != target_window_id:
+    #         # tab.swap_with_window(window.id)
+    #         boss.switch_focus_to(window.id)
+
+    # boss.visual_window_select_action(tab, callback, "Choose window to swap with")
+    tab.focus_visible_window()
+
+
 # keymap reflex
 KEY_MAPPINGS = {
     "cmd+r": {"-zsh": "text:joshuto"},
-    "cmd+t": {"-zsh": "def:getattr(boss, 'new_tab')()", "tmux": "ctrl+a->c"},
+    "cmd+t": {
+        "-zsh": "def:getattr(boss, 'new_tab')()",
+        "tmux": "ctrl+a->c",
+        "is_nvim": True,
+    },
     # wndow switching
-    "cmd+1": {"-zsh": "def:getattr(boss, 'goto_tab')(1)", "tmux": "ctrl+a->1"},
-    "cmd+2": {"-zsh": "def:getattr(boss, 'goto_tab')(2)", "tmux": "ctrl+a->2"},
-    "cmd+3": {"-zsh": "def:getattr(boss, 'goto_tab')(3)", "tmux": "ctrl+a->3"},
-    "cmd+4": {"-zsh": "def:getattr(boss, 'goto_tab')(4)", "tmux": "ctrl+a->4"},
-    "cmd+5": {"-zsh": "def:getattr(boss, 'goto_tab')(5)", "tmux": "ctrl+a->5"},
-    "cmd+6": {"-zsh": "def:getattr(boss, 'goto_tab')(6)", "tmux": "ctrl+a->6"},
+    "cmd+1": {
+        "-zsh": "def:getattr(boss, 'goto_tab')(1)",
+        "tmux": "ctrl+a->1",
+        "is_nvim": True,
+    },
+    "cmd+2": {
+        "-zsh": "def:getattr(boss, 'goto_tab')(2)",
+        "tmux": "ctrl+a->2",
+        "is_nvim": True,
+    },
+    "cmd+3": {
+        "-zsh": "def:getattr(boss, 'goto_tab')(3)",
+        "tmux": "ctrl+a->3",
+        "is_nvim": True,
+    },
+    "cmd+4": {
+        "-zsh": "def:getattr(boss, 'goto_tab')(4)",
+        "tmux": "ctrl+a->4",
+        "is_nvim": True,
+    },
+    "cmd+5": {
+        "-zsh": "def:getattr(boss, 'goto_tab')(5)",
+        "tmux": "ctrl+a->5",
+        "is_nvim": True,
+    },
+    "cmd+6": {
+        "-zsh": "def:getattr(boss, 'goto_tab')(6)",
+        "tmux": "ctrl+a->6",
+        "is_nvim": True,
+    },
     # window next or prev
-    "cmd+[": {"-zsh": "def:getattr(boss, 'next_tab')()", "tmux": "ctrl+a->n"},
-    "cmd+]": {"-zsh": "def:getattr(boss, 'previous_tab')()", "tmux": "ctrl+a->p"},
+    "cmd+[": {
+        "-zsh": "def:getattr(boss, 'next_tab')()",
+        "tmux": "ctrl+a->n",
+        "is_nvim": True,
+    },
+    "cmd+]": {
+        "-zsh": "def:getattr(boss, 'previous_tab')()",
+        "tmux": "ctrl+a->p",
+        "is_nvim": True,
+    },
     # window closing
     "cmd+w": {"-zsh": "def:getattr(boss, 'close_window')()"},
     # window title rename
     "cmd+shift+k": {
         "-zsh": "def:getattr(boss, 'set_tab_title')()",
         "tmux": "ctrl+a->,",
+        "is_nvim": True,
     },
     # window switch
     "cmd+alt+[": {
-        "-zsh": "def:getattr(boss.active_tab, 'move_window_forward')()",
+        # "-zsh": "def:getattr(boss.active_tab, 'move_window_forward')()",
+        "-zsh": "def:getattr(tab, 'swap_with_window')()",
         "tmux": "ctrl+a->{",
+        "is_nvim": True,
     },
     "cmd+alt+]": {
-        "-zsh": "def:getattr(boss.active_tab, 'move_window_backward')()",
+        # "-zsh": "def:getattr(boss.active_tab, 'move_window_backward')()",
+        "-zsh": "def:getattr(tab, 'swap_with_window')()",
         "tmux": "ctrl+a->}",
+        "is_nvim": True,
     },
     # window max
     "cmd+enter": {
         "-zsh": "def:getattr(boss.active_tab, 'toggle_layout')('stack')",
         "tmux": "ctrl+a->z",
+        "is_nvim": True,
     },
+    # pane search
+    "cmd+f": {
+        "-zsh": "def:select_pane_id(boss, target_window_id)",
+        "tmux": "ctrl+a->q",
+    },
+    "ctrl+f": {"tmux": "ctrl+a->ctrl+f"},
 }
 
 
@@ -69,6 +131,8 @@ def send_keymap(window, keymap):
 @result_handler(no_ui=True)
 def handle_result(args, answer, target_window_id, boss):
     window = boss.active_window
+    tab = boss.active_tab
+
     if window is None:
         return
 
@@ -76,10 +140,6 @@ def handle_result(args, answer, target_window_id, boss):
     keymap = args[1]
 
     event = KEY_MAPPINGS.get(keymap, {})
-
-    if not event:
-        send_keymap(window, keymap)
-        return
 
     operate = event.get(cmd, "")
     if operate.startswith("def:"):
@@ -91,4 +151,10 @@ def handle_result(args, answer, target_window_id, boss):
         for keymap in keymap_list:
             send_keymap(window, keymap)
     else:
-        send_keymap(window, keymap)
+        if cmd == "nvim":
+            if event.get("is_nvim", None):
+                eval(event["-zsh"][4:])
+            else:
+                send_keymap(window, keymap)
+        elif cmd == "tmux":
+            send_keymap(window, keymap)
