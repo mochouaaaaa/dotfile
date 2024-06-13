@@ -7,8 +7,8 @@ fi
 
 if [[ "$TERM_PROGRAM" == "WezTerm" ]]; then
     export IS_WEZTERM="1"
+    printf "\033]1337;SetUserVar=IS_WEZTERM=MQ==\007"
     source $HOME/.config/wezterm/scripts/wezterm.sh
-    printf "\033]1337;SetUserVar=IS_WEZTERM=1\007"
 fi
 
 if [[ "$TERM_PROGRAM" == "tmux" && "$IS_WEZTERM" == "1" ]]; then
