@@ -101,7 +101,6 @@ KEY_MAPPINGS = {
     # pane search
     "cmd+f": {
         "-zsh": "def:select_pane_id(boss, target_window_id)",
-        "tmux": "ctrl+a->q",
     },
     "ctrl+f": {"tmux": "ctrl+a->ctrl+f"},
 }

@@ -2,9 +2,9 @@
 fg = "red"
 bold = true
 
-[selection.prefix]
-prefix = "  "
-size = 2
+# [selection.prefix]
+# prefix = "  "
+# size = 2
 
 [visual_mode_selection]
 fg = "red"
