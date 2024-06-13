@@ -4,19 +4,34 @@ local M = {
     "linux-cultist/venv-selector.nvim",
     dependencies = {
         "neovim/nvim-lspconfig",
-        { "nvim-telescope/telescope.nvim", branch = "0.1.x", dependencies = { "nvim-lua/plenary.nvim" } },
     },
     branch = "regexp", -- This is the regexp branch, use this for the new version
-    -- event = "VeryLazy", -- Optional: needed only if you want to type `:VenvSelect` without a keymapping
-    event = "LspAttach",
 }
 
 function M.config()
-    -- require("venv-selector").setup {
-    -- 	pyenv_path = "/Volumes/Code/tools/.pyenv/versions",
-    -- 	cache_dir = vim.fn.getcwd() .. "/.cache/venv-selector/",
-    -- 	cache_file = vim.fn.getcwd() .. "/.cache/venv-selector/" .. "/venvs.json",
-    -- }
+    local venv_selector = require("venv-selector")
+
+    local function shorter_name(filename)
+        return filename:gsub(os.getenv("HOME"), "~"):gsub("/bin/python", "")
+    end
+
+    venv_selector.setup({
+        settings = {
+            pyenv_path = os.getenv("PYENV_ROOT") .. "/versions",
+            options = {
+                on_telescope_result_callback = shorter_name,
+            },
+            search = {
+                -- cwd = false,
+                pyenv = {
+                    command = "fd python$ "
+                        .. vim.env.HOME
+                        .. "/.config/env/pyenv/versions --max-depth 3 --full-path -a -L",
+                    on_telescope_result_callback = shorter_name,
+                },
+            },
+        },
+    })
 end
 
 M.keys = {

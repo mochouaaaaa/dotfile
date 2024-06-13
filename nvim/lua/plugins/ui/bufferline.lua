@@ -7,13 +7,13 @@ local bufferline = {
         return {
             highlights = require("catppuccin.groups.integrations.bufferline").get(),
             options = {
-                diagnostics = "nvim_lsp",
+                -- diagnostics = "nvim_lsp",
                 always_show_bufferline = true,
                 show_buffer_close_icons = true,
                 show_duplicate_prefix = true, -- whether to show duplicate buffer prefix
-                numbers = function(opts)
-                    return string.format("%s·%s", opts.lower(opts.ordinal), opts.raise(opts.id))
-                end,
+                -- numbers = function(opts)
+                -- return string.format("%s·%s", opts.lower(opts.ordinal), opts.raise(opts.id))
+                -- end,
                 hover = { enabled = true, delay = 200, reveal = { "close" } },
                 enforce_regular_tabs = true,
                 offsets = {
@@ -46,14 +46,14 @@ bufferline.keys = {
                 bd(0)
             end
         end,
-        desc = "Delete Buffer",
+        desc = "Close Buffer",
     },
      -- stylua: ignore
     { "<leader>bD", function() require("mini.bufremove").delete(0, true) end, desc = "Delete Buffer (Force)" },
     { "<leader>bo", "<Cmd>BufferLineCloseOthers<CR>", desc = "close all other visible buffers" },
     -- 左右切换
-    { "<S-h>", "<Cmd>BufferLineCyclePrev<CR>" },
-    { "<S-l>", "<Cmd>BufferLineCycleNext<CR>" },
+    { "<S-h>", "<Cmd>BufferLineCyclePrev<CR>", desc = "swap right buffer" },
+    { "<S-l>", "<Cmd>BufferLineCycleNext<CR>", desc = "swap left buffer" },
     { "<S-left>", "<Cmd>BufferLineCyclePrev<CR>" },
     { "<S-right>", "<Cmd>BufferLineCycleNext<CR>" },
 }
