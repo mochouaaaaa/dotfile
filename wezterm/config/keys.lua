@@ -28,23 +28,24 @@ for k, v in pairs(keyCombination) do
 end
 
 local keys = {
+	wezterm_nvim.wezterm_tmux_nvim("f", mod.CTRL),
 
-	wezterm_nvim.wezterm_nvim("move", "h", mod.COMMAND),
-	wezterm_nvim.wezterm_nvim("move", "j", mod.COMMAND),
-	wezterm_nvim.wezterm_nvim("move", "k", mod.COMMAND),
-	wezterm_nvim.wezterm_nvim("move", "l", mod.COMMAND),
+	wezterm_nvim.wezterm_tmux_nvim("h", mod.COMMAND, action { ActivatePaneDirection = "Left" }),
+	wezterm_nvim.wezterm_tmux_nvim("j", mod.COMMAND, action { ActivatePaneDirection = "Down" }),
+	wezterm_nvim.wezterm_tmux_nvim("k", mod.COMMAND, action { ActivatePaneDirection = "Up" }),
+	wezterm_nvim.wezterm_tmux_nvim("l", mod.COMMAND, action { ActivatePaneDirection = "Right" }),
 
-	wezterm_nvim.wezterm_nvim("resize", "h", mod.CTRL_S),
-	wezterm_nvim.wezterm_nvim("resize", "j", mod.CTRL_S),
-	wezterm_nvim.wezterm_nvim("resize", "k", mod.CTRL_S),
-	wezterm_nvim.wezterm_nvim("resize", "l", mod.CTRL_S),
+	wezterm_nvim.wezterm_tmux_nvim("h", mod.CTRL_S, action { AdjustPaneSize = { "Left", 3 } }),
+	wezterm_nvim.wezterm_tmux_nvim("j", mod.CTRL_S, action { AdjustPaneSize = { "Down", 3 } }),
+	wezterm_nvim.wezterm_tmux_nvim("k", mod.CTRL_S, action { AdjustPaneSize = { "Up", 3 } }),
+	wezterm_nvim.wezterm_tmux_nvim("l", mod.CTRL_S, action { AdjustPaneSize = { "Right", 3 } }),
 
-	wezterm_nvim.wezterm_nvim("split", "h", mod.COMMAND_REV),
-	wezterm_nvim.wezterm_nvim("split", "j", mod.COMMAND_REV),
-	wezterm_nvim.wezterm_nvim("split", "k", mod.COMMAND_REV),
-	wezterm_nvim.wezterm_nvim("split", "l", mod.COMMAND_REV),
+	wezterm_nvim.wezterm_tmux_nvim("h", mod.COMMAND_REV, action { SplitPane = { direction = "Left" } }),
+	wezterm_nvim.wezterm_tmux_nvim("j", mod.COMMAND_REV, action { SplitPane = { direction = "Down" } }),
+	wezterm_nvim.wezterm_tmux_nvim("k", mod.COMMAND_REV, action { SplitPane = { direction = "Up" } }),
+	wezterm_nvim.wezterm_tmux_nvim("l", mod.COMMAND_REV, action { SplitPane = { direction = "Right" } }),
 
-	wezterm_nvim.wezterm_nvim("close_tab", "w", mod.COMMAND),
+	wezterm_nvim.wezterm_tmux_nvim("w", mod.COMMAND, action { CloseCurrentPane = { confirm = false } }),
 
 	-- wezterm_nvim.SendKey("e", mod.Command),
 	-- copy/paste --
@@ -54,17 +55,55 @@ local keys = {
 	-- tabs --
 	-- tabs: spawn+close
 	-- { key = "Enter", mods = mod.COMMAND, action = action.TogglePaneZoomState },
-	wezterm_nvim.SendKey2TmuxOrNvim("Enter", mod.COMMAND, action.TogglePaneZoomState),
-	{ key = "t", mods = mod.COMMAND, action = action.SpawnTab("DefaultDomain") },
-	-- { key = "e", mods = mod.Command, action = action.SendKey({ key = "e", mods = "META" }) },
+	wezterm_nvim.wezterm_tmux_nvim("Enter", mod.COMMAND, action.TogglePaneZoomState, true),
+	wezterm_nvim.wezterm_tmux_nvim("t", mod.COMMAND, action.SpawnTab("DefaultDomain"), true),
+	wezterm_nvim.wezterm_tmux_nvim("[", mod.COMMAND, action.ActivateTabRelative(1), true),
+	wezterm_nvim.wezterm_tmux_nvim("]", mod.COMMAND, action.ActivateTabRelative(-1), true),
+	wezterm_nvim.wezterm_tmux_nvim(
+		"[",
+		mod.COMMAND .. "|ALT",
+		action { PaneSelect = { mode = "SwapWithActiveKeepFocus", alphabet = "123456789" } },
+		true
+	),
+	wezterm_nvim.wezterm_tmux_nvim(
+		"]",
+		mod.COMMAND .. "|ALT",
+		action { PaneSelect = { mode = "SwapWithActiveKeepFocus", alphabet = "123456789" } },
+		true
+	),
+
+	wezterm_nvim.wezterm_tmux_nvim("1", mod.COMMAND, action { ActivateTab = 0 }, true),
+	wezterm_nvim.wezterm_tmux_nvim("2", mod.COMMAND, action { ActivateTab = 1 }, true),
+	wezterm_nvim.wezterm_tmux_nvim("3", mod.COMMAND, action { ActivateTab = 2 }, true),
+	wezterm_nvim.wezterm_tmux_nvim("4", mod.COMMAND, action { ActivateTab = 3 }, true),
+	wezterm_nvim.wezterm_tmux_nvim("5", mod.COMMAND, action { ActivateTab = 4 }, true),
+	wezterm_nvim.wezterm_tmux_nvim("6", mod.COMMAND, action { ActivateTab = 5 }, true),
+
+	-- tabs: rename
+	wezterm_nvim.wezterm_tmux_nvim(
+		"k",
+		mod.COMMAND_S,
+		action.PromptInputLine {
+			description = "Enter new name for tab",
+			action = wezterm.action_callback(function(window, pane, line)
+				-- line will be `nil` if they hit escape without entering anything
+				-- An empty string if they just hit enter
+				-- Or the actual line of text they wrote
+				if line then
+					window:active_tab():set_title(line)
+				end
+			end),
+		},
+		true
+	),
 
 	-- send tmux
-	wezterm_nvim.SendKey2TmuxOrNvim("s", mod.COMMAND),
-	wezterm_nvim.SendKey2TmuxOrNvim("e", mod.COMMAND),
-	wezterm_nvim.SendKey2TmuxOrNvim("f", mod.COMMAND),
-	wezterm_nvim.SendKey2TmuxOrNvim("f", mod.COMMAND_S),
-	wezterm_nvim.SendKey2TmuxOrNvim("r", mod.COMMAND),
-	wezterm_nvim.SendKey2TmuxOrNvim("/", mod.COMMAND),
+	wezterm_nvim.wezterm_tmux_nvim("s", mod.COMMAND),
+	wezterm_nvim.wezterm_tmux_nvim("e", mod.COMMAND),
+	wezterm_nvim.wezterm_tmux_nvim("f", mod.COMMAND, action { PaneSelect = { alphabet = "123456789" } }),
+	wezterm_nvim.wezterm_tmux_nvim("f", mod.COMMAND_S, action.Search { CaseInSensitiveString = "" }),
+	wezterm_nvim.wezterm_tmux_nvim("r", mod.COMMAND, action { SendString = "joshuto\n" }),
+	wezterm_nvim.wezterm_tmux_nvim("/", mod.COMMAND),
 }
 
 local M = {

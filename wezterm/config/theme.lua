@@ -24,25 +24,25 @@ return {
 	-- 启用连体字体特性
 	harfbuzz_features = { "calt=1", "clig=1", "liga=1" },
 	-- 设置图标字体为 JetBrainsMono Nerd Font
-	font_rules = {
-		{
-			italic = true,
-			font = wezterm.font("JetBrainsMono Nerd Font", { italic = true }),
-		},
-		{
-			italic = false,
-			font = wezterm.font("JetBrainsMono Nerd Font"),
-		},
-		{
-			bold = true,
-			font = wezterm.font("JetBrainsMono Nerd Font", { bold = true }),
-		},
-		{
-			italic = true,
-			bold = true,
-			font = wezterm.font("JetBrainsMono Nerd Font", { italic = true, bold = true }),
-		},
-	},
+	-- font_rules = {
+	-- 	{
+	-- 		italic = true,
+	-- 		font = wezterm.font("JetBrainsMono Nerd Font", { italic = true }),
+	-- 	},
+	-- 	{
+	-- 		italic = false,
+	-- 		font = wezterm.font("JetBrainsMono Nerd Font"),
+	-- 	},
+	-- 	{
+	-- 		bold = true,
+	-- 		font = wezterm.font("JetBrainsMono Nerd Font", { bold = true }),
+	-- 	},
+	-- 	{
+	-- 		italic = true,
+	-- 		bold = true,
+	-- 		font = wezterm.font("JetBrainsMono Nerd Font", { italic = true, bold = true }),
+	-- 	},
+	-- },
 
 	use_ime = true,
 	font_size = font_size,
