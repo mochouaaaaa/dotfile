@@ -8,6 +8,7 @@ return {
         },
     },
     opts = function()
+        local coustom_lib = require("plugins.configs.heirline")
         local lib = require("heirline-components.all")
         return {
             opts = {
@@ -40,10 +41,10 @@ return {
                     {
                         lib.component.neotree(),
                         lib.component.fill(),
-                        lib.component.compiler_build_type(),
-                        lib.component.compiler_play(),
-                        lib.component.compiler_redo(),
-                        lib.component.aerial(),
+                        -- lib.component.compiler_build_type(),
+                        -- lib.component.compiler_play(),
+                        -- lib.component.compiler_redo(),
+                        -- lib.component.aerial(),
                     },
                 },
                 -- Regular winbar
@@ -52,9 +53,7 @@ return {
                     lib.component.fill(),
                     lib.component.breadcrumbs(),
                     lib.component.fill(),
-                    lib.component.compiler_play(),
-                    lib.component.compiler_redo(),
-                    lib.component.aerial(),
+                    coustom_lib.overseer(),
                 },
             },
             statuscolumn = { -- UI left column
@@ -76,7 +75,7 @@ return {
                 lib.component.cmd_info(),
                 lib.component.fill(),
                 lib.component.lsp(),
-                lib.component.compiler_state(),
+                -- lib.component.compiler_state(),
                 lib.component.virtual_env(),
                 lib.component.nav(),
                 lib.component.mode({ surround = { separator = "right" } }),

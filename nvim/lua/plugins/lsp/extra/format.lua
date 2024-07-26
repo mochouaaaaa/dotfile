@@ -45,6 +45,14 @@ local M = {
             },
             default = vim.fn.expand("$HOME/.config/rules/stylelint/stylelint.config.js"),
         },
+        python = {
+            files = {
+                "pyproject.toml",
+                "ruff.toml",
+                ".ruff.toml",
+            },
+            default = vim.fn.expand("$HOME/.config/rules/pyproject.toml"),
+        },
     },
     init = function()
         -- Install the conform formatter on VeryLazy
@@ -87,17 +95,6 @@ function M.setup(_, opts)
         end
     end
 
-    -- for _, key in ipairs { "format_on_save", "format_after_save" } do
-    -- 	if opts[key] then
-    -- 		Util.warn(
-    -- 			("Don't set `opts.%s` for `conform.nvim`.\n**LazyVim** will use the conform formatter automatically"):format(
-    -- 				key
-    -- 			)
-    -- 		)
-    -- 		---@diagnostic disable-next-line: no-unknown
-    -- 		opts[key] = nil
-    -- 	end
-    -- end
     require("conform").setup(opts)
 end
 
@@ -151,6 +148,7 @@ function M.opts()
     local rustfmt_config = M.resolve_config("rustfmt")
     local prettier_config = M.resolve_config("prettierd")
     local stylelint_config = M.resolve_config("stylelint")
+    local python_config = M.resolve_config("python")
 
     return {
         formatters = {
@@ -174,6 +172,11 @@ function M.opts()
                     return { "-c", stylelint_config(), "--stdin-filepath", "$FILENAME" }
                 end,
             },
+            ruff_format = {
+                prepend_args = function()
+                    return { "format", "--config", python_config() }
+                end,
+            },
         },
         formatters_by_ft = {
             lua = { "stylua" },
@@ -188,7 +191,7 @@ function M.opts()
             -- Python
             python = function(bufnr)
                 if conform.get_formatter_info("ruff_format", bufnr).available then
-                    return { "ruff_format" }
+                    return { "ruff_fix", "ruff_format" }
                 else
                     return { "isort", "black" }
                 end

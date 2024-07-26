@@ -9,15 +9,14 @@ local M = {
 
 local function init_keys()
     local wk = require("which-key")
-    wk.register({
-        ["<leader>e"] = {
-            name = "neo-tree",
-            b = { "<Cmd>Neotree buffers<CR>", "Neo-tree Buffers" },
-            g = { "<Cmd>Neotree git_status<CR>", "Neo-tree Git Status" },
-            d = {
-                "<Cmd>Neotree reveal_force_cwd dir=%:h toggle<CR>",
-                "Toggle File Explorer in buffer dir",
-            },
+    wk.add({
+        { "<leader>e", group = "Neotree" },
+        { "<leader>eb", "<Cmd>Neotree buffers<CR>", desc = "Neo-tree Buffers" },
+        { "<leader>eg", "<Cmd>Neotree git_status<CR>", desc = "Neo-tree Git Status" },
+        {
+            "<leader>ed",
+            "<Cmd>Neotree reveal_force_cwd dir=%:h toggle<CR>",
+            desc = "Toggle File Explorer in buffer dir",
         },
     })
 end
@@ -245,7 +244,7 @@ function M.opts()
 
         buffers = {
             bind_to_cwd = false,
-            follow_current_file = true, -- This will find and focus the file in the active buffer every time
+            -- follow_current_file = true, -- This will find and focus the file in the active buffer every time
             -- the current file is changed while the tree is open.
             group_empty_dirs = true, -- when true, empty directories will be grouped together
             window = {

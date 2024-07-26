@@ -63,17 +63,21 @@ opt.fileencodings = "utf-8,gbk,gb18030,gb2312,ucs-bom,cp936,big5,euc-jp,euc-kr"
 
 -- 取消回车自动添加注释
 vim.api.nvim_create_autocmd("FileType", {
-	pattern = "*",
-	callback = function() opt.formatoptions:remove { "c", "r", "o" } end,
+    pattern = "*",
+    callback = function()
+        opt.formatoptions:remove({ "c", "r", "o" })
+    end,
 })
 
 -- TODO: remove this once https://github.com/nvim-telescope/telescope.nvim/issues/699 is fixed
 vim.api.nvim_create_autocmd("BufEnter", {
-	callback = function()
-		if vim.opt.foldmethod:get() == "expr" then
-			vim.schedule(function() vim.opt.foldmethod = "expr" end)
-		end
-	end,
+    callback = function()
+        if vim.opt.foldmethod:get() == "expr" then
+            vim.schedule(function()
+                vim.opt.foldmethod = "expr"
+            end)
+        end
+    end,
 })
 
 o.virtualedit = "block" -- Allow cursor to move where there is no text in visual block mode
@@ -99,9 +103,6 @@ opt.undodir = vim.fn.expand("$HOME/.cache/nvim/undo")
 opt.backupdir = vim.fn.expand("$HOME/.cache/nvim/backup")
 opt.viewdir = vim.fn.expand("$HOME/.cache/nvim/view")
 vim.lsp.set_log_level("info")
-
--- Rendering
-opt.termguicolors = true
 
 -- Misc
 opt.history = 1000
@@ -134,12 +135,12 @@ vim.fn.sign_define("DiagnosticSignWarn", { text = " ", texthl = "DiagnosticSi
 vim.fn.sign_define("DiagnosticSignInfo", { text = " ", texthl = "DiagnosticSignInfo" })
 vim.fn.sign_define("DiagnosticSignHint", { text = "󰌵", texthl = "DiagnosticSignHint" })
 
-vim.diagnostic.config {
-	virtual_text = false,
-	float = { header = "", prefix = "", focusable = false, border = "rounded", source = "always" },
-	update_in_insert = true,
-	severity_sort = true,
-}
+vim.diagnostic.config({
+    virtual_text = false,
+    float = { header = "", prefix = "", focusable = false, border = "rounded", source = "always" },
+    update_in_insert = true,
+    severity_sort = true,
+})
 
 -- kitty terminal background
 vim.cmd([[highlight Normal guibg=none]])
@@ -147,9 +148,7 @@ vim.cmd([[highlight NonText guibg=none]])
 vim.cmd([[highlight Normal ctermbg=none]])
 vim.cmd([[highlight NonText ctermbg=none]])
 
-if vim.fn.has("nvim-0.10") == 1 then
-	opt.smoothscroll = true
-end
+opt.smoothscroll = true
 
 -- folding
 o.foldlevel = 99

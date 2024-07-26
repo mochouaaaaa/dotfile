@@ -20,6 +20,7 @@ return {
             strictSetInference = true,
             useLibraryCodeForTypes = true,
             reportAny = "off",
+            reportAssignmentType = "none",
             reportMissingTypeStubs = "off",
             reportUnusedCallResult = "off",
             reportUnknownValerType = "off",

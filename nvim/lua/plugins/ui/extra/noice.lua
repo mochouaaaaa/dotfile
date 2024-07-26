@@ -171,16 +171,12 @@ return {
             noice.setup(opts)
 
             local wk = require("which-key")
-            wk.register({
-                ["<leader>f"] = {
-                    name = "Telescope",
-                    n = {
-                        function()
-                            noice.cmd("telescope")
-                        end,
-                        "opens message history",
-                    },
-                },
+            wk.add({
+                "<leader>fn",
+                function()
+                    noice.cmd("telescope")
+                end,
+                desc = "opens message history",
             })
 
             local Util = require("lazyvim.util")

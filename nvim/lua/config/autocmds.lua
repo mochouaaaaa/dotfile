@@ -82,43 +82,55 @@ autocmd("BufEnter", {
 })
 
 autocmd("BufEnter", {
-        desc = "Open Neo-Tree on startup with directory",
-        group = augroup("neotree_start", { clear = true }),
-        callback = function()
-            if package.loaded["neo-tree"] then
+    desc = "Open Neo-Tree on startup with directory",
+    group = augroup("neotree_start", { clear = true }),
+    callback = function()
+        if package.loaded["neo-tree"] then
+            return true
+        else
+            local stats = (vim.uv or vim.loop).fs_stat(vim.api.nvim_buf_get_name(0)) -- TODO: REMOVE vim.loop WHEN DROPPING SUPPORT FOR Neovim v0.9
+            if stats and stats.type == "directory" then
+                require("lazy").load({ plugins = { "neo-tree.nvim" } })
                 return true
-            else
-                local stats = (vim.uv or vim.loop).fs_stat(vim.api.nvim_buf_get_name(0)) -- TODO: REMOVE vim.loop WHEN DROPPING SUPPORT FOR Neovim v0.9
-                if stats and stats.type == "directory" then
-                    require("lazy").load({ plugins = { "neo-tree.nvim" } })
-                    return true
+            end
+        end
+    end,
+})
+
+autocmd("TermClose", {
+    pattern = "*lazygit*",
+    group = augroup("neotree_refresh", { clear = true }),
+    desc = "Refresh Neo-Tree sources when closing lazygit",
+    callback = function()
+        local manager_avail, manager = pcall(require, "neo-tree.sources.manager")
+        if manager_avail then
+            for _, source in ipairs({ "filesystem", "git_status", "document_symbols" }) do
+                local module = "neo-tree.sources." .. source
+                if package.loaded[module] then
+                    manager.refresh(require(module).name)
                 end
             end
-        end,
-    })
+        end
+    end,
+})
 
-    autocmd("TermClose", {
-        pattern = "*lazygit*",
-        group = augroup("neotree_refresh", { clear = true }),
-        desc = "Refresh Neo-Tree sources when closing lazygit",
-        callback = function()
-            local manager_avail, manager = pcall(require, "neo-tree.sources.manager")
-            if manager_avail then
-                for _, source in ipairs({ "filesystem", "git_status", "document_symbols" }) do
-                    local module = "neo-tree.sources." .. source
-                    if package.loaded[module] then
-                        manager.refresh(require(module).name)
-                    end
-                end
-            end
-        end,
-    })
+autocmd("TermClose", {
+    pattern = "*lazygit",
+    callback = function()
+        if package.loaded["neo-tree.sources.git_status"] then
+            require("neo-tree.sources.git_status").refresh()
+        end
+    end,
+})
 
-    autocmd("TermClose", {
-        pattern = "*lazygit",
-        callback = function()
-            if package.loaded["neo-tree.sources.git_status"] then
-                require("neo-tree.sources.git_status").refresh()
-            end
-        end,
-    })
+vim.o.scrolloff = math.floor(vim.o.lines / 2)
+autocmd({ "CursorMoved" }, {
+    group = vim.api.nvim_create_augroup("cursor_move", { clear = true }),
+    callback = function()
+        local mode = vim.api.nvim_get_mode().mode
+        -- 仅在普通模式和可视模式下执行 zz
+        if mode == "n" or mode == "v" then
+            vim.cmd("normal! zz")
+        end
+    end,
+})

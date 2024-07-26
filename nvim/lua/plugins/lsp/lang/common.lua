@@ -49,15 +49,6 @@ function M.setup(client, bufnr)
     vim.api.nvim_buf_set_option(bufnr, "omnifunc", "v:lua.vim.lsp.omnifunc")
     -- keymap settings
 
-    -- if client.config ~= nil and client.config.root_dir then
-    -- 	basedir = client.config.root_dir .. "/.githistory/"
-    -- else
-    -- 	basedir = vim.fn.stdpath("data") .. "/.githistory/"
-    -- end
-    -- require("lgh").setup {
-    -- 	basedir = basedir,
-    -- }
-
     vim.keymap.set("n", "<leader>wl", function()
         vim.notify(vim.inspect(vim.lsp.buf.list_workspace_folders()))
     end, {
