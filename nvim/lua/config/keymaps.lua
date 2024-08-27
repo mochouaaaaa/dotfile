@@ -48,6 +48,10 @@ local mappings = {
     { from = utils.platform_key("cmd") .. "-l>", to = "<ESC>A", mode = mode_i },
     { from = utils.platform_key("cmd") .. "-left>", to = "<ESC>I", mode = mode_i },
     { from = utils.platform_key("cmd") .. "-right>", to = "<ESC>A", mode = mode_i },
+    { from = utils.platform_key("cmd") .. "-j>", to = "<C-o>j", mode = mode_i, opt = opt_ns },
+    { from = utils.platform_key("cmd") .. "-down>", to = "<C-o>j", mode = mode_i, opt = opt_ns },
+    { from = utils.platform_key("cmd") .. "-k>", to = "<C-o>k", mode = mode_i, opt = opt_ns },
+    { from = utils.platform_key("cmd") .. "-up>", to = "<C-o>k", mode = mode_i, opt = opt_ns },
 
     -- 正常模式
     -- 窗口
