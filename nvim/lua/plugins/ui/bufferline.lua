@@ -1,24 +1,19 @@
 local bufferline = {
     "akinsho/bufferline.nvim",
-    event = "VeryLazy",
     dependencies = { "echasnovski/mini.bufremove", "nvim-tree/nvim-web-devicons" },
-    enabled = true,
     opts = function()
         return {
             highlights = require("catppuccin.groups.integrations.bufferline").get(),
             options = {
-                -- diagnostics = "nvim_lsp",
                 always_show_bufferline = true,
-                show_buffer_close_icons = true,
                 show_duplicate_prefix = true, -- whether to show duplicate buffer prefix
                 -- numbers = function(opts)
                 -- return string.format("%s·%s", opts.lower(opts.ordinal), opts.raise(opts.id))
                 -- end,
-                hover = { enabled = true, delay = 200, reveal = { "close" } },
                 enforce_regular_tabs = true,
                 offsets = {
                     filetype = "neo-tree",
-                    text = "Neo-tree",
+                    text = "File Explorer",
                     highlight = "Directory",
                     text_align = "left",
                 },

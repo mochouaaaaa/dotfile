@@ -5,6 +5,7 @@ return {
         dependencies = {
             "folke/zen-mode.nvim",
             "stevearc/aerial.nvim",
+            "SmiteshP/nvim-navic",
         },
     },
     opts = function()
@@ -21,7 +22,7 @@ return {
                     return is_disabled
                 end,
             },
-            tabline = { -- UI upper bar
+            tabline = { -- UI upper bau
                 lib.component.tabline_conditional_padding(),
                 lib.component.tabline_buffers(),
                 lib.component.fill({ hl = { bg = "tabline_bg" } }),
@@ -33,25 +34,12 @@ return {
                 end,
                 fallthrough = false,
                 lib.component.winbar_when_inactive(),
-                -- Winbar for terminal, neotree, and aerial.
                 {
-                    condition = function()
-                        return not lib.condition.is_active()
-                    end,
+
                     {
-                        lib.component.neotree(),
-                        lib.component.fill(),
-                        -- lib.component.compiler_build_type(),
-                        -- lib.component.compiler_play(),
-                        -- lib.component.compiler_redo(),
-                        -- lib.component.aerial(),
+                        provider = " ",
                     },
-                },
-                -- Regular winbar
-                {
-                    lib.component.neotree(),
-                    lib.component.fill(),
-                    lib.component.breadcrumbs(),
+                    coustom_lib.navic(),
                     lib.component.fill(),
                     coustom_lib.overseer(),
                 },
@@ -76,7 +64,12 @@ return {
                 lib.component.fill(),
                 lib.component.lsp(),
                 -- lib.component.compiler_state(),
-                lib.component.virtual_env(),
+                {
+                    condition = function()
+                        return vim.bo.filetype == "python"
+                    end,
+                    lib.component.virtual_env(),
+                },
                 lib.component.nav(),
                 lib.component.mode({ surround = { separator = "right" } }),
             },
