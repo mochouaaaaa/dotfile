@@ -7,15 +7,46 @@ return {
     },
     { -- The task runner we use
         "stevearc/overseer.nvim",
-        commit = "6271cab7ccc4ca840faa93f54440ffae3a3918bd",
-        cmd = { "CompilerOpen", "CompilerToggleResults", "CompilerRedo" },
-        opts = {
-            task_list = {
-                direction = "bottom",
-                min_height = 25,
-                max_height = 25,
-                default_detail = 1,
-            },
-        },
+        -- cmd = { "CompilerOpen", "CompilerToggleResults", "CompilerRedo" },
+        init = function()
+            vim.keymap.set("n", "<F6>", "<cmd>OverseerRun<cr>", { desc = "Run task" })
+            vim.keymap.set("n", "<F7>", "<cmd>OverseerQuickAction<cr>", { desc = "Quick Action" })
+        end,
+        config = function()
+            local overseer = require("overseer")
+
+            overseer.setup({
+                dap = false,
+                templates = { "user.python", "user.python_params", "user.django", "user.go" },
+                strategy = {
+                    "toggleterm",
+                    use_shell = true,
+                    direction = "horizontal",
+                    auto_scroll = true,
+                    close_on_exit = false,
+                    open_on_start = true,
+                    hidden = false,
+                },
+                task_list = {
+                    direction = "left",
+                    bindings = {
+                        ["<C-u>"] = false,
+                        ["<C-d>"] = false,
+                        ["<C-h>"] = false,
+                        ["<C-j>"] = false,
+                        ["<C-k>"] = false,
+                        ["<C-l>"] = false,
+                    },
+                },
+            })
+
+            overseer.add_template_hook({
+                module = "^make$",
+            }, function(task_defn, util)
+                util.add_component(task_defn, { "on_output_quickfix", open_on_exit = "failure" })
+                util.add_component(task_defn, "on_complete_notify")
+                util.add_component(task_defn, { "display_duration", detail_level = 1 })
+            end)
+        end,
     },
 }
