@@ -20,6 +20,15 @@ alias lt='ls --tree'
 
 alias rg="rg --hyperlink-format=kitty"
 
-alias vim="nvim"
+_nvim ()
+{
+    if [[ $# -gt 0  ]]; then
+        nvim "$@"
+    else
+            nvim .
+    fi
+}
+alias vim="_nvim"
+alias nvim="_nvim"
 # alias astro_nvim="NVIM_APPNAME=AstroNvim nvim"
 # alias lazy_nvim="NVIM_APPNAME=lazynvim nvim"
