@@ -27,49 +27,49 @@ KEY_MAPPINGS = {
     "cmd+t": {
         "-zsh": "def:getattr(boss, 'new_tab')()",
         "tmux": "ctrl+a->c",
-        "is_nvim": True,
+        "nvim": "-zsh",
     },
     # wndow switching
     "cmd+1": {
         "-zsh": "def:getattr(boss, 'goto_tab')(1)",
         "tmux": "ctrl+a->1",
-        "is_nvim": True,
+        "nvim": "-zsh",
     },
     "cmd+2": {
         "-zsh": "def:getattr(boss, 'goto_tab')(2)",
         "tmux": "ctrl+a->2",
-        "is_nvim": True,
+        "nvim": "-zsh",
     },
     "cmd+3": {
         "-zsh": "def:getattr(boss, 'goto_tab')(3)",
         "tmux": "ctrl+a->3",
-        "is_nvim": True,
+        "nvim": "-zsh",
     },
     "cmd+4": {
         "-zsh": "def:getattr(boss, 'goto_tab')(4)",
         "tmux": "ctrl+a->4",
-        "is_nvim": True,
+        "nvim": "-zsh",
     },
     "cmd+5": {
         "-zsh": "def:getattr(boss, 'goto_tab')(5)",
         "tmux": "ctrl+a->5",
-        "is_nvim": True,
+        "nvim": "-zsh",
     },
     "cmd+6": {
         "-zsh": "def:getattr(boss, 'goto_tab')(6)",
         "tmux": "ctrl+a->6",
-        "is_nvim": True,
+        "nvim": "-zsh",
     },
     # window next or prev
     "cmd+[": {
         "-zsh": "def:getattr(boss, 'next_tab')()",
         "tmux": "ctrl+a->n",
-        "is_nvim": True,
+        "nvim": "-zsh",
     },
     "cmd+]": {
         "-zsh": "def:getattr(boss, 'previous_tab')()",
         "tmux": "ctrl+a->p",
-        "is_nvim": True,
+        "nvim": "-zsh",
     },
     # window closing
     "cmd+w": {"-zsh": "def:getattr(boss, 'close_window')()"},
@@ -77,26 +77,26 @@ KEY_MAPPINGS = {
     "cmd+shift+k": {
         "-zsh": "def:getattr(boss, 'set_tab_title')()",
         "tmux": "ctrl+a->,",
-        "is_nvim": True,
+        "nvim": "-zsh",
     },
     # window switch
     "cmd+alt+[": {
         # "-zsh": "def:getattr(boss.active_tab, 'move_window_forward')()",
         "-zsh": "def:getattr(tab, 'swap_with_window')()",
         "tmux": "ctrl+a->{",
-        "is_nvim": True,
+        "nvim": "-zsh",
     },
     "cmd+alt+]": {
         # "-zsh": "def:getattr(boss.active_tab, 'move_window_backward')()",
         "-zsh": "def:getattr(tab, 'swap_with_window')()",
         "tmux": "ctrl+a->}",
-        "is_nvim": True,
+        "nvim": "-zsh",
     },
     # window max
     "cmd+enter": {
         "-zsh": "def:getattr(boss.active_tab, 'toggle_layout')('stack')",
         "tmux": "ctrl+a->z",
-        "is_nvim": True,
+        "nvim": "-zsh",
     },
     # pane search
     "cmd+f": {
@@ -141,6 +141,7 @@ def handle_result(args, answer, target_window_id, boss):
     event = KEY_MAPPINGS.get(keymap, {})
 
     operate = event.get(cmd, "")
+
     if operate.startswith("def:"):
         eval(operate[4:])
     elif operate.startswith("text:"):
@@ -151,7 +152,7 @@ def handle_result(args, answer, target_window_id, boss):
             send_keymap(window, keymap)
     else:
         if cmd == "nvim":
-            if event.get("is_nvim", None):
+            if event.get("nvim", None) == "-zsh":
                 eval(event["-zsh"][4:])
             else:
                 send_keymap(window, keymap)

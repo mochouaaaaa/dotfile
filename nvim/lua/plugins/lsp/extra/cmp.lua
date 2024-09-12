@@ -35,9 +35,6 @@ for _, file in ipairs(require_file) do
 end
 
 local default_source = {
-    -- Copilot source
-    -- { name = "copilot", group_index = 2 },
-    -- { name = "codeium", group_index = 2, max_item_count = 5 },
     -- Other source
     { name = "nvim_lsp", priority = 1000, keyword_length = 1 },
     { name = "luasnip", keyword_length = 2 },
@@ -91,7 +88,7 @@ nvim_cmp.opts = function()
                 behavior = cmp.ConfirmBehavior.Replace,
                 select = true,
             }),
-            [utils.platform_key("cmd") .. "-e>"] = cmp.mapping({
+            [utils.platform_key.cmd .. "-e>"] = cmp.mapping({
                 i = cmp.mapping.abort(),
                 c = cmp.mapping.close(),
             }),
@@ -109,10 +106,10 @@ nvim_cmp.opts = function()
                     fallback()
                 end
             end, { "i", "s" }),
-            [utils.platform_key("cmd") .. "-k>"] = cmp.mapping.select_prev_item({
+            [utils.platform_key.cmd .. "-k>"] = cmp.mapping.select_prev_item({
                 behavior = cmp.SelectBehavior.Select,
             }),
-            [utils.platform_key("cmd") .. "-j>"] = cmp.mapping.select_next_item({
+            [utils.platform_key.cmd .. "-j>"] = cmp.mapping.select_next_item({
                 behavior = cmp.SelectBehavior.Select,
             }),
         },
@@ -133,14 +130,6 @@ nvim_cmp.opts = function()
         preselect = cmp.PreselectMode.None,
         sorting = {
             comparators = {
-                function()
-                    local ok, cop = pcall(require, "copilot_cmp")
-                    if ok then
-                        return cop.prioritize
-                    end
-                end,
-                -- require("copilot_cmp.comparators").prioritize,
-                --
                 cmp.config.compare.sort_text,
                 cmp.config.compare.offset,
                 cmp.config.compare.exact,

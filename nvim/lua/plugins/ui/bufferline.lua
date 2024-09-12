@@ -1,3 +1,8 @@
+_G.__cached_neo_tree_selector = nil
+_G.__get_selector = function()
+    return _G.__cached_neo_tree_selector
+end
+
 local bufferline = {
     "akinsho/bufferline.nvim",
     dependencies = { "echasnovski/mini.bufremove", "nvim-tree/nvim-web-devicons" },
@@ -13,9 +18,11 @@ local bufferline = {
                 enforce_regular_tabs = true,
                 offsets = {
                     filetype = "neo-tree",
-                    text = "File Explorer",
-                    highlight = "Directory",
-                    text_align = "left",
+                    raw = " %{%v:lua.__get_selector()%} ",
+                    highlight = { sep = { link = "WinSeparator" } },
+                    -- text = "File Explorer",
+                    -- text_align = "left",
+                    separator = "┃",
                 },
             },
         }
@@ -26,7 +33,7 @@ local utils = require("config.utils")
 
 bufferline.keys = {
     {
-        utils.platform_key("cmd") .. "-w>",
+        utils.platform_key.cmd .. "-w>",
         function()
             local bd = require("mini.bufremove").delete
             if vim.bo.modified then

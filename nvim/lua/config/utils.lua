@@ -9,11 +9,12 @@ return {
     -- cmd: command
     -- option: option
     -- @return string
-    platform_key = function(key)
-        local _m = {
-            cmd = is_mac() and "<D" or "<A",
-            option = is_mac() and "<A" or "<M",
-        }
-        return _m[key]
+    platform_key = {
+        cmd = is_mac() and "<D" or "<A",
+        option = is_mac() and "<A" or "<M",
+    },
+    is_mac = is_mac,
+    is_linux = function()
+        return vim.fn.has("unix") == 1 and vim.fn.has("linux") == 1
     end,
 }

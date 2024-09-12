@@ -7,10 +7,10 @@ return {
 			-- gcc和gc注释修改为D-/
 			require("Comment").setup {
 				toggler = {
-					line = utils.platform_key("cmd") .. "-/>",
+					line = utils.platform_key.cmd .. "-/>",
 				},
 				opleader = {
-					line = utils.platform_key("cmd") .. "-/>",
+					line = utils.platform_key.cmd .. "-/>",
 				},
 			}
 		end,

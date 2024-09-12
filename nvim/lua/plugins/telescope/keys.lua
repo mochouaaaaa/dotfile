@@ -14,12 +14,12 @@ return {
 		desc = "Search Git File",
 	},
 	{
-		utils.platform_key("cmd") .. "-S-f>",
+		utils.platform_key.cmd .. "-S-f>",
 		Util.telescope("live_grep", { additional_args = extr_args }),
 		desc = "Grep (root dir)",
 	},
 	{
-		utils.platform_key("cmd") .. "-f>",
+		utils.platform_key.cmd .. "-f>",
 		function()
 			Util.telescope(
 				"find_files",

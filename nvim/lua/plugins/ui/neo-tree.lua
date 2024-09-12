@@ -12,7 +12,7 @@ local function init_keys()
     wk.add({
         { "<leader>e", group = "Neotree" },
         { "<leader>eb", "<Cmd>Neotree buffers<CR>", desc = "Neo-tree Buffers" },
-        { "<leader>eg", "<Cmd>Neotree git_status<CR>", desc = "Neo-tree Git Status" },
+        -- { "<leader>eg", "<Cmd>Neotree git_status<CR>", desc = "Neo-tree Git Status" },
         {
             "<leader>ed",
             "<Cmd>Neotree reveal_force_cwd dir=%:h toggle<CR>",
@@ -26,8 +26,10 @@ local utils = require("config.utils")
 function M.opts()
     vim.g.neo_tree_remove_legacy_commands = 1
     -- mac system cmd keymap
-    vim.api.nvim_set_keymap("n", utils.platform_key("cmd") .. "-e>", "<Cmd>Neotree toggle<CR>", {})
+    vim.api.nvim_set_keymap("n", utils.platform_key.cmd .. "-e>", "<Cmd>Neotree toggle<CR>", {})
     init_keys()
+
+    local neotree_command = require("plugins.configs.neo-tree")
 
     return {
         auto_clean_after_session_restore = true,
@@ -65,6 +67,9 @@ function M.opts()
                 nowait = true,
             },
             mappings = {
+                ["f"] = "telescope_find",
+                ["tg"] = "telescope_grep",
+
                 ["<space>"] = "none",
                 ["<cr>"] = "open",
                 ["<tab>"] = "open",
@@ -87,21 +92,24 @@ function M.opts()
                     local path = state.tree:get_node().path
                     vim.fn.system("echo -n " .. string.format("%q", path) .. " | pbcopy")
                 end,
-                ["d"] = "delete",
+                ["d"] = "trash",
+                ["D"] = "diff_files", -- diff file
                 ["r"] = "rename",
                 ["R"] = "refresh",
                 ["y"] = "copy_to_clipboard",
+                ["P"] = "paste_from_clipboard",
                 ["x"] = "cut_to_clipboard",
-                ["p"] = "paste_from_clipboard",
                 ["z"] = "close_all_nodes",
                 ["Z"] = "expand_all_nodes",
                 ["q"] = "close_window",
+                ["o"] = "system_open",
                 ["?"] = "show_help",
             },
         },
 
         filesystem = {
             commands = {
+                system_open = neotree_command.system_open,
                 parent_or_close = function(state)
                     local node = state.tree:get_node()
                     if (node.type == "directory" or node:has_children()) and node:is_expanded() then
@@ -158,55 +166,23 @@ function M.opts()
                         end,
                     })
                 end,
-                find_in_dir = function(state)
+                trash = neotree_command.trash,
+                trash_visual = neotree_command.trash_visual,
+                telescope_find = function(state)
                     local node = state.tree:get_node()
-                    local path = node.type == "file" and node:get_parent_id() or node:get_id()
-                    require("telescope.builtin").find_files({
-                        cwd = path,
-                    })
+                    local path = node:get_id()
+                    require("telescope.builtin").find_files(neotree_command.getTelescopeOpts(state, path))
                 end,
-                delete = function(state)
+                telescope_grep = function(state)
                     local node = state.tree:get_node()
-                    require("neo-tree").config.filesystem.commands.delete_visual(state, { node })
+                    local path = node:get_id()
+                    require("telescope.builtin").live_grep(neotree_command.getTelescopeOpts(state, path))
                 end,
-                delete_visual = function(state, selected_nodes)
-                    local path = {}
-                    for _, node in ipairs(selected_nodes) do
-                        if node.type ~= "message" then
-                            path[#path + 1] = "the POSIX file " .. string.format("%q", node.path)
-                        end
-                    end
-
-                    local term
-                    if #path < 1 then
-                        return
-                    elseif #path == 1 then
-                        term = "this file"
-                    else
-                        term = #path .. " files"
-                    end
-
-                    local inputs = require("neo-tree.ui.inputs")
-                    inputs.confirm("Are you sure trash " .. term .. "?", function(confirmed)
-                        if not confirmed then
-                            return
-                        end
-
-                        vim.fn.system({
-                            "osascript",
-                            "-e",
-                            'tell app "Finder" to move {' .. table.concat(path, ",") .. "} to trash",
-                        })
-                        require("neo-tree.sources.manager").refresh(state.name)
-                    end)
-                end,
+                diff_files = neotree_command.diff_files,
             },
             window = {
                 mappings = {
                     ["H"] = "toggle_hidden",
-                    ["f"] = "fuzzy_finder",
-                    ["F"] = "fuzzy_finder_directory",
-                    -- ["/"] = "filter_on_submit",
                     ["/"] = "filter_as_you_type", -- this was the default until v1.28
                     ["<C-c>"] = "clear_filter",
                     ["u"] = "navigate_up",
@@ -237,6 +213,19 @@ function M.opts()
                     event = "neo_tree_buffer_enter",
                     handler = function(_)
                         vim.opt_local.signcolumn = "auto"
+                    end,
+                },
+                {
+                    event = "after_render",
+                    handler = function(state)
+                        if state.current_position == "left" or state.current_position == "right" then
+                            vim.api.nvim_win_call(state.winid, function()
+                                local str = require("neo-tree.ui.selector").get()
+                                if str then
+                                    _G.__cached_neo_tree_selector = str
+                                end
+                            end)
+                        end
                     end,
                 },
             },

@@ -90,7 +90,7 @@ return {
                                 function()
                                     gs.stage_hunk({ vim.fn.line("."), vim.fn.line("v") })
                                 end,
-                                "stage hunk",
+                                desc = "stage hunk",
                             },
 
                             { "<leader>gr", group = "undo" },
@@ -99,7 +99,7 @@ return {
                                 function()
                                     gs.reset_hunk({ vim.fn.line("."), vim.fn.line("v") })
                                 end,
-                                "reset hunk",
+                                desc = "reset hunk",
                             },
                         },
                     },

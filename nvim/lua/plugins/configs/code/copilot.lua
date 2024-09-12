@@ -43,8 +43,8 @@ return {
                             debounce = 75,
                             keymap = {
                                 accept = false,
-                                next = utils.platform_key("cmd") .. "-j>",
-                                prev = utils.platform_key("cmd") .. "-k>",
+                                next = utils.platform_key.cmd .. "-j>",
+                                prev = utils.platform_key.cmd .. "-k>",
                                 dismiss = false,
                             },
                         },
