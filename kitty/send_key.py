@@ -23,7 +23,8 @@ def select_pane_id(boss: Boss, target_window_id):
 
 # keymap reflex
 KEY_MAPPINGS = {
-    "cmd+r": {"-zsh": "text:joshuto"},
+    #"cmd+r": {"-zsh": "text:joshuto"},
+    "cmd+r": {"-zsh": "text:yazi"},
     "cmd+t": {
         "-zsh": "def:getattr(boss, 'new_tab')()",
         "tmux": "ctrl+a->c",

@@ -1,0 +1,20 @@
+[manager]
+prepend_keymap = [
+    { on = [
+        "c",
+        "m",
+    ], run = "plugin chmod", desc = "Chmod on selected files" },
+    { on = [
+        "o",
+        "o",
+    ], run = "open", desc = "use default open command" },
+    { on = [
+        "o",
+        "z",
+    ], run = "plugin open_utils --args='zed'", desc = "use zed open file or directory" },
+    { on = [
+        "o",
+        "c",
+    ], run = "plugin open_utils --args='code'", desc = "use code open file or directory" },
+
+]

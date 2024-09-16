@@ -36,10 +36,12 @@ return {
     },
     {
         "Wansmer/symbol-usage.nvim",
-        enabled = false,
+        enabled = true,
         config = function()
             local function text_format(symbol)
                 local fragments = {}
+
+                local stacked_functions = symbol.stacked_count > 0 and (" | +%s"):format(symbol.stacked_count) or ""
 
                 if symbol.references then
                     local usage = symbol.references <= 1 and "usage" or "usages"
@@ -55,7 +57,7 @@ return {
                     table.insert(fragments, symbol.implementation .. " impls")
                 end
 
-                return table.concat(fragments, ", ")
+                return table.concat(fragments, ", ") .. stacked_functions
             end
             require("symbol-usage").setup({
                 request_pending_text = "",

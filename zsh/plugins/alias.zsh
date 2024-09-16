@@ -32,3 +32,13 @@ alias vim="_nvim"
 alias nvim="_nvim"
 # alias astro_nvim="NVIM_APPNAME=AstroNvim nvim"
 # alias lazy_nvim="NVIM_APPNAME=lazynvim nvim"
+
+function _yazi() {
+	local tmp="$(mktemp -t "yazi-cwd.XXXXXX")"
+	yazi "$@" --cwd-file="$tmp"
+	if cwd="$(cat -- "$tmp")" && [ -n "$cwd" ] && [ "$cwd" != "$PWD" ]; then
+		builtin cd -- "$cwd"
+	fi
+	rm -f -- "$tmp"
+}
+alias yazi="_yazi"
