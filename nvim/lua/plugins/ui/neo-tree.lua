@@ -1,10 +1,12 @@
 local M = {
     "nvim-neo-tree/neo-tree.nvim",
-    cond = not vim.g.vscode,
-    cmd = "Neotree",
-    init = function()
-        vim.g.neo_tree_remove_legacy_commands = true
-    end,
+    branch = "v3.x",
+    dependencies = {
+        "nvim-lua/plenary.nvim",
+        "nvim-tree/nvim-web-devicons", -- not strictly required, but recommended
+        "MunifTanjim/nui.nvim",
+        -- "3rd/image.nvim", -- Optional image support in preview window: See `# Preview Mode` for more information
+    },
 }
 
 local function init_keys()
@@ -24,7 +26,6 @@ end
 local utils = require("config.utils")
 
 function M.opts()
-    vim.g.neo_tree_remove_legacy_commands = 1
     -- mac system cmd keymap
     vim.api.nvim_set_keymap("n", utils.platform_key.cmd .. "-e>", "<Cmd>Neotree toggle<CR>", {})
     init_keys()
@@ -305,11 +306,11 @@ function M.opts()
                     added = "✚", -- NOTE: you can set any of these to an empty string to not show them
                     deleted = "✖",
                     modified = "",
-                    renamed = "",
+                    renamed = "󰁕",
                     -- Status type
                     untracked = "",
                     ignored = "",
-                    unstaged = " ",
+                    unstaged = "󰄱",
                     staged = "",
                     conflict = "",
                 },

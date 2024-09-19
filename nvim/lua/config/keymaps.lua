@@ -56,7 +56,7 @@ local mappings = {
     -- 正常模式
     -- 窗口
     { from = "<leader>|", to = "<C-w>v", mode = mode_n, desc = "垂直新增窗" },
-    { from = "<leader>_", to = "<C-w>s", mode = mode_n, desc = " 水平新增窗" },
+    { from = "<leader>_", to = "<C-w>s", mode = mode_n, desc = "水平新增窗" },
     { from = "<C-w>", to = "<Cmd>BufferLineCloseOther<CR>", mode = mode_n },
     { from = "sc", to = "<C-w>c", mode = mode_n, desc = "关闭当前窗" },
     { from = "so", to = "<C-w>o", mode = mode_n, desc = "关闭其他窗" },
