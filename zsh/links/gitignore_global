@@ -43,9 +43,10 @@ __pycache__/
 *.out
 
 # Application specific files
-venv
+venv/
 node_modules/
 .sass-cache
+env/
 
 # Temp File
 *.swp
@@ -59,3 +60,9 @@ node_modules/
 .vscode
 
 .idea
+
+# .config
+nvim/.zed/
+raycast/
+scripts/
+yazi/plugins/
