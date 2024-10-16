@@ -1,132 +1,283 @@
-from kittens.tui.handler import result_handler
-from kitty.boss import Boss
+from typing import Union
+from abc import ABCMeta, abstractmethod
+
 from kitty.key_encoding import KeyEvent, parse_shortcut
+
+from kittens.tui.handler import result_handler
 
 
 def main(args):
     pass
 
 
-def select_pane_id(boss: Boss, target_window_id):
-    tab = boss.active_tab
-    # boss.switch_focus_to(1)
-    # print(boss.active_tab.swap_with_window())
+class BaseCommandKeyMap(metaclass=ABCMeta):
+    # 定义特殊字符的映射表，将非法字符映射为合法的函数名片段
+    SPECIAL_CHAR_MAP = {
+        "+": "_",  # '+' 替换为 '_'
+        "-": "dash",  # '-' 替换为 'dash'
+        ",": "comma",  # ',' 替换为 'comma'
+        "[": "left_bracket",  # '[' 替换为 'left_bracket'
+        "]": "right_bracket",  # ']' 替换为 'right_bracket'
+        "(": "left_paren",  # '(' 替换为 'left_paren'
+        ")": "right_paren",  # ')' 替换为 'right_paren'
+    }
 
-    # def callback(tab, window):
-    #     if window and window.id != target_window_id:
-    #         # tab.swap_with_window(window.id)
-    #         boss.switch_focus_to(window.id)
+    def __init__(self, boss, window, keymap: str):
+        self.boss = boss
+        self.window = window
+        self.keymap = keymap
+        self.tab_num = 7
 
-    # boss.visual_window_select_action(tab, callback, "Choose window to swap with")
-    tab.focus_visible_window()
+        self.reset_keymap: list[str] = self.create_reset_keymap()
+        self._apply_reset_keymap()
 
+        self.create_tab_keymap()
 
-# keymap reflex
-KEY_MAPPINGS = {
-    # "cmd+r": {"-zsh": "text:joshuto"},
-    "cmd+r": {"-zsh": "text:yazi"},
-    # "cmd+r": {"-zsh": "def:getattr(boss, 'launch')('--copy-env', '--cwd=current', 'sh', '-c', 'yazi')"},
-    "cmd+t": {
-        "-zsh": "def:getattr(boss, 'new_tab')()",
-        "tmux": "ctrl+a->c",
-        "nvim": "-zsh",
-    },
-    # wndow switching
-    "cmd+1": {
-        "-zsh": "def:getattr(boss, 'goto_tab')(1)",
-        "tmux": "ctrl+a->1",
-        "nvim": "-zsh",
-    },
-    "cmd+2": {
-        "-zsh": "def:getattr(boss, 'goto_tab')(2)",
-        "tmux": "ctrl+a->2",
-        "nvim": "-zsh",
-    },
-    "cmd+3": {
-        "-zsh": "def:getattr(boss, 'goto_tab')(3)",
-        "tmux": "ctrl+a->3",
-        "nvim": "-zsh",
-    },
-    "cmd+4": {
-        "-zsh": "def:getattr(boss, 'goto_tab')(4)",
-        "tmux": "ctrl+a->4",
-        "nvim": "-zsh",
-    },
-    "cmd+5": {
-        "-zsh": "def:getattr(boss, 'goto_tab')(5)",
-        "tmux": "ctrl+a->5",
-        "nvim": "-zsh",
-    },
-    "cmd+6": {
-        "-zsh": "def:getattr(boss, 'goto_tab')(6)",
-        "tmux": "ctrl+a->6",
-        "nvim": "-zsh",
-    },
-    # window next or prev
-    "cmd+[": {
-        "-zsh": "def:getattr(boss, 'next_tab')()",
-        "tmux": "ctrl+a->n",
-        "nvim": "-zsh",
-    },
-    "cmd+]": {
-        "-zsh": "def:getattr(boss, 'previous_tab')()",
-        "tmux": "ctrl+a->p",
-        "nvim": "-zsh",
-    },
-    # window closing
-    "cmd+w": {"-zsh": "def:getattr(boss, 'close_window')()"},
-    # window title rename
-    "cmd+shift+k": {
-        "-zsh": "def:getattr(boss, 'set_tab_title')()",
-        "tmux": "ctrl+a->,",
-        "nvim": "-zsh",
-    },
-    # window switch
-    "cmd+alt+[": {
-        # "-zsh": "def:getattr(boss.active_tab, 'move_window_forward')()",
-        "-zsh": "def:getattr(tab, 'swap_with_window')()",
-        "tmux": "ctrl+a->{",
-        "nvim": "-zsh",
-    },
-    "cmd+alt+]": {
-        # "-zsh": "def:getattr(boss.active_tab, 'move_window_backward')()",
-        "-zsh": "def:getattr(tab, 'swap_with_window')()",
-        "tmux": "ctrl+a->}",
-        "nvim": "-zsh",
-    },
-    # window max
-    "cmd+enter": {
-        "-zsh": "def:getattr(boss.active_tab, 'toggle_layout')('stack')",
-        "tmux": "ctrl+a->z",
-        "nvim": "-zsh",
-    },
-    # pane search
-    "cmd+f": {
-        "-zsh": "def:select_pane_id(boss, target_window_id)",
-    },
-    "ctrl+f": {"tmux": "ctrl+a->ctrl+f"},
-}
+        # 初始化时，提前转换快捷键为合法函数名
+        self.function_name = self._convert_keymap_to_function_name()
+
+    def _convert_keymap_to_function_name(self):
+        """
+        Convert the keymap to a valid function name based on the special char map.
+        """
+        function_name = self.keymap
+        # 使用映射字典只进行一次字符替换操作
+        for special_char, replacement in self.SPECIAL_CHAR_MAP.items():
+            function_name = function_name.replace(special_char, replacement)
+        return function_name
+
+    @abstractmethod
+    def create_tab_keymap(self):
+        """
+        Apply tab keymap, should be overridden by subclasses
+        """
+        pass
+
+    @abstractmethod
+    def create_reset_keymap(self) -> list[str]:
+        """
+        Factory method to create reset_keymap, should be overridden by subclasses
+        """
+        return []
+
+    def _apply_reset_keymap(self):
+        for key in self.reset_keymap:
+            setattr(self, key, self.default_keymap)
+
+    def encode_key_mapping(self, window, key_mapping):
+        mods, key = parse_shortcut(key_mapping)
+        event = KeyEvent(
+            mods=mods,
+            key=key,
+            shift=bool(mods & 1),
+            alt=bool(mods & 2),
+            ctrl=bool(mods & 4),
+            super=bool(mods & 8),
+            hyper=bool(mods & 16),
+            meta=bool(mods & 32),
+        ).as_window_system_event()
+
+        return window.encoded_key(event)
+
+    def send_keymap(self, keymap=None):
+        """
+        send keymap to child process
+        """
+        if keymap is None:
+            keymap = self.keymap
+        encoded = self.encode_key_mapping(self.window, keymap)
+        self.window.write_to_child(encoded)
+
+    def default_keymap(self):
+        self.send_keymap()
+
+    def call_keymap(self):
+        """
+        Call the corresponding function once.
+        """
+        call_func = getattr(self, self.function_name, None)
+        if call_func is not None:
+            # 只调用一次对应函数
+            call_func()
+        else:
+            print(f"Function '{self.function_name}' not found.")
 
 
-def encode_key_mapping(window, key_mapping):
-    mods, key = parse_shortcut(key_mapping)
-    event = KeyEvent(
-        mods=mods,
-        key=key,
-        shift=bool(mods & 1),
-        alt=bool(mods & 2),
-        ctrl=bool(mods & 4),
-        super=bool(mods & 8),
-        hyper=bool(mods & 16),
-        meta=bool(mods & 32),
-    ).as_window_system_event()
+class ZshCommandKeyMap(BaseCommandKeyMap):
+    def __init__(self, boos, window, keymap: str):
+        super().__init__(boos, window, keymap)
 
-    return window.encoded_key(event)
+    def create_reset_keymap(self) -> list[str]:
+        """
+        Define reset_keymap for ZshCommandKeyMap
+        """
+        return []  # Customize as per requirement
+
+    def create_tab_keymap(self):
+        for index in range(1, self.tab_num):
+            setattr(self, f"cmd_{index}", self.boss.goto_tab(index))
+
+    def cmd_w(self):
+        """
+        close currrent window
+        """
+        self.boss.close_window()
+
+    def cmd_r(self):
+        """
+        Open file browser
+        """
+        # import tempfile
+        # import os
+
+        # getattr(self.boss, 'launch')('--copy-env', '--cwd=current', 'sh', '-c', 'yazi')
+
+        self.window.write_to_child("yazi\n")
+        # 创建临时文件以存储子进程修改的工作目录
+        # temp_dir_file = tempfile.NamedTemporaryFile(delete=False, dir="/tmp")
+        # temp_dir_file.close()  # 我们仅需要文件名，立即关闭文件
+        #
+        # # 启动 yazi 进程并将修改后的工作目录写入临时文件
+        # self.boss.launch("--copy-env", "--cwd=current", "sh", "-c", f"yazi; pwd > {temp_dir_file.name}")
+        #
+        # # 读取临时文件中的新工作目录并在主进程中更新
+        # try:
+        #     with open(temp_dir_file.name, "r") as f:
+        #         new_dir = f.read().strip()
+        #         if new_dir:
+        #             os.chdir(new_dir)  # 更新主进程工作目录
+        #             print(f"Changed working directory to: {new_dir}")
+        #         else:
+        #             print("Failed to read new directory from yazi.")
+        # except FileNotFoundError:
+        #     print(f"Temporary file not found: {temp_dir_file.name}")
+        # finally:
+        #     # 删除临时文件
+        #     os.unlink(temp_dir_file.name)
+
+    def cmd_t(self):
+        """
+        new tab
+        """
+        self.boss.new_tab()
+
+    def cmd_enter(self):
+        """
+        toggle layout
+        """
+        self.boss.active_tab.toggle_layout("stack")
+
+    def cmd_shift_k(self):
+        """
+        rename
+        """
+        self.boss.set_tab_title()
+
+    def cmd_f(self):
+        """
+        pane goto
+        """
+        tab = self.boss.active_tab
+        tab.focus_visible_window()
+
+    def cmd_left_bracket(self):
+        """
+        next tab
+        """
+        self.boss.next_tab()
+
+    def cmd_right_bracket(self):
+        """
+        prev tab
+        """
+        self.boss.previous_tab()
+
+    def cmd_alt_left_bracket(self):
+        """
+        swap with prev window
+        """
+        self.boss.swap_with_window()
+
+    def cmd_alt_right_bracket(self):
+        """
+        swap with next window
+        """
+        self.boss.swap_with_window()
 
 
-def send_keymap(window, keymap):
-    encoded = encode_key_mapping(window, keymap)
-    window.write_to_child(encoded)
+class NvimCommandKeyMap(ZshCommandKeyMap):
+    def __init__(self, boos, window, keymap: str):
+        super().__init__(boos, window, keymap)
+
+    def create_tab_keymap(self):
+        return super().create_tab_keymap()
+
+    def create_reset_keymap(self) -> list[str]:
+        """
+        Define reset_keymap for NvimCommandKeyMap
+        """
+        return ["cmd_f", "cmd_r", "cmd_shift_f", "cmd_s", "cmd_t", "cmd_w", "cmd_e"]
+
+
+class TmuxCommandKeyMap(ZshCommandKeyMap):
+    def __init__(self, boos, window, keymap: str):
+        super().__init__(boos, window, keymap)
+
+    def create_reset_keymap(self) -> list[str]:
+        """
+        Define reset_keymap for TmuxCommandKeyMap
+        """
+        return ["cmd_s", "cmd_w", "cmd_e", "cmd_f", "cmd_r", "cmd_shift_f"]
+
+    def create_tab_keymap(self):
+        for index in range(1, self.tab_num):
+            setattr(self, f"cmd_{index}", lambda s=self, i=index: s.send_keymap(f"ctrl+a->{i}"))
+
+    def send_keymap(self, keymap: Union[str, None] = None):
+        if keymap is None:
+            super().send_keymap()
+        else:
+            keymap_list = keymap.split("->")
+            for keymap in keymap_list:
+                super().send_keymap(keymap)
+
+    def cmd_t(self):
+        self.send_keymap("ctrl+a->c")
+
+    def cmd_f(self):
+        self.send_keymap("ctrl+a->q")
+
+    def cmd_shift_k(self):
+        return self.send_keymap("ctrl+a->,")
+
+    def cmd_enter(self):
+        return self.send_keymap("ctrl+a->z")
+
+    def cmd_left_bracket(self):
+        return self.send_keymap("ctrl+a->n")
+
+    def cmd_right_bracket(self):
+        return self.send_keymap("ctrl+a->p")
+
+    def cmd_alt_left_bracket(self):
+        return self.send_keymap("ctrl+a->{")
+
+    def cmd_alt_right_bracket(self):
+        return self.send_keymap("ctrl+a->}")
+
+
+class YaziCommandKeyMap(ZshCommandKeyMap):
+    def __init__(self, boos, window, keymap: str):
+        super().__init__(boos, window, keymap)
+
+    def create_tab_keymap(self):
+        return super().create_tab_keymap()
+
+    def create_reset_keymap(self) -> list[str]:
+        """
+        Define reset_keymap for TmuxCommandKeyMap
+        """
+        return ["cmd_f", "cmd_shift_f"]
 
 
 @result_handler(no_ui=True)
@@ -140,23 +291,23 @@ def handle_result(args, answer, target_window_id, boss):
     cmd = window.child.foreground_cmdline[0]
     keymap = args[1]
 
-    event = KEY_MAPPINGS.get(keymap, {})
+    # 类映射字典，只实例化对应的类
+    class_map = {
+        "-zsh": ZshCommandKeyMap,
+        "nvim": NvimCommandKeyMap,
+        "tmux": TmuxCommandKeyMap,
+        "yazi": YaziCommandKeyMap,
+    }
 
-    operate = event.get(cmd, "")
+    # 判断cmd类型并实例化对应类
+    command_class = class_map.get(cmd, None)
 
-    if operate.startswith("def:"):
-        eval(operate[4:])
-    elif operate.startswith("text:"):
-        window.write_to_child(operate[5:] + "\n")
-    elif "->" in operate:
-        keymap_list = operate.split("->")
-        for keymap in keymap_list:
-            send_keymap(window, keymap)
-    else:
-        if cmd == "nvim":
-            if event.get("nvim", None) == "-zsh":
-                eval(event["-zsh"][4:])
-            else:
-                send_keymap(window, keymap)
-        elif cmd == "tmux":
-            send_keymap(window, keymap)
+    if command_class is None:
+        print(f"Unsupported command: {cmd}")
+        return
+
+    # 只实例化与当前cmd对应的类
+    command_instance = command_class(boss, window, keymap)
+
+    # 调用对应的快捷键映射函数
+    command_instance.call_keymap()
