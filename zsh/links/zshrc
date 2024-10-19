@@ -1,59 +1,20 @@
-
-#readline
-export LDFLAGS="-L$(brew --prefix readline)/lib"
-export CPPFLAGS="-I$(brew --prefix readline)/include"
-
-#sqlite
-export PATH="/usr/local/opt/sqlite/bin:$PATH"
-export LDFLAGS="-L$(brew --prefix sqlite)/lib:$LDFLAGS"
-export CPPFLAGS="-I$(brew --prefix sqlite)/include:$CPPFLAGS"
-
-#zlib
-export LDFLAGS="-L$(brew --prefix zlib)/lib:$LDFLAGS"
-export CPPFLAGS="-I$(brew --prefix zlib)/include:$CPPFLAGS"
-
-# tcl-tk
-export PATH="/usr/local/opt/tcl-tk/bin:$PATH"
-export LDFLAGS="-L$(brew --prefix tcl-tk)/lib:$LDFLAGS"
-export CPPFLAGS="-I$(brew --prefix tcl-tk)/include:$CPPFLAGS"
-
-# mysql-client
-export PATH="/usr/local/opt/mysql-client/bin:$PATH"
-export LDFLAGS="-L$(brew --prefix mysql-client)/lib:$LDFLAGS"
-export CPPFLAGS="-I$(brew --prefix mysql-client)/include:$CPPFLAGS"
-export PKG_CONFIG_PATH="/usr/local/opt/mysql-client/lib/pkgconfig"
-
-export LDFLAGS="-L$(brew --prefix openssl)/lib:$LDFLAGS"
-export CPPFLAGS="-I$(brew --prefix openssl)/include:$CPPFLAGS"
-
-# boots
-
-[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
-
-### Added by Zinit's installer
-if [[ ! -f $HOME/.local/share/zinit/zinit.git/zinit.zsh ]]; then
-    print -P "%F{33} %F{220}Installing %F{33}ZDHARMA-CONTINUUM%F{220} Initiative Plugin Manager (%F{33}zdharma-continuum/zinit%F{220})…%f"
-    command mkdir -p "$HOME/.local/share/zinit" && command chmod g-rwX "$HOME/.local/share/zinit"
-    command git clone https://github.com/zdharma-continuum/zinit "$HOME/.local/share/zinit/zinit.git" && \
-        print -P "%F{33} %F{34}Installation successful.%f%b" || \
-        print -P "%F{160} The clone has failed.%f%b"
+if [[ $- != *i* ]]; then
+    return
 fi
 
-source "$HOME/.local/share/zinit/zinit.git/zinit.zsh"
-autoload -Uz _zinit
-(( ${+_comps} )) && _comps[zinit]=_zinit
+ZINIT_HOME="${XDG_DATA_HOME:-${HOME}/.local/share}/zinit/zinit.git"
+[ ! -d $ZINIT_HOME ] && mkdir -p "$(dirname $ZINIT_HOME)"
+[ ! -d $ZINIT_HOME/.git ] && git clone https://github.com/zdharma-continuum/zinit.git "$ZINIT_HOME"
+source "${ZINIT_HOME}/zinit.zsh"
 
-# Load a few important annexes, without Turbo
-# (this is currently required for annexes)
-zinit light-mode for \
-    zdharma-continuum/zinit-annex-as-monitor \
-    zdharma-continuum/zinit-annex-bin-gem-node \
-    zdharma-continuum/zinit-annex-patch-dl \
-    zdharma-continuum/zinit-annex-rust
+zinit snippet OMZL::git.zsh
+zinit light romkatv/zsh-defer
+zsh-defer zinit light-mode for zdharma-continuum/zinit-annex-bin-gem-node
+zsh-defer zinit light zsh-users/zsh-completions
+# zsh-defer zinit light zinit-zsh/z-a-meta-plugins
 
-zinit light zsh-users/zsh-completions
-### End of Zinit's installer chunk
-#
-source $HOME/.config/zsh/init.zsh
+autoload -U compinit
+compinit
+zinit snippet $HOME/.config/zsh/init.zsh
 export PATH="/usr/local/sbin:$PATH"
 

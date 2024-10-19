@@ -22,3 +22,5 @@
 	defaultBranch = main
 [core]
 	excludesfile = /Users/mochou/.gitignore_global
+[pager]
+	log = emojify

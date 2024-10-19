@@ -14,13 +14,30 @@ check_os_type() {
 }
 
 
+# check_command_exist() {
+#     if command -v "$1" &> /dev/null; then
+#         if [[ -n "$2" ]]; then
+#             if ! type "$2" &> /dev/null; then
+#                 eval "$2"
+#             fi 
+#         fi
+#         return 0
+#     else
+#         return 1
+#     fi
+# }
+
+
 check_command_exist() {
-    if ! command -v $1 &> /dev/null; then
-        if [[ -n $2 ]]; then
-            $2
-        else
-            return 0
+    if (( $+commands[$1] )); then
+        if [[ -n "$2" ]]; then
+            if ! type "$2" &> /dev/null; then
+                eval "$2"
+            fi 
         fi
+        return 0
+    else
+        return 1
     fi
 }
 
