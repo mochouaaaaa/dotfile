@@ -115,7 +115,7 @@ class ZshCommandKeyMap(BaseCommandKeyMap):
 
     def create_tab_keymap(self):
         for index in range(1, self.tab_num):
-            setattr(self, f"cmd_{index}", self.boss.goto_tab(index))
+            setattr(self, f"cmd_{index}", lambda index=index: self.boss.goto_tab(tab_num=index))
 
     def cmd_w(self):
         """
@@ -209,14 +209,11 @@ class NvimCommandKeyMap(ZshCommandKeyMap):
     def __init__(self, boos, window, keymap: str):
         super().__init__(boos, window, keymap)
 
-    def create_tab_keymap(self):
-        return super().create_tab_keymap()
-
     def create_reset_keymap(self) -> list[str]:
         """
         Define reset_keymap for NvimCommandKeyMap
         """
-        return ["cmd_f", "cmd_r", "cmd_shift_f", "cmd_s", "cmd_t", "cmd_w", "cmd_e"]
+        return ["cmd_f", "cmd_r", "cmd_shift_f", "cmd_s", "cmd_w", "cmd_e"]
 
 
 class TmuxCommandKeyMap(ZshCommandKeyMap):

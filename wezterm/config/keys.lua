@@ -1,109 +1,42 @@
+local keymap = require("utils.send_keys")
 local platform = require("utils.platform")()
-local wezterm = require("wezterm")
-local action = wezterm.action
-local wezterm_nvim = require("utils.smart_split")
-
-local mod = {
-	CTRL = "CTRL",
-	SHIFT = "SHIFT",
-}
-
-if platform.is_mac then
-	mod.COMMAND = "CMD"
-	mod.COMMAND_REV = mod.COMMAND .. "|" .. mod.CTRL
-	mod.OPTION = "META"
-else
-	mod.COMMAND = "ALT"
-	mod.COMMAND_REV = mod.COMMAND .. "|" .. mod.CTRL
-	mod.OPTION = "NONE"
-end
-
-keyCombination = {
-	CTRL_S = mod.CTRL .. "|" .. mod.SHIFT,
-	COMMAND_S = mod.COMMAND .. "|" .. mod.SHIFT,
-}
-
-for k, v in pairs(keyCombination) do
-	mod[k] = v
-end
 
 local keys = {
-	wezterm_nvim.wezterm_tmux_nvim("f", mod.CTRL),
+	-- copy/paste
+	keymap.create_key_binding("CMD", "c"),
+	keymap.create_key_binding("CMD", "v"),
 
-	wezterm_nvim.wezterm_tmux_nvim("h", mod.COMMAND, action { ActivatePaneDirection = "Left" }),
-	wezterm_nvim.wezterm_tmux_nvim("j", mod.COMMAND, action { ActivatePaneDirection = "Down" }),
-	wezterm_nvim.wezterm_tmux_nvim("k", mod.COMMAND, action { ActivatePaneDirection = "Up" }),
-	wezterm_nvim.wezterm_tmux_nvim("l", mod.COMMAND, action { ActivatePaneDirection = "Right" }),
+	-- custom
+	keymap.create_key_binding("CMD", "w"),
+	keymap.create_key_binding("CMD", "r"),
+	keymap.create_key_binding("CMD|SHIFT", "f"),
+	keymap.create_key_binding("CMD", "f"),
+	keymap.create_key_binding("CMD", "t"),
+	-- move
+	keymap.create_key_binding("CMD", "h"),
+	keymap.create_key_binding("CMD", "j"),
+	keymap.create_key_binding("CMD", "k"),
+	keymap.create_key_binding("CMD", "l"),
+	-- resize
+	keymap.create_key_binding("CTRL|SHIFT", "h"),
+	keymap.create_key_binding("CTRL|SHIFT", "j"),
+	keymap.create_key_binding("CTRL|SHIFT", "k"),
+	keymap.create_key_binding("CTRL|SHIFT", "l"),
+	-- split
+	keymap.create_key_binding("CMD|CTRL", "h"),
+	keymap.create_key_binding("CMD|CTRL", "j"),
+	keymap.create_key_binding("CMD|CTRL", "k"),
+	keymap.create_key_binding("CMD|CTRL", "l"),
 
-	wezterm_nvim.wezterm_tmux_nvim("h", mod.CTRL_S, action { AdjustPaneSize = { "Left", 3 } }),
-	wezterm_nvim.wezterm_tmux_nvim("j", mod.CTRL_S, action { AdjustPaneSize = { "Down", 3 } }),
-	wezterm_nvim.wezterm_tmux_nvim("k", mod.CTRL_S, action { AdjustPaneSize = { "Up", 3 } }),
-	wezterm_nvim.wezterm_tmux_nvim("l", mod.CTRL_S, action { AdjustPaneSize = { "Right", 3 } }),
-
-	wezterm_nvim.wezterm_tmux_nvim("h", mod.COMMAND_REV, action { SplitPane = { direction = "Left" } }),
-	wezterm_nvim.wezterm_tmux_nvim("j", mod.COMMAND_REV, action { SplitPane = { direction = "Down" } }),
-	wezterm_nvim.wezterm_tmux_nvim("k", mod.COMMAND_REV, action { SplitPane = { direction = "Up" } }),
-	wezterm_nvim.wezterm_tmux_nvim("l", mod.COMMAND_REV, action { SplitPane = { direction = "Right" } }),
-
-	wezterm_nvim.wezterm_tmux_nvim("w", mod.COMMAND, action { CloseCurrentPane = { confirm = false } }),
-
-	-- wezterm_nvim.SendKey("e", mod.Command),
-	-- copy/paste --
-	{ key = "c", mods = mod.COMMAND, action = action.CopyTo("Clipboard") },
-	{ key = "v", mods = mod.COMMAND, action = action.PasteFrom("Clipboard") },
-
-	-- tabs --
-	-- tabs: spawn+close
-	-- { key = "Enter", mods = mod.COMMAND, action = action.TogglePaneZoomState },
-	wezterm_nvim.wezterm_tmux_nvim("Enter", mod.COMMAND, action.TogglePaneZoomState, true),
-	wezterm_nvim.wezterm_tmux_nvim("t", mod.COMMAND, action.SpawnTab("DefaultDomain"), true),
-	wezterm_nvim.wezterm_tmux_nvim("[", mod.COMMAND, action.ActivateTabRelative(1), true),
-	wezterm_nvim.wezterm_tmux_nvim("]", mod.COMMAND, action.ActivateTabRelative(-1), true),
-	wezterm_nvim.wezterm_tmux_nvim(
-		"[",
-		mod.COMMAND .. "|ALT",
-		action { PaneSelect = { mode = "SwapWithActiveKeepFocus", alphabet = "123456789" } },
-		true
-	),
-	wezterm_nvim.wezterm_tmux_nvim(
-		"]",
-		mod.COMMAND .. "|ALT",
-		action { PaneSelect = { mode = "SwapWithActiveKeepFocus", alphabet = "123456789" } },
-		true
-	),
-
-	wezterm_nvim.wezterm_tmux_nvim("1", mod.COMMAND, action { ActivateTab = 0 }, true),
-	wezterm_nvim.wezterm_tmux_nvim("2", mod.COMMAND, action { ActivateTab = 1 }, true),
-	wezterm_nvim.wezterm_tmux_nvim("3", mod.COMMAND, action { ActivateTab = 2 }, true),
-	wezterm_nvim.wezterm_tmux_nvim("4", mod.COMMAND, action { ActivateTab = 3 }, true),
-	wezterm_nvim.wezterm_tmux_nvim("5", mod.COMMAND, action { ActivateTab = 4 }, true),
-	wezterm_nvim.wezterm_tmux_nvim("6", mod.COMMAND, action { ActivateTab = 5 }, true),
-
-	-- tabs: rename
-	wezterm_nvim.wezterm_tmux_nvim(
-		"k",
-		mod.COMMAND_S,
-		action.PromptInputLine {
-			description = "Enter new name for tab",
-			action = wezterm.action_callback(function(window, pane, line)
-				-- line will be `nil` if they hit escape without entering anything
-				-- An empty string if they just hit enter
-				-- Or the actual line of text they wrote
-				if line then
-					window:active_tab():set_title(line)
-				end
-			end),
-		},
-		true
-	),
-
-	-- send tmux
-	wezterm_nvim.wezterm_tmux_nvim("s", mod.COMMAND),
-	wezterm_nvim.wezterm_tmux_nvim("e", mod.COMMAND),
-	wezterm_nvim.wezterm_tmux_nvim("f", mod.COMMAND, action { PaneSelect = { alphabet = "123456789" } }),
-	wezterm_nvim.wezterm_tmux_nvim("f", mod.COMMAND_S, action.Search { CaseInSensitiveString = "" }),
-	wezterm_nvim.wezterm_tmux_nvim("r", mod.COMMAND, action { SendString = "joshuto\n" }),
-	wezterm_nvim.wezterm_tmux_nvim("/", mod.COMMAND),
+	-- tab
+	keymap.create_key_binding("CMD", "1"),
+	keymap.create_key_binding("CMD", "2"),
+	keymap.create_key_binding("CMD", "3"),
+	keymap.create_key_binding("CMD", "4"),
+	keymap.create_key_binding("CMD", "5"),
+	keymap.create_key_binding("CMD", "6"),
+	keymap.create_key_binding("CMD|SHIFT", "k"),
+	keymap.create_key_binding("CMD", "Enter"),
 }
 
 local M = {

@@ -72,27 +72,8 @@ function M.wezterm_tmux_nvim(key, mods, action, nvim_run)
 
 			-- wezterm shell
 			elseif is_wezterm(pane) or action then
-				print(pane)
 				win:perform_action(action, pane)
 			end
-
-			-- run tmux or nvim
-			-- if is_vim(pane) or is_tmux(pane) then
-			-- pass the keys through to vim/nvim
-			-- win:perform_action({ SendKey = { key = key, mods = mods } }, pane)
-			-- 	local csi_keymap = csi.get_csi_sequence(key, mods)
-			-- 	win:perform_action({ SendString = csi_keymap }, pane)
-			-- else
-			-- 	if operation == "resize" then
-			-- 		win:perform_action({ AdjustPaneSize = { direction_keys[key], 3 } }, pane)
-			-- 	elseif operation == "move" then
-			-- 		win:perform_action({ ActivatePaneDirection = direction_keys[key] }, pane)
-			-- 	elseif operation == "split" then
-			-- 		win:perform_action({ SplitPane = { direction = direction_keys[key] } }, pane)
-			-- 	elseif operation == "close_tab" then
-			-- 		win:perform_action({ CloseCurrentPane = { confirm = false } }, pane)
-			-- 	end
-			-- end
 		end),
 	}
 end
