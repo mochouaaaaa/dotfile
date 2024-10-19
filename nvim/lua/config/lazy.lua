@@ -22,7 +22,7 @@ require("lazy").setup({
     spec = {
         { "nvim-lua/plenary.nvim" },
         -- 添加 LazyVim 并且导入它的其他插件
-        { "LazyVim/LazyVim", pin = true, commint = "e1d39b624f8dffadd787de5a83c81540919d953e" },
+        { "LazyVim/LazyVim" },
         { import = "plugins" },
     },
     defaults = {

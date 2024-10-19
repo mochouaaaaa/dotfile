@@ -1,6 +1,3 @@
-require("lazyvim.config.autocmds")
-
-local Util = require("lazyvim.util")
 -- copilot proxy
 local ok, _ = pcall(require, "copilot")
 if ok then
@@ -119,18 +116,6 @@ autocmd("TermClose", {
     callback = function()
         if package.loaded["neo-tree.sources.git_status"] then
             require("neo-tree.sources.git_status").refresh()
-        end
-    end,
-})
-
-vim.o.scrolloff = math.floor(vim.o.lines / 2)
-autocmd({ "CursorMoved" }, {
-    group = vim.api.nvim_create_augroup("cursor_move", { clear = true }),
-    callback = function()
-        local mode = vim.api.nvim_get_mode().mode
-        -- 仅在普通模式和可视模式下执行 zz
-        if mode == "n" or mode == "v" then
-            vim.cmd("normal! zz")
         end
     end,
 })

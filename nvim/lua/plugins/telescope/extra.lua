@@ -42,8 +42,7 @@ return {
 
 		config = function(_, opts)
 			require("neoclip").setup(opts)
-			local Util = require("lazyvim.util")
-			Util.on_load("telescope.nvim", function() require("telescope").load_extension("neoclip") end)
+			require("telescope").load_extension("neoclip")
 		end,
 	},
 	{
@@ -65,8 +64,7 @@ return {
 		config = function(_, opts)
 			require("project_nvim").setup(opts)
 
-			local Util = require("lazyvim.util")
-			Util.on_load("telescope.nvim", function() require("telescope").load_extension("projects") end)
+			require("telescope").load_extension("projects")
 		end,
 		keys = {
 			{

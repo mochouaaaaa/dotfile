@@ -62,10 +62,7 @@ local M = {
                 priority = 100,
                 primary = true,
                 format = function(buf)
-                    local plugin = require("lazy.core.config").plugins["conform.nvim"]
-                    local Plugin = require("lazy.core.plugin")
-                    local opts = Plugin.values(plugin, "opts", false)
-                    require("conform").format(Util.merge(opts.format, { bufnr = buf }))
+                    require("conform").format({ bufnr = buf })
                 end,
                 sources = function(buf)
                     local ret = require("conform").list_formatters(buf)

@@ -18,13 +18,4 @@ return {
             })
         end,
     },
-    {
-        "mikavilpas/yazi.nvim",
-        event = "VeryLazy",
-        config = function()
-            vim.keymap.set("n", utils.platform_key.cmd .. "-r>", function()
-                require("yazi").yazi()
-            end)
-        end,
-    },
 }

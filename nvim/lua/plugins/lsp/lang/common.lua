@@ -146,11 +146,9 @@ function M.setup(client, bufnr)
         end
     end
 
-    Util.lsp.on_attach(function(client, buffer)
-        if client.supports_method("textDocument/inlayHint") then
-            Util.toggle.inlay_hints(true, {})
-        end
-    end)
+    if client.supports_method("textDocument/inlayHint") then
+        vim.lsp.inlay_hint.enable(true, { bufnr = bufnr })
+    end
 
     if client.supports_method("textDocument/documentHighlight") then
         add_buffer_autocmd("lsp_document_highlight", bufnr, {

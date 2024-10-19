@@ -89,24 +89,6 @@ return {
             end
         end,
     },
-    {
-        -- 轻松加快 Neovim 启动时间！
-        "nathom/filetype.nvim",
-        lazy = true,
-        event = { "BufRead", "BufNewFile" },
-        config = function()
-            require("filetype").setup({
-                overrides = {
-                    extensions = {
-                        h = "cpp",
-                        pyd = "python",
-                        pyc = "python",
-                    },
-                },
-            })
-        end,
-    },
-
     -- 在"dd"等不希望将内容复制到系统剪贴板的时候不复制到系统剪贴板。支持在SSH等情况复制到系统剪贴板。
     {
         "ibhagwan/smartyank.nvim",

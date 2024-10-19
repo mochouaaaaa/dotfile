@@ -10,22 +10,37 @@ local bufferline = {
         return {
             highlights = require("catppuccin.groups.integrations.bufferline").get(),
             options = {
-                always_show_bufferline = true,
+                close_command = function(n)
+                    require("mini.bufremove").delete(n, false)
+                end,
+                right_mouse_command = function(n)
+                    require("mini.bufremove").delete(n, false)
+                end,
+
+                always_show_bufferline = false,
                 show_duplicate_prefix = true, -- whether to show duplicate buffer prefix
-                -- numbers = function(opts)
-                -- return string.format("%s·%s", opts.lower(opts.ordinal), opts.raise(opts.id))
-                -- end,
-                enforce_regular_tabs = true,
+                buffer_close_icon = "",
+                close_icon = "",
                 offsets = {
                     filetype = "neo-tree",
                     raw = " %{%v:lua.__get_selector()%} ",
                     highlight = { sep = { link = "WinSeparator" } },
-                    -- text = "File Explorer",
-                    -- text_align = "left",
+                    text = "File Explorer",
+                    text_align = "right",
                     separator = "┃",
                 },
             },
         }
+    end,
+    config = function(_, opts)
+        require("bufferline").setup(opts)
+        vim.api.nvim_create_autocmd("BufAdd", {
+            callback = function()
+                vim.schedule(function()
+                    pcall(nvim_bufferline)
+                end)
+            end,
+        })
     end,
 }
 

@@ -179,10 +179,7 @@ return {
                 desc = "opens message history",
             })
 
-            local Util = require("lazyvim.util")
-            Util.on_load("telescope.nvim", function()
-                require("telescope").load_extension("noice")
-            end)
+            require("telescope").load_extension("noice")
         end,
     },
 }
