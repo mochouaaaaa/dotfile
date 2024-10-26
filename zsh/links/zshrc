@@ -13,8 +13,19 @@ zsh-defer zinit light-mode for zdharma-continuum/zinit-annex-bin-gem-node
 zsh-defer zinit light zsh-users/zsh-completions
 # zsh-defer zinit light zinit-zsh/z-a-meta-plugins
 
-autoload -U compinit
-compinit
+# autoload -U compinit
+# compinit
+
+# homebrew
+# brew why
+function brew() {
+    if [[ $1 == "why" ]]; then
+        brew uses --installed $2
+    else
+        command brew "$@"
+    fi
+}
+
 zinit snippet $HOME/.config/zsh/init.zsh
 export PATH="/usr/local/sbin:$PATH"
 

@@ -218,6 +218,12 @@ class ZshCommandKeyMap(BaseCommandKeyMap):
                 self, f"cmd_ctrl_{directory_key}", lambda direction=direction, boss=self.boss: _func(direction, boss)
             )
 
+    def cmd_m(self):
+        """
+        minimize kitty
+        """
+        self.boss.minimize_macos_window()
+
     def cmd_w(self):
         """
         close currrent window
@@ -340,7 +346,7 @@ class TmuxCommandKeyMap(ZshCommandKeyMap):
                 super().send_keymap(keymap)
 
     def _split_window(self):
-        for direction in self.DIRECTORY_KEY_MAP.values():
+        for direction in self.DIRECTORY_KEY_MAP.keys():
             setattr(
                 self,
                 f"cmd_ctrl_{direction}",
@@ -348,7 +354,7 @@ class TmuxCommandKeyMap(ZshCommandKeyMap):
             )
 
     def _move_window(self):
-        for direction in self.DIRECTORY_KEY_MAP.values():
+        for direction in self.DIRECTORY_KEY_MAP.keys():
             setattr(
                 self,
                 f"cmd_{direction}",
@@ -356,7 +362,7 @@ class TmuxCommandKeyMap(ZshCommandKeyMap):
             )
 
     def _resize_window(self):
-        for direction in self.DIRECTORY_KEY_MAP.values():
+        for direction in self.DIRECTORY_KEY_MAP.keys():
             setattr(
                 self,
                 f"ctrl_shift_{direction}",
@@ -405,7 +411,6 @@ class YaziCommandKeyMap(ZshCommandKeyMap):
 @result_handler(no_ui=True)
 def handle_result(args, answer, target_window_id, boss):
     window = boss.active_window
-    tab = boss.active_tab
 
     if window is None:
         return
@@ -415,6 +420,7 @@ def handle_result(args, answer, target_window_id, boss):
 
     # 类映射字典，只实例化对应的类
     class_map = {
+        "/usr/bin/ssh": ZshCommandKeyMap,
         "-zsh": ZshCommandKeyMap,
         "nvim": NvimCommandKeyMap,
         "tmux": TmuxCommandKeyMap,

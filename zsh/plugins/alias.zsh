@@ -1,11 +1,30 @@
 zinit snippet $HOME/.config/zsh/utils.zsh
 
+hash -d desktop="$HOME/Desktop"
+hash -d downloads="$HOME/Downloads"
+hash -d documents="$HOME/Documents"
+hash -d videos="$HOME/Videos"
+hash -d music="$HOME/Music"
+hash -d pictures="$HOME/Pictures"
+hash -d movies="$HOME/Movies"
+hash -d trash="$HOME/.Trash"
+hash -d code="/Volumes/Code"
+
+
 alias ..="cd .."
 alias ~="cd ~"
 alias -- -="cd -"
 
 export BAT_THEME="Catppuccin-macchiato"
-check_command_exist "bat" "alias cat='bat -p'"
+# _bat_or_cat(){
+#     if [[ -f "$1" ]]; then
+#         case "$(file --brief --mime-type "$1")" in
+#             image/*) kitty icat "$1" ;;
+#             *) bat -p "$1" ;;
+#         esac
+#     fi
+# }
+check_command_exist "bat" "alias cat=bat"
 
 check_command_exist "btop" "alias top=btop"
 
@@ -38,7 +57,7 @@ if check_command_exist "yazi"; then
         fi
         rm -f -- "$tmp"
     }
-    # alias yazi=_yazi
+    alias yazi=_yazi
     if [[ -n "$YAZI_ID" ]]; then
         function _yazi_cd() {	
             ya pub dds-cd --str "$PWD"

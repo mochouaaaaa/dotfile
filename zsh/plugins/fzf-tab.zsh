@@ -1,4 +1,6 @@
-source <(fzf --zsh)
+if (( $+commands[fzf] )) &>/dev/null; then
+    source <(fzf --zsh)
+fi
 
 # build-fzf-tab-module  二进制执行
 zsh-defer zinit light Aloxaf/fzf-tab
@@ -64,7 +66,7 @@ export FZF_CTRL_R_OPTS="
 export FZF_TMUX_OPTS="-p 90%,80%" # 控制着fzf的window 是 popup 的还是 split panel 的
 zstyle ':fzf-tab:*' fzf-command ftb-tmux-popup
 zstyle ':fzf-tab:*' popup-pad 30 0
-zstyle ':fzf-tab:*' fzf-flags --preview-window=down:3:hidden:wrap
+zstyle ':fzf-tab:*' fzf-flags --preview-window=down:9:hidden:wrap
 zstyle ':fzf-tab:*' fzf-pad 4
 zstyle ':completion:*:eza' file-sort modification
 zstyle ':completion:*:eza' sort false
@@ -83,7 +85,6 @@ zstyle ':fzf-tab:complete:systemctl-*:*' fzf-preview 'SYSTEMD_COLORS=1 systemctl
 
 # show file content
 zstyle ':fzf-tab:complete:*:*' fzf-preview 'less ${(Q)realpath}'
-export LESSOPEN='|~/.lessfilter %s'
 zstyle ':fzf-tab:complete:*:options' fzf-preview
 zstyle ':fzf-tab:complete:*:argument-1' fzf-preview
 
