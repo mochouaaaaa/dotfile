@@ -237,9 +237,9 @@ class ZshCommandKeyMap(BaseCommandKeyMap):
         # import tempfile
         # import os
 
-        # getattr(self.boss, 'launch')('--copy-env', '--cwd=current', 'sh', '-c', 'yazi')
+        self.boss.launch("--copy-env", "--type=overlay-main", "--cwd=current", "sh", "-c", "yazi")
 
-        self.window.write_to_child("yazi\n")
+        # self.window.write_to_child("yazi\n")
         # 创建临时文件以存储子进程修改的工作目录
         # temp_dir_file = tempfile.NamedTemporaryFile(delete=False, dir="/tmp")
         # temp_dir_file.close()  # 我们仅需要文件名，立即关闭文件
@@ -420,7 +420,7 @@ def handle_result(args, answer, target_window_id, boss):
 
     # 类映射字典，只实例化对应的类
     class_map = {
-        "/usr/bin/ssh": ZshCommandKeyMap,
+        # "/usr/bin/ssh": NvimCommandKeyMap,
         "-zsh": ZshCommandKeyMap,
         "nvim": NvimCommandKeyMap,
         "tmux": TmuxCommandKeyMap,
@@ -432,6 +432,7 @@ def handle_result(args, answer, target_window_id, boss):
 
     if command_class is None:
         print(f"Unsupported command: {cmd}")
+        window.send_key(keymap)
         return
 
     # 只实例化与当前cmd对应的类

@@ -2,6 +2,7 @@ local M = {
 	-- behaviours
 	automatically_reload_config = true,
 	check_for_updates = false,
+	ssh_backend = "Ssh2",
 	exit_behavior = "CloseOnCleanExit", -- if the shell program exited with a successful status
 	status_update_interval = 1000,
 

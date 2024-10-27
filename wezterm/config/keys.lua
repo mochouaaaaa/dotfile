@@ -1,5 +1,4 @@
 local keymap = require("utils.send_keys")
-local platform = require("utils.platform")()
 
 local keys = {
 	-- copy/paste

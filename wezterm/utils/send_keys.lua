@@ -38,16 +38,13 @@ end
 
 function BaseCommandKeyMap:_convert_keymap_to_function_name()
 	self.mod = string.gsub(self.mod, "|", "_")
-	local key = self.keymap
+	local key = self.key
 
-	-- 替换特殊字符
-	for special_char, replacement in pairs(self.SPECIAL_CHAR_MAP) do
-		if key:find(special_char) then
-			key = key:gsub(special_char, replacement)
-		end
+	if self.SPECIAL_CHAR_MAP[key] then
+		key = self.SPECIAL_CHAR_MAP[key]
 	end
 
-	local function_name = string.lower(self.mod .. "_" .. self.key)
+	local function_name = string.lower(self.mod .. "_" .. key)
 	return function_name
 end
 
@@ -103,6 +100,13 @@ function ZshCommandKeyMap:create_tab_keymap()
 	end
 end
 
+ZshCommandKeyMap.DIRECTIONAL = {
+	h = "Left",
+	j = "Down",
+	k = "Up",
+	l = "Right",
+}
+
 -- Common command functions
 local function create_cmd_function(name, action)
 	ZshCommandKeyMap["cmd_" .. name] = function(self) self:send_keymap(action) end
@@ -111,14 +115,14 @@ end
 -- Directional commands
 for _, direction in ipairs { "h", "j", "k", "l" } do
 	ZshCommandKeyMap["cmd_" .. direction] = function(self)
-		self:send_keymap(wezterm.action { ActivatePaneDirection = direction })
+		self:send_keymap(wezterm.action { ActivatePaneDirection = self.DIRECTIONAL[direction] })
 	end
 end
 
 -- Resize pane commands
 for _, dir in ipairs { "h", "j", "k", "l" } do
 	ZshCommandKeyMap["ctrl_shift_" .. dir] = function(self)
-		self:send_keymap(wezterm.action { AdjustPaneSize = { dir, 3 } })
+		self:send_keymap(wezterm.action { AdjustPaneSize = { self.DIRECTIONAL[dir], 3 } })
 	end
 end
 
@@ -138,10 +142,18 @@ create_cmd_function(
 	wezterm.action { PaneSelect = { mode = "SwapWithActiveKeepFocus", alphabet = "123456789" } }
 )
 
-function ZshCommandKeyMap:cmd_ctrl_h() self:send_keymap(wezterm.action { SplitPane = { direction = "Left" } }) end
-function ZshCommandKeyMap:cmd_ctrl_j() self:send_keymap(wezterm.action { SplitPane = { direction = "Down" } }) end
-function ZshCommandKeyMap:cmd_ctrl_k() self:send_keymap(wezterm.action { SplitPane = { direction = "Up" } }) end
-function ZshCommandKeyMap:cmd_ctrl_l() self:send_keymap(wezterm.action { SplitPane = { direction = "Right" } }) end
+function ZshCommandKeyMap:cmd_ctrl_h()
+	self:send_keymap(wezterm.action { SplitPane = { direction = self.DIRECTIONAL["h"] } })
+end
+function ZshCommandKeyMap:cmd_ctrl_j()
+	self:send_keymap(wezterm.action { SplitPane = { direction = self.DIRECTIONAL["j"] } })
+end
+function ZshCommandKeyMap:cmd_ctrl_k()
+	self:send_keymap(wezterm.action { SplitPane = { direction = self.DIRECTIONAL["k"] } })
+end
+function ZshCommandKeyMap:cmd_ctrl_l()
+	self:send_keymap(wezterm.action { SplitPane = { direction = self.DIRECTIONAL["l"] } })
+end
 function ZshCommandKeyMap:cmd_shift_k()
 	self:send_keymap(wezterm.action.PromptInputLine {
 		description = "Enter new name for tab",
@@ -162,7 +174,24 @@ NvimCommandKeyMap.__index = NvimCommandKeyMap
 
 function NvimCommandKeyMap:new(mod, key, window, pane) return ZshCommandKeyMap.new(self, mod, key, window, pane) end
 
-function NvimCommandKeyMap:create_reset_keymap() return { "cmd_f", "cmd_r", "cmd_shift_f", "cmd_s", "cmd_w", "cmd_e" } end
+function NvimCommandKeyMap:create_reset_keymap()
+	return {
+		"cmd_h",
+		"cmd_j",
+		"cmd_k",
+		"cmd_l",
+		"ctrl_shift_h",
+		"ctrl_shift_j",
+		"ctrl_shift_k",
+		"ctrl_shift_l",
+		"cmd_f",
+		"cmd_r",
+		"cmd_shift_f",
+		"cmd_s",
+		"cmd_w",
+		"cmd_e",
+	}
+end
 
 -- TmuxCommandKeyMap class
 TmuxCommandKeyMap = setmetatable({}, { __index = BaseCommandKeyMap })
@@ -236,6 +265,10 @@ function YaziCommandKeyMap:cmd_f() BaseCommandKeyMap.default_keymap(self) end
 -- handle_result 函数
 function handle_result(mod, key, window)
 	local pane = window:active_pane()
+	if pane:get_foreground_process_name() == nil then
+		window:perform_action({ SendString = csi.get_csi_keymap(key, mod) }, pane)
+		return
+	end
 	local process_name = string.match(pane:get_foreground_process_name(), "[^/]+$")
 
 	local class_map = {
