@@ -1,3 +1,19 @@
+local cmdline_popup_view = {
+    position = {
+        row = 3,
+        col = "50%",
+    },
+    size = {
+        width = "48%",
+        height = "auto",
+    },
+    border = {
+        style = vim.g.border.style,
+        padding = { 0, 1 },
+    },
+    filter_options = {},
+}
+
 local opts = {
     -- you can enable a preset for easier configuration
     lsp = {
@@ -37,9 +53,16 @@ local opts = {
         },
     },
     views = {
+        cmdline_popup = cmdline_popup_view,
         mini = {
             win_options = {
-                winblend = 0,
+                winblend = function()
+                    if vim.g.neovide then
+                        return 75
+                    else
+                        return 10
+                    end
+                end,
             },
         },
     },

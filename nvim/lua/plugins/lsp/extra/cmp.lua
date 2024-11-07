@@ -114,8 +114,8 @@ nvim_cmp.opts = function()
             }),
         },
         window = {
-            completion = cmp.config.window.bordered(border_opts),
-            documentation = cmp.config.window.bordered(border_opts),
+            completion = cmp.config.window.bordered(vim.g.border.style),
+            documentation = cmp.config.window.bordered(vim.g.border.style),
         },
         experimental = {
             ghost_text = { hl_group = "Comment" },

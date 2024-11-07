@@ -100,7 +100,7 @@ return {
     },
     {
         "nvim-pack/nvim-spectre",
-        build = "build.sh nvim-oxi",
+        -- build = "build.sh nvim-oxi",
         config = function()
             -- Lua
             local utils = require("config.utils")

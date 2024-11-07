@@ -1,6 +1,6 @@
 return {
     "catppuccin/nvim",
-    name = "cvatppuccin",
+    name = "catppuccin",
     priority = 1000,
     build = ":CatppuccinCompile",
     config = function()
@@ -21,8 +21,8 @@ return {
                 dap_ui = true,
                 dashboard = true,
                 flash = true,
-                notify = false,
-                noice = false,
+                notify = true,
+                noice = true,
                 neotree = false,
                 gitsigns = true,
                 markdown = true,
@@ -68,5 +68,9 @@ return {
             },
         })
         vim.cmd.colorscheme("catppuccin")
+        if vim.g.neovide then
+            vim.notify("neovide load config")
+            require("plugins.ui.theme.neovide").init()
+        end
     end,
 }

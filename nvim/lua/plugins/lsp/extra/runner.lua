@@ -1,3 +1,5 @@
+local _key = require("util.keymap")
+
 return {
     { -- This plugin
         "Zeioth/compiler.nvim",
@@ -30,12 +32,16 @@ return {
                 task_list = {
                     direction = "left",
                     bindings = {
-                        ["<C-u>"] = false,
-                        ["<C-d>"] = false,
-                        ["<C-h>"] = false,
-                        ["<C-j>"] = false,
-                        ["<C-k>"] = false,
-                        ["<C-l>"] = false,
+                        [_key.platform_key.cmd .. "-h>"] = "<C-w>h",
+                        [_key.platform_key.cmd .. "-j>"] = "<C-w>j",
+                        [_key.platform_key.cmd .. "-k>"] = "<C-w>k",
+                        [_key.platform_key.cmd .. "-l>"] = "<C-w>l",
+                    },
+                },
+                form = {
+                    border = vim.g.border.style,
+                    win_opts = {
+                        winblend = vim.o.pumblend,
                     },
                 },
             })

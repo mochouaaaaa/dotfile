@@ -1,3 +1,5 @@
+local _key = require("util.keymap")
+
 local config = function()
     local actions = require("telescope.actions")
 
@@ -19,11 +21,8 @@ local config = function()
             },
             mappings = {
                 i = {
-                    ["C-j>"] = actions.cycle_history_next,
-                    ["C-k>"] = actions.cycle_history_prev,
-
-                    ["<Down>"] = actions.move_selection_next,
-                    ["<Up>"] = actions.move_selection_previous,
+                    [_key.platform_key.cmd .. "-j>"] = actions.move_selection_next,
+                    [_key.platform_key.cmd .. "-k>"] = actions.move_selection_previous,
 
                     ["<CR>"] = actions.select_default,
                 },
@@ -36,8 +35,6 @@ local config = function()
                     ["j"] = actions.move_selection_next,
                     ["k"] = actions.move_selection_previous,
 
-                    ["<Down>"] = actions.move_selection_next,
-                    ["<Up>"] = actions.move_selection_previous,
                     ["gg"] = actions.move_to_top,
                     ["G"] = actions.move_to_bottom,
                 },

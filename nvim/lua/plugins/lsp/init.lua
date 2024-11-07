@@ -1,8 +1,50 @@
 return {
     {
+        "folke/lazydev.nvim",
+        ft = "lua", -- only load on lua files
+        opts = {
+            library = {
+                -- See the configuration section for more details
+                -- Load luvit types when the `vim.uv` word is found
+                { path = "luvit-meta/library", words = { "vim%.uv" } },
+            },
+        },
+    },
+    { "Bilal2453/luvit-meta", lazy = true }, -- optional `vim.uv` typings
+    { -- optional completion source for require statements and module annotations
+        "hrsh7th/nvim-cmp",
+        opts = function(_, opts)
+            opts.sources = opts.sources or {}
+            table.insert(opts.sources, {
+                name = "lazydev",
+                group_index = 0, -- set group index to 0 to skip loading LuaLS completions
+            })
+        end,
+    },
+    {
         "smjonas/inc-rename.nvim",
         config = function()
             require("inc_rename").setup()
+        end,
+    },
+    {
+        "chrisgrieser/nvim-lsp-endhints",
+        event = "LspAttach",
+        config = function()
+            require("lsp-endhints").setup({
+                icons = {
+                    type = "󰜁 ",
+                    parameter = "󰏪 ",
+                    offspec = " ", -- hint kind not defined in official LSP spec
+                    unknown = " ", -- hint kind is nil
+                },
+                label = {
+                    padding = 1,
+                    marginLeft = 0,
+                    bracketedParameters = true,
+                },
+                autoEnableHints = true,
+            })
         end,
     },
     {
@@ -28,53 +70,6 @@ return {
                         preview_cutoff = 20,
                         preview_height = function(_, _, max_lines)
                             return max_lines - 15
-                        end,
-                    },
-                },
-            })
-        end,
-    },
-    {
-        "Wansmer/symbol-usage.nvim",
-        enabled = true,
-        config = function()
-            local function text_format(symbol)
-                local fragments = {}
-
-                local stacked_functions = symbol.stacked_count > 0 and (" | +%s"):format(symbol.stacked_count) or ""
-
-                if symbol.references then
-                    local usage = symbol.references <= 1 and "usage" or "usages"
-                    local num = symbol.references == 0 and "no" or symbol.references
-                    table.insert(fragments, ("%s %s"):format(num, usage))
-                end
-
-                if symbol.definition then
-                    table.insert(fragments, symbol.definition .. " defs")
-                end
-
-                if symbol.implementation then
-                    table.insert(fragments, symbol.implementation .. " impls")
-                end
-
-                return table.concat(fragments, ", ") .. stacked_functions
-            end
-            require("symbol-usage").setup({
-                request_pending_text = "",
-                implementation = { enabled = true },
-                definition = { enabled = true },
-                references = { enabled = true },
-                text_format = text_format,
-                disable = {
-                    cond = {
-                        function()
-                            return vim.fn.expand("%:p"):find(vim.fn.getcwd())
-                        end,
-                        function()
-                            return vim.fn.expand("%:p"):find("/site_packages/")
-                        end,
-                        function()
-                            return vim.fn.expand("%:p"):find("/venv/")
                         end,
                     },
                 },
@@ -157,7 +152,6 @@ return {
             cmp.event:on("confirm_done", cmp_autopairs.on_confirm_done())
         end,
     },
-    { "folke/neodev.nvim" },
     { import = "plugins.lsp.extra" },
     { import = "plugins.lsp.extra_lang" },
 }

@@ -18,6 +18,15 @@ end
 
 vim.opt.rtp:prepend(vim.env.LAZY or lazypath)
 
+-- Set border style
+local enable_border = not vim.g.neovide
+vim.g.border = {
+    enabled = enable_border,
+    style = enable_border and "rounded" or { " " },
+    borderchars = enable_border and { "─", "│", "─", "│", "╭", "╮", "╯", "╰" }
+        or { " ", " ", " ", " ", " ", " ", " ", " " },
+}
+
 require("lazy").setup({
     spec = {
         { "nvim-lua/plenary.nvim" },

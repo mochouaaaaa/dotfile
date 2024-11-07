@@ -1,15 +1,6 @@
 local M = {}
 local Util = require("lazyvim.util")
 
---- Helper function to check if any active LSP clients given a filter provide a specific capability
----@param capability string The server capability to check for (example: "documentFormattingProvider")
----@param filter vim.lsp.get_active_clients.filter|nil (table|nil) A table with
----              key-value pairs used to filter the returned clients.
----              The available keys are:
----               - id (number): Only return clients with the given id
----               - bufnr (number): Only return clients attached to this buffer
----               - name (string): Only return clients with the given name
----@return boolean # Whether or not any of the clients provide the capability
 function M.has_capability(capability, filter)
     for _, client in ipairs(vim.lsp.get_active_clients(filter)) do
         if client.supports_method(capability) then
@@ -174,7 +165,7 @@ function M.setup(client, bufnr)
     end
 
     if Util.has("nvim-navic") then
-        navic = require("nvim-navic")
+        local navic = require("nvim-navic")
         if client.server_capabilities.documentSymbolProvider then
             navic.attach(client, bufnr)
         end
@@ -197,7 +188,7 @@ function M.make_capabilities(override)
         valueSet = { 1 },
     }
     capabilities = require("cmp_nvim_lsp").default_capabilities(capabilities)
-    return override and vim.tal_deep_extend("keep", capabilities, override) or capabilities
+    return override and vim.tbl_deep_extend("keep", capabilities, override) or capabilities
 end
 
 return M

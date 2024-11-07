@@ -25,6 +25,10 @@ end
 
 local utils = require("config.utils")
 
+function M.init()
+    vim.g.neo_tree_remove_legacy_commands = 0
+end
+
 function M.opts()
     -- mac system cmd keymap
     vim.api.nvim_set_keymap("n", utils.platform_key.cmd .. "-e>", "<Cmd>Neotree toggle<CR>", {})
@@ -35,7 +39,7 @@ function M.opts()
     return {
         auto_clean_after_session_restore = true,
         close_if_last_window = true,
-        popup_border_style = "rounded", -- "double", "none", "rounded", "shadow", "single" or "solid"
+        popup_border_style = vim.g.border.style, -- "double", "none", "rounded", "shadow", "single" or "solid"
         sort_case_insensitive = true, -- used when sorting files and directories in the tree
         sort_function = function(a, b)
             if a.type == b.type then

@@ -1,7 +1,12 @@
 patch:
-  "style/horizontal": true
+  "menu/page_size": 9
   "style/candidate_list_layout": linear
   "style/translucency": true
+
+  "key_binder/bindings":
+    # Emacs 风格的快捷键
+    - { when: paging, accept: Super_L+k, send: Page_Up } # 翻页
+    - { when: paging, accept: Super_L+j, send: Page_Down }
 
   # 特定App默认中/英文输入
   app_options:
@@ -21,6 +26,9 @@ patch:
     com.microsoft.VSCode: # Visual Studio Code
       ascii_mode: true
       ascii_punct: true # 中文状态输出英文标点(半角)
+    com.neovide.neovide:
+      ascii_mode: true
+      ascii_punct: true
     com.tencent.Lemon: # 腾讯柠檬
       ascii_mode: true
     com.apple.dt.Xcode: # Xcode

@@ -69,20 +69,25 @@ vim.api.nvim_create_autocmd("FileType", {
     end,
 })
 
--- TODO: remove this once https://github.com/nvim-telescope/telescope.nvim/issues/699 is fixed
-vim.api.nvim_create_autocmd("BufEnter", {
-    callback = function()
-        if vim.opt.foldmethod:get() == "expr" then
-            vim.schedule(function()
-                vim.opt.foldmethod = "expr"
-            end)
-        end
-    end,
-})
-
 o.virtualedit = "block" -- Allow cursor to move where there is no text in visual block mode
 
 -- UI
+
+vim.opt.fillchars = {
+    diff = "╱",
+    eob = " ",
+    stl = " ",
+    stlnc = " ",
+    wbr = " ",
+    horiz = "─",
+    horizup = "┴",
+    horizdown = "┬",
+    vert = "│",
+    vertleft = "┤",
+    vertright = "├",
+    verthoriz = "┼",
+}
+
 o.winblend = 0
 o.pumblend = 0
 o.pumheight = 15
@@ -108,8 +113,6 @@ vim.lsp.set_log_level("info")
 opt.history = 1000
 opt.wildignorecase = true
 
-opt.ttimeoutlen = 10
-
 o.timeout = true
 o.timeoutlen = 500
 
@@ -126,27 +129,6 @@ g.loaded_python3_provider = 0
 g.loaded_ruby_provider = 0
 g.loaded_node_provider = 0
 g.loaded_perl_provider = 0
-
--- Diagnostic
-opt.updatetime = 300
-
-vim.fn.sign_define("DiagnosticSignError", { text = " ", texthl = "DiagnosticSignError" })
-vim.fn.sign_define("DiagnosticSignWarn", { text = " ", texthl = "DiagnosticSignWarn" })
-vim.fn.sign_define("DiagnosticSignInfo", { text = " ", texthl = "DiagnosticSignInfo" })
-vim.fn.sign_define("DiagnosticSignHint", { text = "󰌵", texthl = "DiagnosticSignHint" })
-
-vim.diagnostic.config({
-    virtual_text = false,
-    float = { header = "", prefix = "", focusable = false, border = "rounded", source = "always" },
-    update_in_insert = true,
-    severity_sort = true,
-})
-
--- kitty terminal background
-vim.cmd([[highlight Normal guibg=none]])
-vim.cmd([[highlight NonText guibg=none]])
-vim.cmd([[highlight Normal ctermbg=none]])
-vim.cmd([[highlight NonText ctermbg=none]])
 
 opt.smoothscroll = true
 

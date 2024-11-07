@@ -8,6 +8,7 @@ return {
             "SmiteshP/nvim-navic",
         },
     },
+    event = "UIEnter",
     opts = function()
         local coustom_lib = require("plugins.configs.heirline")
         local lib = require("heirline-components.all")
@@ -55,6 +56,15 @@ return {
             statusline = { -- UI statusbar
                 hl = { fg = "fg", bg = "bg" },
                 lib.component.mode(),
+                {
+                    init = function()
+                        left_components_length = 4
+                    end,
+                    provider = function()
+                        return "   "
+                    end,
+                    -- hl = primary_highlight,
+                },
                 lib.component.git_branch(),
                 lib.component.file_info(),
                 lib.component.git_diff(),
