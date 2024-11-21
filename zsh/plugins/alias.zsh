@@ -25,6 +25,7 @@ export BAT_THEME="Catppuccin-macchiato"
 #     fi
 # }
 
+alias neovim=/Volumes/Code/Projects/rust/neovide/target/release/neovide
 check_command_exist "neovide" "alias neovide='neovide $@ --frame buttonless --fork'"
 
 check_command_exist "bat" "alias cat='bat -p --style=plain'"
@@ -41,7 +42,7 @@ if check_command_exist "lsd"; then
     alias la='ls -a'
     alias lla='ls -la'
     alias lt='ls --tree'
-fi 
+fi
 
 check_command_exist "procs" "alias ps=procs"
 
@@ -62,7 +63,7 @@ if check_command_exist "yazi"; then
     }
     alias yazi=_yazi
     if [[ -n "$YAZI_ID" ]]; then
-        function _yazi_cd() {	
+        function _yazi_cd() {
             ya pub dds-cd --str "$PWD"
         }
         add-zsh-hook zshexit _yazi_cd

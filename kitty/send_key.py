@@ -111,6 +111,17 @@ class BaseCommandKeyMap(metaclass=ABCMeta):
             print(f"Function '{self.function_name}' not found.")
 
 
+class DefaultCommandKeyMap(BaseCommandKeyMap):
+    def create_reset_keymap(self) -> list[str]:
+        return super().create_reset_keymap()
+
+    def create_tab_keymap(self):
+        return super().create_tab_keymap()
+
+    def call_keymap(self) -> None:
+        self.default_keymap()
+
+
 class ZshCommandKeyMap(BaseCommandKeyMap):
     def __init__(self, boos, window, keymap: str):
         super().__init__(boos, window, keymap)
@@ -205,9 +216,9 @@ class ZshCommandKeyMap(BaseCommandKeyMap):
     def _split_window(self):
         def _func(direction, boss):
             if direction == "up" or direction == "down":
-                boss.launch("--cwd=current", "--location=hsplit")
+                boss.launch("--cwd=current", "--copy-env", "--location=hsplit")
             else:
-                boss.launch("--cwd=current", "--location=vsplit")
+                boss.launch("--cwd=current", "--copy-env", "--location=vsplit")
 
             if direction == "up" or direction == "left":
                 # boss.active_tab.move_window(direction)
@@ -420,7 +431,6 @@ def handle_result(args, answer, target_window_id, boss):
 
     # 类映射字典，只实例化对应的类
     class_map = {
-        # "/usr/bin/ssh": NvimCommandKeyMap,
         "-zsh": ZshCommandKeyMap,
         "nvim": NvimCommandKeyMap,
         "tmux": TmuxCommandKeyMap,
@@ -431,8 +441,9 @@ def handle_result(args, answer, target_window_id, boss):
     command_class = class_map.get(cmd, None)
 
     if command_class is None:
-        print(f"Unsupported command: {cmd}")
-        window.send_key(keymap)
+        print(f"Unsupported command: {cmd}, call default keymap.")
+        default_instance = DefaultCommandKeyMap(boss, window, keymap)
+        default_instance.call_keymap()
         return
 
     # 只实例化与当前cmd对应的类
