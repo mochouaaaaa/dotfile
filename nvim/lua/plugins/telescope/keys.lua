@@ -1,6 +1,6 @@
-local extr_args = require("plugins.configs.fzf").extr_args
+local extr_args = require("util.fzf").extr_args
 
-local utils = require("config.utils")
+local _key = require("util.keymap")
 local telescope = require("telescope.builtin")
 
 return {
@@ -16,14 +16,14 @@ return {
         desc = "Search Git File",
     },
     {
-        utils.platform_key.cmd .. "-S-f>",
+        _key.platform_key.cmd .. "-S-f>",
         function()
             telescope.live_grep({ additional_args = extr_args })
         end,
         desc = "Grep (root dir)",
     },
     {
-        utils.platform_key.cmd .. "-f>",
+        _key.platform_key.cmd .. "-f>",
         function()
             telescope.find_files({
                 find_command = { "rg", "--color=never", "--smart-case", "--files", unpack(extr_args) },

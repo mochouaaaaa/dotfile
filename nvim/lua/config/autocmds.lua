@@ -2,7 +2,7 @@ local autocmd = vim.api.nvim_create_autocmd
 local augroup = vim.api.nvim_create_augroup
 
 -- Automatic save
-require("util.autosave").setup()
+-- require("util.autosave").setup()
 
 -- Terminal option
 vim.api.nvim_create_autocmd({ "TermOpen" }, {

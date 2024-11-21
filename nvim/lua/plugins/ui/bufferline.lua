@@ -8,7 +8,7 @@ local function is_pinned(buf)
     return false
 end
 
-local utils = require("config.utils")
+local _key = require("util.keymap")
 
 return {
     "akinsho/bufferline.nvim",
@@ -18,7 +18,7 @@ return {
     },
     keys = {
         {
-            utils.platform_key.cmd .. "-w>",
+            _key.platform_key.cmd .. "-w>",
             function()
                 local bd = require("mini.bufremove").delete
                 if vim.bo.modified then

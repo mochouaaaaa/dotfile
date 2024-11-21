@@ -34,6 +34,10 @@ require("lazy").setup({
         { "LazyVim/LazyVim" },
         { import = "plugins" },
     },
+    ui = {
+        border = vim.g.border.style,
+        backdrop = 100,
+    },
     defaults = {
         -- 默认情况下，只有 LazyVim 插件会被懒加载。 您的自定义插件将在启动过程中加载。
         -- 如果你知道你在做什么，你可以将它设置为 `true` 来默认懒加载你所有的自定义插件。

@@ -98,31 +98,31 @@ local opts = {
                 kind = "",
                 any = {
                     -- Save
-                    { find = " bytes written" },
+                    -- { find = " bytes written" },
 
                     -- Redo/Undo
-                    { find = " changes; before #" },
-                    { find = " changes; after #" },
-                    { find = "1 change; before #" },
-                    { find = "1 change; after #" },
+                    -- { find = " changes; before #" },
+                    -- { find = " changes; after #" },
+                    -- { find = "1 change; before #" },
+                    -- { find = "1 change; after #" },
 
                     -- Yank
-                    { find = " lines yanked" },
+                    -- { find = " lines yanked" },
 
                     -- Move lines
-                    { find = " lines moved" },
-                    { find = " lines indented" },
+                    -- { find = " lines moved" },
+                    -- { find = " lines indented" },
 
                     -- Bulk edit
-                    { find = " fewer lines" },
-                    { find = " more lines" },
-                    { find = "1 more line" },
-                    { find = "1 line less" },
+                    -- { find = " fewer lines" },
+                    -- { find = " more lines" },
+                    -- { find = "1 more line" },
+                    -- { find = "1 line less" },
 
                     -- General messages
-                    { find = "Already at newest change" },
-                    { find = "Already at oldest change" },
-                    { find = "E21: Cannot make changes, 'modifiable' is off" },
+                    -- { find = "Already at newest change" },
+                    -- { find = "Already at oldest change" },
+                    -- { find = "E21: Cannot make changes, 'modifiable' is off" },
                 },
             },
             opts = { skip = true },

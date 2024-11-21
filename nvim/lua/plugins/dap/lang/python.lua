@@ -1,4 +1,4 @@
-local env = require("plugins.configs.virtual_env")
+local env = require("util.virtual_env")
 
 return {
     config = function(dap)

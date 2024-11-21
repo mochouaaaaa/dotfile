@@ -10,10 +10,10 @@ local LuaSnip = {
         delete_check_events = "TextChanged",
         region_check_events = "CursorMoved",
     },
-    config = require("plugins.configs.luasnip"),
+    config = require("util.luasnip"),
 }
 
-local utils = require("config.utils")
+local _key = require("util.keymap")
 
 local nvim_cmp = {
     "hrsh7th/nvim-cmp",
@@ -25,12 +25,12 @@ local nvim_cmp = {
     },
 }
 
-local require_file = vim.fn.globpath(vim.fn.stdpath("config") .. "/lua/plugins/configs/code", "*.lua", false, true)
+local require_file = vim.fn.globpath(vim.fn.stdpath("config") .. "/lua/util/code", "*.lua", false, true)
 for _, file in ipairs(require_file) do
-    local module_name = file:match("(/plugins/.*)%.lua$")
+    local module_name = file:match("(/util/.*)%.lua$")
     local module = require(module_name)
     if module.enabled then
-        table.insert(nvim_cmp.dependencies, module.config(utils))
+        table.insert(nvim_cmp.dependencies, module.config(_key))
     end
 end
 
@@ -47,7 +47,7 @@ nvim_cmp.opts = function()
 
     local snip_status_ok, luasnip = pcall(require, "luasnip")
 
-    lspkind = require("plugins.configs.lspkind")
+    lspkind = require("util.lspkind")
 
     -- backgroud-color
     vim.api.nvim_set_hl(0, "CmpGhostText", { link = "Comment", default = true })
@@ -88,7 +88,7 @@ nvim_cmp.opts = function()
                 behavior = cmp.ConfirmBehavior.Replace,
                 select = true,
             }),
-            [utils.platform_key.cmd .. "-e>"] = cmp.mapping({
+            [_key.platform_key.cmd .. "-e>"] = cmp.mapping({
                 i = cmp.mapping.abort(),
                 c = cmp.mapping.close(),
             }),
@@ -106,10 +106,10 @@ nvim_cmp.opts = function()
                     fallback()
                 end
             end, { "i", "s" }),
-            [utils.platform_key.cmd .. "-k>"] = cmp.mapping.select_prev_item({
+            [_key.platform_key.cmd .. "-k>"] = cmp.mapping.select_prev_item({
                 behavior = cmp.SelectBehavior.Select,
             }),
-            [utils.platform_key.cmd .. "-j>"] = cmp.mapping.select_next_item({
+            [_key.platform_key.cmd .. "-j>"] = cmp.mapping.select_next_item({
                 behavior = cmp.SelectBehavior.Select,
             }),
         },

@@ -1,4 +1,4 @@
-local utils = require("config.utils")
+local _key = require("util.keymap")
 
 local mode_n = { "n" }
 local mode_v = { "v" }
@@ -28,9 +28,9 @@ local mappings = {
     { from = "q", to = "<Cmd>q<CR>", mode = mode_n },
     { from = "qq", to = "<Cmd>q!<CR>", mode = mode_n },
     { from = "Q", to = "<Cmd>qa!<CR>", mode = mode_n },
-    { from = utils.platform_key.cmd .. "-s>", to = "<Cmd>w<CR>", mode = mode_n, desc = "save file" },
+    { from = _key.platform_key.cmd .. "-s>", to = "<Cmd>w<CR>", mode = mode_n, desc = "save file" },
     { from = "<C-r>", to = "<Cmd>undo<CR>", mode = mode_ni, desc = "Undo" },
-    { from = utils.platform_key.cmd .. "-S-r>", to = "<Cmd>redo<CR>", mode = mode_ni, desc = "Redo" },
+    { from = _key.platform_key.cmd .. "-S-r>", to = "<Cmd>redo<CR>", mode = mode_ni, desc = "Redo" },
 
     -- ------ 视图模式
     -- 单行或多行移动
@@ -44,14 +44,14 @@ local mappings = {
     { from = "<Tab>", to = ">gv", mode = mode_v },
 
     -- insert 模式下，跳到行首行尾
-    { from = utils.platform_key.cmd .. "-h>", to = "<ESC>I", mode = mode_i },
-    { from = utils.platform_key.cmd .. "-l>", to = "<ESC>A", mode = mode_i },
-    { from = utils.platform_key.cmd .. "-left>", to = "<ESC>I", mode = mode_i },
-    { from = utils.platform_key.cmd .. "-right>", to = "<ESC>A", mode = mode_i },
-    { from = utils.platform_key.cmd .. "-j>", to = "<C-o>j", mode = mode_i, opt = opt_ns },
-    { from = utils.platform_key.cmd .. "-down>", to = "<C-o>j", mode = mode_i, opt = opt_ns },
-    { from = utils.platform_key.cmd .. "-k>", to = "<C-o>k", mode = mode_i, opt = opt_ns },
-    { from = utils.platform_key.cmd .. "-up>", to = "<C-o>k", mode = mode_i, opt = opt_ns },
+    { from = _key.platform_key.cmd .. "-h>", to = "<ESC>I", mode = mode_i },
+    { from = _key.platform_key.cmd .. "-l>", to = "<ESC>A", mode = mode_i },
+    { from = _key.platform_key.cmd .. "-left>", to = "<ESC>I", mode = mode_i },
+    { from = _key.platform_key.cmd .. "-right>", to = "<ESC>A", mode = mode_i },
+    { from = _key.platform_key.cmd .. "-j>", to = "<C-o>j", mode = mode_i, opt = opt_ns },
+    { from = _key.platform_key.cmd .. "-down>", to = "<C-o>j", mode = mode_i, opt = opt_ns },
+    { from = _key.platform_key.cmd .. "-k>", to = "<C-o>k", mode = mode_i, opt = opt_ns },
+    { from = _key.platform_key.cmd .. "-up>", to = "<C-o>k", mode = mode_i, opt = opt_ns },
 
     -- 正常模式
     -- 窗口

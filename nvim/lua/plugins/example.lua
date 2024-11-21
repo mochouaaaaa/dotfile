@@ -43,7 +43,7 @@ return {
                 -- see https://sw.kovidgoyal.net/kitty/conf/#opt-kitty.remote_control_password
                 kitty_password = "kitty",
             })
-            local utils = require("config.utils")
+            local utils = require("util.keymap")
             local cmd = utils.platform_key.cmd
 
             vim.keymap.set("n", "<C-S-k>", function()
@@ -103,7 +103,7 @@ return {
         -- build = "build.sh nvim-oxi",
         config = function()
             -- Lua
-            local utils = require("config.utils")
+            local utils = require("util.keymap")
 
             local spectre = require("spectre")
             spectre.setup({

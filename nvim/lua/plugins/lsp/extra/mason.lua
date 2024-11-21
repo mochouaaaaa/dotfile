@@ -7,14 +7,6 @@ local M = {
         "MasonUninstallAll",
         "MasonLog",
     },
-    opts = {
-        PATH = "prepend",
-        ui = {
-            border = vim.g.border.style,
-            width = 0.8,
-            height = 0.8,
-        },
-    },
 }
 
 M.opts = {
@@ -77,6 +69,7 @@ M.opts = {
     max_concurrent_installers = 10,
 
     ui = {
+        border = vim.g.border.style,
         icons = {
             package_installed = "✓",
             package_pending = "➜",

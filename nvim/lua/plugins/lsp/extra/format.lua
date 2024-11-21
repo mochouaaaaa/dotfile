@@ -63,17 +63,21 @@ local M = {
 	init = function()
 		-- Install the conform formatter on VeryLazy
 		require("lazyvim.util").on_very_lazy(function()
-			require("lazyvim.util").format.register {
+			require("lazyvim.util").format.register({
 				name = "conform.nvim",
 				priority = 100,
 				primary = true,
-				format = function(buf) require("conform").format { bufnr = buf } end,
+				format = function(buf)
+					require("conform").format({ bufnr = buf })
+				end,
 				sources = function(buf)
 					local ret = require("conform").list_formatters(buf)
 					---@param v conform.FormatterInfo
-					return vim.tbl_map(function(v) return v.name end, ret)
+					return vim.tbl_map(function(v)
+						return v.name
+					end, ret)
 				end,
-			}
+			})
 		end)
 	end,
 }
@@ -152,19 +156,29 @@ function M.opts()
 	return {
 		formatters = {
 			stylua = {
-				prepend_args = function() return { "--config-path", stylua_config(), "--no-editorconfig" } end,
+				prepend_args = function()
+					return { "--config-path", stylua_config(), "--no-editorconfig" }
+				end,
 			},
 			rustfmt = {
-				prepend_args = function() return { "--config-path", rustfmt_config() } end,
+				prepend_args = function()
+					return { "--config-path", rustfmt_config() }
+				end,
 			},
 			prettier = {
-				prepend_args = function() return { "--config", prettier_config() } end,
+				prepend_args = function()
+					return { "--config", prettier_config() }
+				end,
 			},
 			stylelint = {
-				prepend_args = function() return { "-c", stylelint_config(), "--stdin-filepath", "$FILENAME" } end,
+				prepend_args = function()
+					return { "-c", stylelint_config(), "--stdin-filepath", "$FILENAME" }
+				end,
 			},
 			ruff_format = {
-				prepend_args = function() return { "format", "--config", python_config() } end,
+				prepend_args = function()
+					return { "format", "--config", python_config() }
+				end,
 			},
 		},
 		formatters_by_ft = {
@@ -179,11 +193,11 @@ function M.opts()
 
 			-- Python
 			python = function(bufnr)
-				if conform.get_formatter_info("ruff_format", bufnr).available then
-					return { "ruff_fix", "ruff_format" }
-				else
-					return { "isort", "black" }
-				end
+				-- if conform.get_formatter_info("ruff_format", bufnr).available then
+				return { "ruff_format" }
+				-- else
+				-- 	return { "isort", "black" }
+				-- end
 			end,
 
 			-- JavaScript

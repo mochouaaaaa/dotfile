@@ -6,6 +6,7 @@ local M = {
     branch = "regexp", -- This is the regexp branch, use this for the new version
     -- lazy = false,
     event = { "LspAttach" },
+    ft = "python",
 }
 
 function M.config()

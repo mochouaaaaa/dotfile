@@ -8,6 +8,7 @@ M.opts = {
 	events = { "BufWritePost", "BufReadPost", "InsertLeave" },
 	linters_by_ft = {
 		lua = { "luacheck" },
+		python = { "ruff" },
 		go = { "revive" },
 		css = { "stylelint" },
 		less = { "stylelint" },
@@ -40,6 +41,14 @@ function M.config(_, opts)
 		"-",
 	}
 	lint.linters.revive.args = { "--config", rc.resolve_config("revive") }
+	lint.linters.ruff.args = {
+		"check",
+		"--stdin-filepath",
+		"$FILENAME",
+		"--config",
+		rc.resolve_config("python"),
+	}
+
 	lint.linters.stylelint.args = {
 		"-c",
 		rc.resolve_config("stylelint"),
@@ -47,7 +56,9 @@ function M.config(_, opts)
 		"json",
 		"--stdin",
 		"--stdin-filename",
-		function() return vim.fn.expand("%:p") end,
+		function()
+			return vim.fn.expand("%:p")
+		end,
 	}
 
 	lint.linters.swiftlint = {

@@ -1,4 +1,4 @@
-local utils = require("config.utils")
+local _key = require("util.keymap")
 
 return {
     {
@@ -9,7 +9,7 @@ return {
         cond = not vim.g.vscode,
         enabled = false,
         config = function()
-            vim.api.nvim_set_keymap("n", utils.platform_key.cmd .. "-r>", "", {
+            vim.api.nvim_set_keymap("n", _key.platform_key.cmd .. "-r>", "", {
                 noremap = true,
                 callback = function()
                     require("joshuto").joshuto()

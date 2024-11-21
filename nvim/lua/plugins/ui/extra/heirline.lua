@@ -6,11 +6,12 @@ return {
             "folke/zen-mode.nvim",
             "stevearc/aerial.nvim",
             "SmiteshP/nvim-navic",
+            "linrongbin16/lsp-progress.nvim",
         },
     },
     event = "UIEnter",
     opts = function()
-        local coustom_lib = require("plugins.configs.heirline")
+        local util = require("util.heirline")
         local lib = require("heirline-components.all")
         return {
             opts = {
@@ -40,9 +41,9 @@ return {
                     {
                         provider = " ",
                     },
-                    coustom_lib.navic(),
+                    util.navic(),
                     lib.component.fill(),
-                    coustom_lib.overseer(),
+                    util.overseer(),
                 },
             },
             statuscolumn = { -- UI left column
@@ -55,7 +56,6 @@ return {
             } or nil,
             statusline = { -- UI statusbar
                 hl = { fg = "fg", bg = "bg" },
-                lib.component.mode(),
                 {
                     init = function()
                         left_components_length = 4
@@ -63,25 +63,22 @@ return {
                     provider = function()
                         return "   "
                     end,
-                    -- hl = primary_highlight,
+                    hl = util.primary_highlight,
                 },
                 lib.component.git_branch(),
-                lib.component.file_info(),
-                lib.component.git_diff(),
-                lib.component.diagnostics(),
                 lib.component.fill(),
                 lib.component.cmd_info(),
                 lib.component.fill(),
-                lib.component.lsp(),
-                -- lib.component.compiler_state(),
+                -- util.LspProgress,
+                lib.component.lsp({ hl = { util.secondary_highlight } }),
                 {
                     condition = function()
                         return vim.bo.filetype == "python"
                     end,
                     lib.component.virtual_env(),
                 },
-                lib.component.nav(),
-                lib.component.mode({ surround = { separator = "right" } }),
+                util.SearchCount,
+                util.positioning,
             },
         }
     end,

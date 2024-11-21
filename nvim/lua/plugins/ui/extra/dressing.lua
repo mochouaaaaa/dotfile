@@ -1,16 +1,5 @@
 local M = {
     "stevearc/dressing.nvim",
-    lazy = true,
-    init = function()
-        vim.ui.select = function(...)
-            require("lazy").load({ plugins = { "dressing.nvim" } })
-            return vim.ui.select(...)
-        end
-        vim.ui.input = function(...)
-            require("lazy").load({ plugins = { "dressing.nvim" } })
-            return vim.ui.input(...)
-        end
-    end,
 }
 
 M.opts = {
@@ -36,6 +25,12 @@ M.opts = {
         },
         telescope = {
             borderchars = vim.g.border.borderchars,
+        },
+        format_item_override = {
+            ["legendary.nvim"] = function(items)
+                local values = require("legendary.ui.format").default_format(items)
+                return string.format("%-20s • %-20s", values[2], values[3])
+            end,
         },
     },
 }

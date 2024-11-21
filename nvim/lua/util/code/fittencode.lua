@@ -39,19 +39,6 @@ return {
                     end
                 end)
                 vim.opt.updatetime = 200
-
-                local function get_clipboard_content()
-                    return vim.fn.getreg("+")
-                end
-
-                local function translate_clipboard_to_chinese()
-                    local content = get_clipboard_content()
-                    local translated = fitten_code.translate_text_into_chinese(content)
-                    vim.notify(translated)
-                end
-                vim.keymap.set("n", "<leader>tt", function()
-                    vim.notify("Translating clipboard content to Chinese...")
-                end)
             end,
         }
     end,
