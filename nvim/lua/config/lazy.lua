@@ -27,6 +27,8 @@ vim.g.border = {
 		or { " ", " ", " ", " ", " ", " ", " ", " " },
 }
 
+require("config.icons")
+
 require("lazy").setup({
 	spec = {
 		{ "nvim-lua/plenary.nvim" },

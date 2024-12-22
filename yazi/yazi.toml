@@ -2,15 +2,73 @@
 show_hidden = true
 
 [opener]
-edit = [{ run = 'nvim "$@"', block = true, for = "unix" }]
-play = [{ run = 'mpv "$@"', orphan = true, for = "unix" }]
-open = [{ run = 'open "$@"', desc = "Open" }]
+edit = [
+    { run = 'nvim "$@"', block = true, for = "unix" },
+    { run = 'code "$@"', orphan = true },
+]
+play = [
+    { run = 'mpv "$@"', orphan = true, for = "unix" },
+    { run = 'iina --no-stdin "$@"' },
+]
+archive = [
+    { run = 'unar "$1"', desc = "Extract here" },
+    { run = '/Applications/MacZip.app/Contents/MacOS/MacZip "$1"', orphan = true, desc = "MacZip" },
+]
 
 [open]
-# append_rules = [{ name = "*", use = "zed" }]
+rules = [
+    { name = "*/", use = [
+        "open",
+        "edit",
+        "reveal",
+    ] },
+
+    { mime = "text/*", use = [
+        "edit",
+        "reveal",
+    ] },
+    { mime = "image/*", use = [
+        "open",
+        "reveal",
+    ] },
+    { mime = "video/*", use = [
+        "play",
+        "reveal",
+    ] },
+    { mime = "audio/*", use = [
+        "play",
+        "reveal",
+    ] },
+    { mime = "inode/x-empty", use = [
+        "edit",
+        "reveal",
+    ] },
+
+    { mime = "application/json", use = [
+        "edit",
+        "reveal",
+    ] },
+    { mime = "*/javascript", use = [
+        "edit",
+        "reveal",
+    ] },
+
+    { name = "*", use = [
+        "open",
+        "reveal",
+    ] },
+]
 
 [plugin]
-prepend_previewers = [{ name = "*.md", run = "glow" }]
+prepend_previewers = [
+    { name = "*.md", run = "glow" },
+    { mime = "application/*zip", run = "ouch" },
+    { mime = "application/x-tar", run = "ouch" },
+    { mime = "application/x-bzip2", run = "ouch" },
+    { mime = "application/x-7z-compressed", run = "ouch" },
+    { mime = "application/x-rar", run = "ouch" },
+    { mime = "application/x-xz", run = "ouch" },
+]
 prepend_fetchers = [
     { id = "git", name = "*", run = "git" },
     { id = "git", name = "*/", run = "git" },

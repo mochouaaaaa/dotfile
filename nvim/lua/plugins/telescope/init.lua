@@ -5,9 +5,9 @@ local config = function()
 
 	require("telescope").setup({
 		defaults = {
-			prompt_prefix = " ",
-			selection_caret = " ",
-			multi_icon = " ",
+			prompt_prefix = vim.g.icons.Telescope.Prefix,
+			selection_caret = vim.g.icons.Telescope.Care,
+			multi_icon = vim.g.icons.Telescope.MultiIcon,
 			path_display = {
 				"truncate",
 			},

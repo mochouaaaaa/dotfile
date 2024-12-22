@@ -1,4 +1,4 @@
-zinit snippet $HOME/.config/zsh/utils.zsh
+source $HOME/.config/zsh/utils.zsh
 
 hash -d desktop="$HOME/Desktop"
 hash -d downloads="$HOME/Downloads"
@@ -25,8 +25,9 @@ export BAT_THEME="Catppuccin-macchiato"
 #     fi
 # }
 
-alias neovim=/Volumes/Code/Projects/rust/neovide/target/release/neovide
+alias neovim=/Volumes/Code/Projects/source/neovide/target/release/neovide
 check_command_exist "neovide" "alias neovide='neovide $@ --frame buttonless --fork'"
+check_command_exist "lazygit" "alias lazygit='lazygit --use-config-file=\"$HOME/.config/lazygit/config.yml\"'"
 
 check_command_exist "bat" "alias cat='bat -p --style=plain'"
 

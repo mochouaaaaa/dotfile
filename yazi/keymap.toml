@@ -1,20 +1,26 @@
 [manager]
 prepend_keymap = [
+    { on = "o", run = "plugin smart-enter", desc = "Enter the child directory, or open the file" },
+
+    { on = "<D-f>", run = "find", desc = "Find in files" },
+    { on = "<D-F>", run = "search rg", desc = "Search with ripgrep" },
+
+    { on = "p", run = "plugin smart-paste", desc = "Paste into the hovered directory or CWD" },
+
     { on = [
         "c",
         "m",
     ], run = "plugin chmod", desc = "Chmod on selected files" },
-    { on = [
-        "o",
-        "o",
-    ], run = "open", desc = "use default open command" },
-    { on = [
-        "o",
-        "z",
-    ], run = "plugin open_utils --args='zed'", desc = "use zed open file or directory" },
-    { on = [
-        "o",
-        "c",
-    ], run = "plugin open_utils --args='code'", desc = "use code open file or directory" },
-
+    # { on = [
+    #     "o",
+    #     "o",
+    # ], run = "open", desc = "use default open command" },
+    # { on = [
+    #     "o",
+    #     "z",
+    # ], run = "plugin command --args='zed'", desc = "use zed open file or directory" },
+    # { on = [
+    #     "o",
+    #     "c",
+    # ], run = "plugin command --args='code'", desc = "use code open file or directory" },
 ]

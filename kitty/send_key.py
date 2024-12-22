@@ -248,7 +248,7 @@ class ZshCommandKeyMap(BaseCommandKeyMap):
         # import tempfile
         # import os
 
-        self.boss.launch("--copy-env", "--type=overlay-main", "--cwd=current", "sh", "-c", "yazi")
+        self.boss.launch("--copy-env", "--type=overlay-main", "--cwd=current", "yazi")
 
         # self.window.write_to_child("yazi\n")
         # 创建临时文件以存储子进程修改的工作目录
