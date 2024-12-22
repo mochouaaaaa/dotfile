@@ -33,7 +33,6 @@ _lazyload_add_completion() {
 export GOENV_ROOT="$HOME/.config/env/goenv"
 export PATH="$GOENV_ROOT/bin:$GOENV_ROOT/shims:$PATH"
 
-export GOPATH=/Volumes/Code/Projects/golang
 export PATH="$PATH:$GOPATH:$GOPATH/bin"
 export PATH="$GOROOT/bin:$PATH"
 

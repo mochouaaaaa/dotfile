@@ -8,7 +8,6 @@ hash -d music="$HOME/Music"
 hash -d pictures="$HOME/Pictures"
 hash -d movies="$HOME/Movies"
 hash -d trash="$HOME/.Trash"
-hash -d code="/Volumes/Code"
 
 
 alias ..="cd .."
@@ -25,7 +24,6 @@ export BAT_THEME="Catppuccin-macchiato"
 #     fi
 # }
 
-alias neovim=/Volumes/Code/Projects/source/neovide/target/release/neovide
 check_command_exist "neovide" "alias neovide='neovide $@ --frame buttonless --fork'"
 check_command_exist "lazygit" "alias lazygit='lazygit --use-config-file=\"$HOME/.config/lazygit/config.yml\"'"
 

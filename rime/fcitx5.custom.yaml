@@ -1,0 +1,31 @@
+patch:
+  "menu/page_size": 9
+  "style/candidate_list_layout": linear
+  "style/translucency": true
+
+  # 特定App默认中/英文输入
+  app_options:
+    Spotlight: # 聚焦搜索
+      ascii_mode: true # true默认英文,false默认中文
+    Terminal: # 终端
+      ascii_mode: true
+      ascii_punct: true
+    wezterm:
+      ascii_mode: true
+      ascii_punct: true
+    kitty:
+      ascii_mode: true
+      ascii_punct: true
+    code frontend: # Visual Studio Code
+      ascii_mode: true
+      ascii_punct: true # 中文状态输出英文标点(半角)
+    neovide:
+      ascii_mode: true
+      ascii_punct: true
+    Postman: # postman
+      ascii_mode: true
+    com.jetbrains.intellij: # idea
+      ascii_mode: true
+    com.jetbrains.pycharm:
+      vim_mode: true
+      ascii_mode: true

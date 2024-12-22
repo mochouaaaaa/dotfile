@@ -34,6 +34,4 @@ require("full-border"):setup {
 	type = ui.Border.ROUNDED,
 }
 
--- THEME.git_modified_sign = "M"
--- THEME.git_deleted_sign = "D"
 require("git"):setup()
