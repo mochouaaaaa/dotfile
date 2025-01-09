@@ -32,7 +32,6 @@ require("config.icons")
 require("lazy").setup({
 	spec = {
 		{ "nvim-lua/plenary.nvim" },
-		-- 添加 LazyVim 并且导入它的其他插件
 		{ "LazyVim/LazyVim" },
 		{ import = "plugins" },
 	},

@@ -193,11 +193,7 @@ function M.opts()
 
 			-- Python
 			python = function(bufnr)
-				-- if conform.get_formatter_info("ruff_format", bufnr).available then
 				return { "ruff_format" }
-				-- else
-				-- 	return { "isort", "black" }
-				-- end
 			end,
 
 			-- JavaScript
@@ -219,6 +215,9 @@ function M.opts()
 			-- Markdown
 			markdown = { "prettierd" },
 			["markdown.mdx"] = { "prettierd" },
+
+			-- Nix
+			nix = { "nixfmt" },
 
 			-- CSS
 			css = { "prettierd", "stylelint" },

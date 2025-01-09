@@ -51,7 +51,7 @@ function M.opts()
 		use_default_mappings = false,
 		window = {
 			position = "left", -- left, right, top, bottom, float, current
-			width = 40, -- applies to left and right positions
+			width = 35, -- applies to left and right positions
 			height = 15, -- applies to top and bottom positions
 			auto_expand_width = false, -- expand the window when file exceeds the window width. does not work with position = "float"
 			popup = {
@@ -201,8 +201,8 @@ function M.opts()
 			scan_mode = "never", -- "shallow": Don't scan into directories to detect possible empty directory a priori
 			bind_to_cwd = false, -- true creates a 2-way binding between vim's cwd and neo-tree's root
 			cwd_target = {
-				sidebar = "tab", -- sidebar is when position = left or right
-				current = "window", -- current is when position = current
+				sidebar = true, -- sidebar is when position = left or right
+				current = true, -- current is when position = current
 			},
 			follow_current_file = { enabled = true }, -- This will find and focus the file in the active buffer every time
 			-- the current file is changed while the tree is open.

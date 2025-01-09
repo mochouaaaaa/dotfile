@@ -63,10 +63,10 @@ opt.fileencodings = "utf-8,gbk,gb18030,gb2312,ucs-bom,cp936,big5,euc-jp,euc-kr"
 
 -- 取消回车自动添加注释
 vim.api.nvim_create_autocmd("FileType", {
-    pattern = "*",
-    callback = function()
-        opt.formatoptions:remove({ "c", "r", "o" })
-    end,
+	pattern = "*",
+	callback = function()
+		opt.formatoptions:remove({ "c", "r", "o" })
+	end,
 })
 
 o.virtualedit = "block" -- Allow cursor to move where there is no text in visual block mode
@@ -74,18 +74,18 @@ o.virtualedit = "block" -- Allow cursor to move where there is no text in visual
 -- UI
 
 vim.opt.fillchars = {
-    diff = "╱",
-    eob = " ",
-    stl = " ",
-    stlnc = " ",
-    wbr = " ",
-    horiz = "─",
-    horizup = "┴",
-    horizdown = "┬",
-    vert = "│",
-    vertleft = "┤",
-    vertright = "├",
-    verthoriz = "┼",
+	diff = "╱",
+	eob = " ",
+	stl = " ",
+	stlnc = " ",
+	wbr = " ",
+	horiz = "─",
+	horizup = "┴",
+	horizdown = "┬",
+	vert = "│",
+	vertleft = "┤",
+	vertright = "├",
+	verthoriz = "┼",
 }
 
 o.winblend = 0

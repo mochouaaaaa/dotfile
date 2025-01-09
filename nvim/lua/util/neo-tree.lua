@@ -1,3 +1,5 @@
+local inputs = require("neo-tree.ui.inputs")
+
 return {
 	getTelescopeOpts = function(state, path)
 		return {
@@ -71,37 +73,35 @@ return {
 	end,
 	trash = function(state)
 		local node = state.tree:get_node()
-		require("neo-tree").config.filesystem.commands.trash_visual(state, { node })
-	end,
-	trash_visual = function(state, selected_nodes)
-		local path = {}
-		for _, node in ipairs(selected_nodes) do
-			if node.type ~= "message" then
-				path[#path + 1] = "the POSIX file " .. string.format("%q", node.path)
-			end
-		end
-
-		local term
-		if #path < 1 then
+		if node.type == "message" then
 			return
-		elseif #path == 1 then
-			term = "this file"
-		else
-			term = #path .. " files"
 		end
-
-		local inputs = require("neo-tree.ui.inputs")
-		inputs.confirm("Are you sure trash " .. term .. "?", function(confirmed)
+		local _, name = require("neo-tree.utils").split_path(node.path)
+		local msg = string.format("Are you sure you want to trash '%s'?", name)
+		inputs.confirm(msg, function(confirmed)
 			if not confirmed then
 				return
 			end
-
-			vim.fn.system({
-				"osascript",
-				"-e",
-				'tell app "Finder" to move {' .. table.concat(path, ",") .. "} to trash",
-			})
-			require("neo-tree.sources.manager").refresh(state.name)
+			vim.api.nvim_command("silent !trash -f " .. node.path)
+			require("neo-tree.sources.manager").refresh(state)
+		end)
+	end,
+	trash_visual = function(state, selected_nodes)
+		local paths_to_trash = {}
+		for _, node in ipairs(selected_nodes) do
+			if node.type ~= "message" then
+				table.insert(paths_to_trash, node.path)
+			end
+		end
+		local msg = "Are you sure you want to trash " .. #paths_to_trash .. " items?"
+		inputs.confirm(msg, function(confirmed)
+			if not confirmed then
+				return
+			end
+			for _, path in ipairs(paths_to_trash) do
+				vim.api.nvim_command("silent !trash -f " .. path)
+			end
+			require("neo-tree.sources.manager").refresh(state)
 		end)
 	end,
 }
