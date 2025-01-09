@@ -18,13 +18,9 @@ return {
 					},
 				})
 
-				local autopairs = require("nvim-autopairs")
-
 				vim.keymap.set("i", "<Tab>", function()
 					if fitten_code.has_suggestions() then
-						autopairs.disable()
 						fitten_code.accept_line()
-						autopairs.enable()
 					else
 						vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes("<Tab>", true, false, true), "n", false)
 					end

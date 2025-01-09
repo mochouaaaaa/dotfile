@@ -28,10 +28,13 @@ local M = {
 	{
 		"3rd/image.nvim",
 		build = false,
+		enabled = not vim.g.vscode,
 		dependencies = { "luarocks.nvim" },
 		opts = {
-			max_width = 100, -- tweak to preference
-			max_height = 12, -- ^
+			backend = "kitty",
+			processor = "magick_rock", -- or "magick_cli"
+			-- max_width = 100, -- tweak to preference
+			-- max_height = 12, -- ^
 		},
 	},
 	-----------------------------

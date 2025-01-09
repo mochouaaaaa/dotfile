@@ -1,6 +1,5 @@
 local M = {
 	"neovim/nvim-lspconfig", -- official lspconfig
-	event = { "BufReadPre", "BufNewFile" },
 	dependencies = {
 		"mason.nvim",
 		"williamboman/mason-lspconfig.nvim",
@@ -30,16 +29,16 @@ function M._sourcekit_lsp()
 			local util = require("lspconfig.util")
 			return util.root_pattern("buildServer.json")(filename)
 				or util.root_pattern("*.xcodeproj", "*.xcworkspace")(filename)
-				or util.find_git_ancestor(filename)
+				-- or util.find_git_ancestor(filename)
+				-- or vim.fs.dirname(vim.fs.find(".git", { path = filename, upward = true }))
 				or util.root_pattern("Package.swift")(filename)
 				or vim.fn.getcwd()
 		end,
 	}
 end
 
-function M.config(_, opts)
-	local lspconfig = require("lspconfig")
-	lspconfig.sourcekit.setup(M._sourcekit_lsp())
+function M.opts(_, opts)
+	opts.sourcekit = M._sourcekit_lsp()
 	require("mason-lspconfig").setup_handlers({
 		function(server_name)
 			local capabilities
@@ -81,8 +80,9 @@ function M.config(_, opts)
 				config.settings = require(settings)
 			end
 
-			lspconfig[server_name].setup(config)
+			opts[server_name] = config
 		end,
 	})
+	return opts
 end
 return M

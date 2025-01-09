@@ -4,6 +4,9 @@ vim.g.maplocalleader = " "
 -- 0.9 版本开始自带缓存加速
 vim.loader.enable()
 
+-- disabled default keymaps
+package.loaded["lazyvim.config.options"] = true
+
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
 if not vim.loop.fs_stat(lazypath) then
 	vim.fn.system({
@@ -32,24 +35,34 @@ require("config.icons")
 require("lazy").setup({
 	spec = {
 		{ "nvim-lua/plenary.nvim" },
-		-- 添加 LazyVim 并且导入它的其他插件
-		{ "LazyVim/LazyVim" },
+		{ "folke/lazy.nvim", version = false },
+		{
+			"LazyVim/LazyVim",
+			import = "lazyvim.plugins",
+			opts = {
+				defaults = {
+					keymaps = false,
+				},
+				colorscheme = "catppuccin",
+			},
+		},
+
+		-- custom plugins
 		{ import = "plugins" },
+
+		-- disabled
+		{ "nvim-lualine/lualine.nvim", enabled = false },
 	},
 	ui = {
 		border = vim.g.border.style,
 		backdrop = 100,
 	},
 	defaults = {
-		-- 默认情况下，只有 LazyVim 插件会被懒加载。 您的自定义插件将在启动过程中加载。
-		-- 如果你知道你在做什么，你可以将它设置为 `true` 来默认懒加载你所有的自定义插件。
 		lazy = false,
-		-- 建议现在先远离 version=false，因为许多支持版本的插件已经
-		-- 过时了，这可能会破坏您的NeoVim安装。
 		version = false, -- 永远使用最新的 git commit 版本
+		keymaps = false,
 	},
-	install = { colortscheme = { "mocha" } },
-	checker = { enabled = false }, -- 自动检查插件更新
+	checker = { enabled = true }, -- 自动检查插件更新
 	performance = {
 		rtp = {
 			disabled_plugins = {
@@ -65,4 +78,4 @@ require("lazy").setup({
 	},
 })
 
-require("config.init")
+-- require("config.init")

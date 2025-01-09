@@ -3,8 +3,18 @@ local M = {
 	event = { "BufReadPost" },
 }
 
-function M.config()
-	require("alternate-toggler").setup({
+function M.keys()
+	return {
+		{
+			"<leader>bt",
+			"<cmd>lua require('alternate-toggler').toggleAlternate()<CR>",
+			desc = "bool conversion",
+		},
+	}
+end
+
+function M.opts(_, opts)
+	return {
 		alternates = {
 			["=="] = "!=",
 			["true"] = "false",
@@ -22,14 +32,7 @@ function M.config()
 			["+"] = "-",
 			["==="] = "!==",
 		},
-	})
-
-	vim.keymap.set(
-		"n",
-		"<leader>bt",
-		"<cmd>lua require('alternate-toggler').toggleAlternate()<CR>",
-		{ desc = "bool conversion" }
-	)
+	}
 end
 
 return M

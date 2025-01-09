@@ -1,10 +1,3 @@
-require("config.keymaps")
-require("config.autocmds")
-require("config.options")
-require("config.diagnositc")
-require("config.filetype")
-require("config.shell")
-
 if vim.env.VSCODE then
 	vim.g.vscode = true
 end

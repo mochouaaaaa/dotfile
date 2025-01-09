@@ -11,6 +11,9 @@ local M = {
 
 M.opts = {
 	ensure_installed = {
+		-- nix
+		"nil",
+
 		-- Lua
 		"lua-language-server", -- language server
 		"stylua", -- formatter
@@ -18,18 +21,21 @@ M.opts = {
 
 		-- Golang
 		"gopls", -- language server
-		"goimports", -- formatter
+		-- "gotools", -- formatter
 		"revive", -- linter
 
 		-- Python
 		-- "pyright",
 		"basedpyright",
-		"isort",
-		"black",
+		"ruff",
 		-- "ruff_format",
 
 		-- Rust
 		"rust-analyzer", -- language server
+		"rustfmt",
+
+		--  swift
+		"swiftlint",
 
 		-- Shell
 		"bash-language-server", -- language server
@@ -101,7 +107,7 @@ M.opts = {
 M.dependencies = {
 	{
 		"WhoIsSethDaniel/mason-tool-installer.nvim",
-		opts = { ensure_installed = M.opts.ensure_installed, auto_update = true },
+		opts = { ensure_installed = M.opts.ensure_installed },
 	},
 }
 

@@ -82,25 +82,6 @@ local M = {
 	end,
 }
 
----@param opts ConformOpts
-function M.setup(_, opts)
-	for name, formatter in pairs(opts.formatters or {}) do
-		if type(formatter) == "table" then
-			---@diagnostic disable-next-line: undefined-field
-			if formatter.extra_args then
-				---@diagnostic disable-next-line: undefined-field
-				formatter.prepend_args = formatter.extra_args
-				Util.deprecate(
-					("opts.formatters.%s.extra_args"):format(name),
-					("opts.formatters.%s.prepend_args"):format(name)
-				)
-			end
-		end
-	end
-
-	require("conform").setup(opts)
-end
-
 function M.resolve_config(type)
 	local config = M.configs[type]
 	local cache = {}
@@ -136,17 +117,6 @@ function M.resolve_config(type)
 end
 
 function M.opts()
-	local plugin = require("lazy.core.config").plugins["conform.nvim"]
-	if plugin.config ~= M.setup then
-		Util.error({
-			"Don't set `plugin.config` for `conform.nvim`.\n",
-			"This will break **LazyVim** formatting.\n",
-			"Please refer to the docs at https://www.lazyvim.org/plugins/formatting",
-		}, { title = "LazyVim" })
-	end
-	---@class
-
-	local conform = require("conform")
 	local stylua_config = M.resolve_config("stylua")
 	local rustfmt_config = M.resolve_config("rustfmt")
 	local prettier_config = M.resolve_config("prettierd")
@@ -193,11 +163,7 @@ function M.opts()
 
 			-- Python
 			python = function(bufnr)
-				-- if conform.get_formatter_info("ruff_format", bufnr).available then
 				return { "ruff_format" }
-				-- else
-				-- 	return { "isort", "black" }
-				-- end
 			end,
 
 			-- JavaScript
@@ -220,6 +186,9 @@ function M.opts()
 			markdown = { "prettierd" },
 			["markdown.mdx"] = { "prettierd" },
 
+			-- Nix
+			nix = { "nixfmt" },
+
 			-- CSS
 			css = { "prettierd", "stylelint" },
 			less = { "prettierd", "stylelint" },
@@ -230,20 +199,7 @@ function M.opts()
 			-- Use the "*" filetype to run formatters on all filetypes.
 			swift = { "swiftformat" },
 		},
-		format_after_save = {
-			lsp_fallback = true,
-			timeout_ms = 500,
-		},
-		notify_on_error = false,
-		format_on_save = {
-			-- These options will be passed to conform.format()
-			timeout_ms = 500,
-			async = false,
-			lsp_fallback = true,
-		},
 	}
 end
-
-M.config = M.setup
 
 return M
