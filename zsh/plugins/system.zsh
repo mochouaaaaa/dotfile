@@ -1,12 +1,22 @@
 
 source $HOME/.config/zsh/utils.zsh
 
+export VISUAL=nvim
+
 if [[ $(check_os_type) == 0 ]]; then
+    hash -d projects="$HOME/Code"
+
+    kitty_update(){
+        curl -L https://sw.kovidgoyal.net/kitty/installer.sh | sh /dev/stdin
+    }
+
+    ___MY_VMOPTIONS_SHELL_FILE="${HOME}/.jetbrains.vmoptions.sh"; if [ -f "${___MY_VMOPTIONS_SHELL_FILE}" ]; then . "${___MY_VMOPTIONS_SHELL_FILE}"; fi
+
 
     # ENV
     export GOPATH=$HOME/Code/Projects/golang
 
-    export PATH=$PATH:$HOME/.local/kitty.app/bin
+    export PATH=$PATH:$HOME/.local/bin:$HOME/.local/kitty.app/bin
 
     alias code="code --enable-features=UseOzonePlatform --ozone-platform=wayland --enable-wayland-ime --new-window"
 
@@ -23,7 +33,7 @@ if [[ $(check_os_type) == 0 ]]; then
     fi
 elif [[ $(check_os_type) == 1 ]]; then
     export GOPATH=/Volumes/Code/Projects/golang
-    hash -d code="/Volumes/Code"
+    hash -d projects="/Volumes/Code"
 
    export BREW_PATH="/usr/local/opt"
     

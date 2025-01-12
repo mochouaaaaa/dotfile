@@ -105,3 +105,4 @@ if (( $+commands[pyenv] )) &>/dev/null; then
 fi
 
 # zprof
+# . "$HOME/.cargo/env"

@@ -14,7 +14,6 @@ alias ..="cd .."
 alias ~="cd ~"
 alias -- -="cd -"
 
-export BAT_THEME="Catppuccin-macchiato"
 # _bat_or_cat(){
 #     if [[ -f "$1" ]]; then
 #         case "$(file --brief --mime-type "$1")" in

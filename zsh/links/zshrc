@@ -1,3 +1,14 @@
+# Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
+# Initialization code that may require console input (password prompts, [y/n]
+# confirmations, etc.) must go above this block; everything else may go below.
+if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
+  source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
+fi
+
+# if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
+  # source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
+# fi
+
 if [[ $- != *i* ]]; then
     return
 fi
@@ -16,6 +27,24 @@ zsh-defer zinit light zsh-users/zsh-completions
 # autoload -U compinit
 # compinit
 
+# 避免重复记录命令
+setopt HIST_IGNORE_ALL_DUPS
+setopt HIST_FIND_NO_DUPS
+setopt HIST_IGNORE_SPACE
+# 自动写入历史记录
+setopt INC_APPEND_HISTORY
+setopt SHARE_HISTORY
+setopt hist_reduce_blanks   # 忽略命令中的多余空格
+setopt hist_verify          # 在执行历史命令前，先让你确认（避免误操作）
+
+# 设置历史记录的最大条数
+HISTSIZE=1000
+SAVEHIST=2000
+
+# 历史记录文件
+HISTFILE=$HOME/.zsh_history
+
+
 # homebrew
 # brew why
 function brew() {
@@ -29,3 +58,8 @@ function brew() {
 source $HOME/.config/zsh/init.zsh
 export PATH="/usr/local/sbin:$PATH"
 
+# To customize prompt, run `p10k configure` or edit ~/.local/share/zinit/snippets/home--mochou/.p10k.zsh/.p10k.zsh.
+# [[ ! -f ~/.local/share/zinit/snippets/home--mochou/.p10k.zsh/.p10k.zsh ]] || source ~/.local/share/zinit/snippets/home--mochou/.p10k.zsh/.p10k.zsh
+
+# To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
+[[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
