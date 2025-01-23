@@ -3,29 +3,30 @@ patch:
   "style/candidate_list_layout": linear
   "style/translucency": true
 
+  schema_list:
+    - schema: rime_mint # 薄荷拼音
+    - schema: rime_mint_flypy # 薄荷拼音-小鹤混输方案
+
+  # dbus-send --print-reply=literal --dest=org.fcitx.Fcitx5 /controller org.fcitx.Fcitx.Controller1.DebugInfo
   # 特定App默认中/英文输入
-  app_options:
-    Spotlight: # 聚焦搜索
-      ascii_mode: true # true默认英文,false默认中文
-    Terminal: # 终端
-      ascii_mode: true
-      ascii_punct: true
-    wezterm:
-      ascii_mode: true
-      ascii_punct: true
-    kitty:
-      ascii_mode: true
-      ascii_punct: true
-    code frontend: # Visual Studio Code
-      ascii_mode: true
-      ascii_punct: true # 中文状态输出英文标点(半角)
-    neovide:
-      ascii_mode: true
-      ascii_punct: true
-    Postman: # postman
-      ascii_mode: true
-    com.jetbrains.intellij: # idea
-      ascii_mode: true
-    com.jetbrains.pycharm:
-      vim_mode: true
-      ascii_mode: true
+  "app_options/wezterm":
+    ascii_mode: true
+    ascii_punct: true
+  "app_options/kitty":
+    ascii_mode: true
+    ascii_punct: true
+  "app_options/code frontend": # Visual Studio Code
+    ascii_mode: true
+    ascii_punct: true # 中文状态输出英文标点(半角)
+  "app_options/neovide":
+    ascii_mode: true
+    ascii_punct: true
+  "app_options/Postman": # postman
+    ascii_mode: true
+    ascii_punct: true
+  "app_options/com.jetbrains.intellij": # idea
+    ascii_mode: true
+    ascii_punct: true
+  "app_options/com.jetbrains.pycharm":
+    ascii_mode: true
+    ascii_punct: true

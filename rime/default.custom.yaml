@@ -1,3 +1,9 @@
 patch:
   "menu/page_size": 9
-  "style/horizontal": true
+  "style/candidate_list_layout": linear
+  "style/translucency": true
+
+  schema_list:
+    - schema: rime_mint # 薄荷拼音
+    - schema: rime_mint_flypy # 薄荷拼音-小鹤混输方案
+
