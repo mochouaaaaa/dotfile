@@ -3,6 +3,7 @@
     "lazyvim.plugins.extras.editor.inc-rename",
     "lazyvim.plugins.extras.editor.navic",
     "lazyvim.plugins.extras.lang.go",
+    "lazyvim.plugins.extras.lang.markdown",
     "lazyvim.plugins.extras.lang.nix"
   ],
   "news": {

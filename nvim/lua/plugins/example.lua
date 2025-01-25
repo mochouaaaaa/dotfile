@@ -74,29 +74,6 @@ return {
 				smart_splits.move_cursor_right()
 			end)
 
-			-- vim.api.nvim_create_autocmd({ "CmdlineLeave" }, {
-			-- 	pattern = { "/", "?" },
-			-- 	callback = function()
-			-- 		vim.keymap.set("n", cmd .. "-k>", function()
-			-- 			smart_splits.move_cursor_up()
-			-- 		end, { noremap = true, silent = true })
-			-- 		vim.keymap.set("n", cmd .. "-j>", function()
-			-- 			smart_splits.move_cursor_down()
-			-- 		end, { noremap = true, silent = true })
-			-- 	end,
-			-- })
-			-- vim.api.nvim_create_autocmd("InsertLeave", {
-			-- 	pattern = { "*" },
-			-- 	callback = function()
-			-- 		vim.keymap.set("n", cmd .. "-k>", function()
-			-- 			smart_splits.move_cursor_up()
-			-- 		end, { noremap = true, silent = true })
-			-- 		vim.keymap.set("n", cmd .. "-j>", function()
-			-- 			smart_splits.move_cursor_down()
-			-- 		end, { noremap = true, silent = true })
-			-- 	end,
-			-- })
-
 			local mux = require("smart-splits.mux").get()
 			if mux ~= nil then
 				vim.keymap.set("n", cmd .. "-C-k>", function()

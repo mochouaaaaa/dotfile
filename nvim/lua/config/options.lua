@@ -64,9 +64,7 @@ opt.fileencodings = "utf-8,gbk,gb18030,gb2312,ucs-bom,cp936,big5,euc-jp,euc-kr"
 -- 取消回车自动添加注释
 vim.api.nvim_create_autocmd("FileType", {
 	pattern = "*",
-	callback = function()
-		opt.formatoptions:remove({ "c", "r", "o" })
-	end,
+	callback = function() opt.formatoptions:remove { "c", "r", "o" } end,
 })
 
 o.virtualedit = "block" -- Allow cursor to move where there is no text in visual block mode
@@ -114,7 +112,8 @@ opt.history = 1000
 opt.wildignorecase = true
 
 o.timeout = true
-o.timeoutlen = 500
+o.ttimeoutlen = 50
+o.timeoutlen = 100
 
 -- g.loaded_gzip = 1
 -- g.loaded_netrw = 1
