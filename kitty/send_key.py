@@ -426,12 +426,12 @@ def handle_result(args, answer, target_window_id, boss):
     if window is None:
         return
 
-    cmd = window.child.foreground_cmdline[0]
+    cmd = window.child.foreground_cmdline[0].split("/")[-1].replace("-", "")
     keymap = args[1]
 
     # 类映射字典，只实例化对应的类
     class_map = {
-        "-zsh": ZshCommandKeyMap,
+        "zsh": ZshCommandKeyMap,
         "nvim": NvimCommandKeyMap,
         "tmux": TmuxCommandKeyMap,
         "yazi": YaziCommandKeyMap,
