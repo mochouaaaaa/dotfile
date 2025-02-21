@@ -70,7 +70,7 @@ return {
 				lib.component.fill(),
 				-- center
 				-- util.FileIcon,
-				lib.component.lsp({}),
+				-- lib.component.lsp({}),
 				lib.component.fill(),
 				-- right
 				-- util.LspProgress,

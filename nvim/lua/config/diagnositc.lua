@@ -1,6 +1,4 @@
 -- Diagnostic
-vim.opt.updatetime = 300
-
 vim.fn.sign_define("DiagnosticSignError", { text = vim.g.icons.Diagnostic.Error, texthl = "DiagnosticSignError" })
 vim.fn.sign_define("DiagnosticSignWarn", { text = vim.g.icons.Diagnostic.Warning, texthl = "DiagnosticSignWarn" })
 vim.fn.sign_define("DiagnosticSignInfo", { text = vim.g.icons.Diagnostic.Info, texthl = "DiagnosticSignInfo" })

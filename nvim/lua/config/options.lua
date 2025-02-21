@@ -8,7 +8,8 @@ local o = vim.o
 opt.conceallevel = 0
 -- opt.list = true
 -- opt.listchars = "tab:»·,nbsp:+,trail:·,extends:→,precedes:←"
-opt.updatetime = 100
+g.lazyredraw = true
+opt.updatetime = 50
 
 -- 行号
 opt.relativenumber = true
@@ -64,7 +65,9 @@ opt.fileencodings = "utf-8,gbk,gb18030,gb2312,ucs-bom,cp936,big5,euc-jp,euc-kr"
 -- 取消回车自动添加注释
 vim.api.nvim_create_autocmd("FileType", {
 	pattern = "*",
-	callback = function() opt.formatoptions:remove { "c", "r", "o" } end,
+	callback = function()
+		opt.formatoptions:remove({ "c", "r", "o" })
+	end,
 })
 
 o.virtualedit = "block" -- Allow cursor to move where there is no text in visual block mode

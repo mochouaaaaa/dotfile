@@ -37,15 +37,6 @@ local M = {
 			-- max_height = 12, -- ^
 		},
 	},
-	-----------------------------
-	{
-		"lukas-reineke/headlines.nvim",
-		lazy = true,
-		ft = { "markdown", "md", "norg" },
-		config = function()
-			require("headlines").setup({})
-		end,
-	},
 }
 
 return M

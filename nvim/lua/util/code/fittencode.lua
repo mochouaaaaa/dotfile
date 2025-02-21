@@ -37,7 +37,6 @@ return {
 						)
 					end
 				end)
-				vim.opt.updatetime = 200
 			end,
 		}
 	end,

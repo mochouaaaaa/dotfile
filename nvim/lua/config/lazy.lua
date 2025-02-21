@@ -52,6 +52,29 @@ require("lazy").setup({
 
 		-- disabled
 		{ "nvim-lualine/lualine.nvim", enabled = false },
+		{
+			"folke/snacks.nvim",
+			opts = function()
+				return {
+					animate = {
+						duration = 20,
+						fps = 60,
+					},
+					bigfile = { enabled = true },
+					dashboard = { enabled = true },
+					explorer = { enabled = false },
+					notifier = { enabled = true },
+					-- indent = { enabled = true },
+					input = { enabled = true },
+					picker = { enabled = true },
+					quickfile = { enabled = true },
+					scope = { enabled = true },
+					-- scroll = { enabled = true },
+					statuscolumn = { enabled = true },
+					words = { enabled = true },
+				}
+			end,
+		},
 	},
 	ui = {
 		border = vim.g.border.style,
