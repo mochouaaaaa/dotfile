@@ -72,6 +72,7 @@ require("lazy").setup({
 					-- scroll = { enabled = true },
 					statuscolumn = { enabled = true },
 					words = { enabled = true },
+					image = { enabled = true },
 				}
 			end,
 		},

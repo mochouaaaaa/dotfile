@@ -21,12 +21,18 @@ patch:
   "app_options/neovide":
     ascii_mode: true
     ascii_punct: true
-  "app_options/Postman": # postman
+  "app_options/firefox": # postman
     ascii_mode: true
     ascii_punct: true
-  "app_options/com.jetbrains.intellij": # idea
+  "app_options/jetbrains.intellij": # idea
     ascii_mode: true
     ascii_punct: true
-  "app_options/com.jetbrains.pycharm":
+  "app_options/jetbrains-pycharm":
+    ascii_mode: true
+    ascii_punct: true
+  "app_options/jetbrains-goland":
+    ascii_mode: true
+    ascii_punct: true
+  "app_options/jetbrains-datagrip":
     ascii_mode: true
     ascii_punct: true
