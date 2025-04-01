@@ -3,6 +3,7 @@ local _key = require("util.keymap")
 local mode_n = { "n" }
 local mode_v = { "v" }
 local mode_i = { "i" }
+local mode_c = { "c" }
 local mode_t = { "t" }
 local mode_nv = { "n", "v" }
 local mode_ni = { "n", "i" }
@@ -22,6 +23,13 @@ local mappings = {
 	{ from = "<Space>", to = "<Nop>", mode = mode_n },
 	{ from = "<C-j>", to = "<Nop>", mode = mode_n },
 	{ from = "<C-k>", to = "<Nop>", mode = mode_n },
+
+	-- 不将删除的数据放入寄存器
+	{ from = "x", to = '"_x', mode = mode_nv },
+	{ from = "dd", to = '"_dd', mode = mode_nv },
+
+	{ from = _key.platform_key.cmd .. "-j>", to = "<C-n>", mode = mode_c, opt = opt_ns },
+	{ from = _key.platform_key.cmd .. "-k>", to = "<C-p>", mode = mode_c, opt = opt_ns },
 	{ from = _key.platform_key.cmd .. "-e>", to = "<Nop>", mode = mode_i, opt = opt_n },
 	{ from = _key.platform_key.cmd .. "-f>", to = "<Nop>", mode = mode_i, opt = opt_n },
 	{ from = _key.platform_key.cmd .. "-F>", to = "<Nop>", mode = mode_i, opt = opt_n },

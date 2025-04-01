@@ -4,16 +4,14 @@ return {
 	{
 		"ibhagwan/fzf-lua",
 		opts = function(_, opts)
-			-- local actions = require("fzf-lua").actions
-			-- actions = {
-			-- files = {
-			-- ["enter"] = actions.file_switch_or_edit,
-			-- },
-			-- }
 			return {
+				files = {
+					follow = true,
+				},
 				grep = {
 					prompt = vim.g.icons.Telescope.Prefix,
 					input_prompt = "Grep For❯ ",
+					follow = true,
 				},
 				winopts = {
 					on_create = function()

@@ -159,44 +159,20 @@ local opts = {
 	},
 }
 
-local set_hl = vim.api.nvim_set_hl
-for hl, color in pairs({
-	NoiceFormatProgressDone = {
-		-- bg = '#455c6d',
-		bg = "#d38aea",
-	},
-	NoiceFormatProgressTodo = {
-		-- bg = '#d38aea',
-		bg = "#455c6d",
-	},
-	NoiceLspProgressTitle = {
-		fg = "#7ad7f3",
-	},
-	NoiceLspProgressClient = {
-		-- link = 'MoreMsg'
-		fg = "#d38aea",
-	},
-	NoiceLspProgressSpinner = {
-		fg = "#d38aea",
-	},
-}) do
-	set_hl(0, hl, color)
-end
-
 return {
 	{
 		"folke/noice.nvim",
 		opts = opts,
-		-- keys = function()
-		-- 	return {
-		-- 		{
-		-- 			"<leader>fn",
-		-- 			function()
-		-- 				require("noice").cmd("fzf")
-		-- 			end,
-		-- 			desc = "Noice Picker Fzf",
-		-- 		},
-		-- 	}
-		-- end,
+		keys = function()
+			return {
+				{
+					"<leader>fn",
+					function()
+						require("noice").cmd("fzf")
+					end,
+					desc = "Noice Picker Fzf",
+				},
+			}
+		end,
 	},
 }

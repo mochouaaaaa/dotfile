@@ -23,7 +23,6 @@ alias -- -="cd -"
 #     fi
 # }
 
-check_command_exist "neovide" "alias neovide='neovide $@ --frame buttonless --fork'"
 check_command_exist "lazygit" "alias lazygit='lazygit --use-config-file=\"$HOME/.config/lazygit/config.yml\"'"
 
 check_command_exist "bat" "alias cat='bat -p --style=plain'"
