@@ -1,6 +1,7 @@
 local M = {
 	"neovim/nvim-lspconfig", -- official lspconfig
-	config = function()
+	enabled = vim.g.IS_NIX,
+	config = function(_, opts)
 		local lspconfig = require("lspconfig")
 		local common = require("plugins.lsp.lang.common")
 		local lang_dir = vim.fn.stdpath("config") .. "/lua/plugins/lsp/lang"
@@ -20,7 +21,6 @@ local M = {
 		end
 
 		for _, server in ipairs(get_lang_servers()) do
-			print(server)
 			local server_settings = "plugins.lsp.lang." .. server .. ".settings"
 			local server_config = "plugins.lsp.lang." .. server .. ".config"
 
@@ -28,8 +28,6 @@ local M = {
 			if pcall(require, server_settings) then
 				settings = require(server_settings)
 			end
-
-			-- print(vim.inspect(settings))
 
 			local config = {
 				capabilities = common.make_capabilities(),

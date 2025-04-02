@@ -7,7 +7,7 @@ local M = {
 		"MasonUninstallAll",
 		"MasonLog",
 	},
-	enabled = false,
+	enabled = not vim.g.IS_NIX,
 }
 
 M.opts = {
@@ -17,20 +17,18 @@ M.opts = {
 		-- "nil",
 
 		-- Lua
-		-- "lua-language-server", -- language server
-		-- "stylua", -- formatter
-		-- "luacheck", -- linter
+		"lua-language-server", -- language server
+		"stylua", -- formatter
+		"luacheck", -- linter
 
 		-- Golang
-		-- "gopls", -- language server
-		-- "gotools", -- formatter
-		-- "revive", -- linter
+		"gopls", -- language server
+		"revive", -- linter
 
 		-- Python
 		-- "pyright",
-		-- "basedpyright",
-		-- "ruff",
-		-- "ruff_format",
+		"basedpyright",
+		"ruff",
 
 		-- Rust
 		-- "rust-analyzer", -- language server
@@ -69,9 +67,9 @@ M.opts = {
 		-- "actionlint", -- linter
 
 		-- Misc
-		-- "cspell", -- spell checker
-		-- "marksman", -- Markdown language server
-		-- "sqlls", -- SQL language server
+		"cspell", -- spell checker
+		"marksman", -- Markdown language server
+		"sqlls", -- SQL language server
 	},
 
 	max_concurrent_installers = 10,
@@ -107,11 +105,10 @@ M.opts = {
 }
 
 -- M.dependencies = {
--- {
--- "WhoIsSethDaniel/mason-tool-installer.nvim",
--- opts = { ensure_installed = M.opts.ensure_installed },
--- opts = { ensure_installed = {} },
--- },
+-- 	{
+-- 		"WhoIsSethDaniel/mason-tool-installer.nvim",
+-- 		opts = { ensure_installed = M.opts.ensure_installed },
+-- 	},
 -- }
 
 return M

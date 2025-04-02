@@ -31,6 +31,7 @@ vim.g.border = {
 }
 
 require("config.icons")
+require("config.init")
 
 require("lazy").setup({
 	spec = {
@@ -49,10 +50,10 @@ require("lazy").setup({
 
 		-- custom plugins
 		{ import = "plugins" },
-		-- { import = "lazyvim.plugins.extras.lang.nix" },
 
 		-- disabled
 		{ "nvim-lualine/lualine.nvim", enabled = false },
+		{ "nvim-ts-autotag", enabled = false },
 		{
 			"folke/snacks.nvim",
 			opts = function()
@@ -102,5 +103,3 @@ require("lazy").setup({
 		},
 	},
 })
-
--- require("config.init")

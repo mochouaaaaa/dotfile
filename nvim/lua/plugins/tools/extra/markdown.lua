@@ -25,7 +25,23 @@ local M = {
 		-- dependencies = { 'nvim-treesitter/nvim-treesitter', 'nvim-tree/nvim-web-devicons' }, -- if you prefer nvim-web-devicons
 		---@module 'render-markdown'
 		---@type render.md.UserConfig
-		opts = {},
+		opts = {
+			heading = {
+				border = true,
+				border_virtual = true,
+			},
+			pipe_table = { preset = "round" },
+			code = {
+				width = "block",
+				right_pad = 4,
+				style = "language",
+			},
+			link = {
+				image = "󰋵 ",
+				email = " ",
+				hyperlink = "󰌷 ",
+			},
+		},
 	},
 	{
 		"vhyrro/luarocks.nvim",
@@ -42,6 +58,11 @@ local M = {
 		opts = {
 			backend = "kitty",
 			processor = "magick_rock", -- or "magick_cli"
+			integrations = {
+				markdown = {
+					only_render_image_at_cursor = true,
+				},
+			},
 			-- max_width = 100, -- tweak to preference
 			-- max_height = 12, -- ^
 		},
