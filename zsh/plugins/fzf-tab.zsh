@@ -1,10 +1,10 @@
-if (( $+commands[fzf] )) &>/dev/null; then
-    source <(fzf --zsh)
-fi
+# if (( $+commands[fzf] )) &>/dev/null; then
+#     source <(fzf --zsh)
+# fi
 
 # build-fzf-tab-module  二进制执行
-zsh-defer zinit light Aloxaf/fzf-tab
-zsh-defer zinit light Freed-Wu/fzf-tab-source
+# zsh-defer zinit light Aloxaf/fzf-tab
+# zsh-defer zinit light Freed-Wu/fzf-tab-source
 
 # disable sort when completing options of any command
 zstyle ':completion:complete:*:options' sort false
@@ -15,32 +15,32 @@ zstyle ':fzf-tab:complete:_zlua:*' query-string input
 export RUNEWIDTH_EASTASIAN=0
 export FZF_COMPLETION_TRIGGER="**"
 
-export FZF_DEFAULT_COMMAND="fd --hidden --follow -I --exclude={Pods,.git,.idea,.vscode,.sass-cache,node_modules,build} --type f"
-export FZF_DEFAULT_OPTS="
---color=bg+:#313244,bg:#1e1e2e,spinner:#f5e0dc,hl:#f38ba8 
---color=fg:#cdd6f4,header:#f38ba8,info:#cba6f7,pointer:#f5e0dc 
---color=marker:#f5e0dc,fg+:#cdd6f4,prompt:#cba6f7,hl+:#f38ba8 
---tmux 
---height 60% 
---layout reverse 
---sort 
---preview '(highlight -O ansi -l {} 2> /dev/null || cat {} || tree -N -C {}) 2> /dev/null | head -500' 
---preview-window right:50%:wrap 
---bind '?:toggle-preview' 
---border 
---cycle 
---select-1 --exit-0
-"
+# export FZF_DEFAULT_COMMAND="fd --hidden --follow -I --exclude={Pods,.git,.idea,.vscode,.sass-cache,node_modules,build} --type f"
+# export FZF_DEFAULT_OPTS="
+# --color=bg+:#313244,bg:#1e1e2e,spinner:#f5e0dc,hl:#f38ba8 
+# --color=fg:#cdd6f4,header:#f38ba8,info:#cba6f7,pointer:#f5e0dc 
+# --color=marker:#f5e0dc,fg+:#cdd6f4,prompt:#cba6f7,hl+:#f38ba8 
+# --tmux 
+# --height 60% 
+# --layout reverse 
+# --sort 
+# --preview '(highlight -O ansi -l {} 2> /dev/null || cat {} || tree -N -C {}) 2> /dev/null | head -500' 
+# --preview-window right:50%:wrap 
+# --bind '?:toggle-preview' 
+# --border 
+# --cycle 
+# --select-1 --exit-0
+# "
 
 # CTRL-T
 export FZF_CTRL_T_OPTS="--preview '(highlight -O ansi -l {} 2> /dev/null || cat {} || tree -C {}) 2> /dev/null | head -200'"
 export FZF_CTRL_T_COMMAND=$FZF_DEFAULT_COMMAND
 export FZF_CTRL_T_OPTS=$FZF_DEFAULT_OPTS
 # CLT-C
-export FZF_ALT_C_OPTS="
---walker-skip .git,node_modules,target
---preview 'tree -C {} | head -200'
-"
+# export FZF_ALT_C_OPTS="
+# --walker-skip .git,node_modules,target
+# --preview 'tree -C {} | head -200'
+# "
 
 # CTRL-R
 export FZF_CTRL_R_OPTS="
