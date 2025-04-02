@@ -7,39 +7,41 @@ local M = {
 		"MasonUninstallAll",
 		"MasonLog",
 	},
+	enabled = false,
 }
 
 M.opts = {
+	automatic_installation = false,
 	ensure_installed = {
 		-- nix
-		"nil",
+		-- "nil",
 
 		-- Lua
-		"lua-language-server", -- language server
-		"stylua", -- formatter
-		"luacheck", -- linter
+		-- "lua-language-server", -- language server
+		-- "stylua", -- formatter
+		-- "luacheck", -- linter
 
 		-- Golang
-		"gopls", -- language server
+		-- "gopls", -- language server
 		-- "gotools", -- formatter
-		"revive", -- linter
+		-- "revive", -- linter
 
 		-- Python
 		-- "pyright",
-		"basedpyright",
-		"ruff",
+		-- "basedpyright",
+		-- "ruff",
 		-- "ruff_format",
 
 		-- Rust
-		"rust-analyzer", -- language server
-		"rustfmt",
+		-- "rust-analyzer", -- language server
+		-- "rustfmt",
 
 		--  swift
-		"swiftlint",
+		-- "swiftlint",
 
 		-- Shell
-		"bash-language-server", -- language server
-		"shfmt", -- formatting
+		-- "bash-language-server", -- language server
+		-- "shfmt", -- formatting
 
 		-- FE
 		-- "typescript-language-server", -- TypeScript language server
@@ -47,29 +49,29 @@ M.opts = {
 		-- "json-lsp", -- JSON language server
 		-- "tailwindcss-language-server", -- Tailwind language server
 		-- "prettier", -- formatter
-		"prettierd",
+		-- "prettierd",
 		-- "eslint-lsp", -- linter
-		"stylelint", -- linter
-		"eslint_d",
-		"prisma-language-server",
+		-- "stylelint", -- linter
+		-- "eslint_d",
+		-- "prisma-language-server",
 
 		-- XML
-		"html-lsp", -- HTML language server
-		"taplo", -- TOML language server
-		"yaml-language-server", -- YAML language server
-		"lemminx", -- XML language server
+		-- "html-lsp", -- HTML language server
+		-- "taplo", -- TOML language server
+		-- "yaml-language-server", -- YAML language server
+		-- "lemminx", -- XML language server
 
 		-- Docker
-		"dockerfile-language-server",
-		"docker-compose-language-service",
+		-- "dockerfile-language-server",
+		-- "docker-compose-language-service",
 
 		-- GitHub Action
-		"actionlint", -- linter
+		-- "actionlint", -- linter
 
 		-- Misc
-		"cspell", -- spell checker
-		"marksman", -- Markdown language server
-		"sqlls", -- SQL language server
+		-- "cspell", -- spell checker
+		-- "marksman", -- Markdown language server
+		-- "sqlls", -- SQL language server
 	},
 
 	max_concurrent_installers = 10,
@@ -104,11 +106,12 @@ M.opts = {
 	},
 }
 
-M.dependencies = {
-	{
-		"WhoIsSethDaniel/mason-tool-installer.nvim",
-		opts = { ensure_installed = M.opts.ensure_installed },
-	},
-}
+-- M.dependencies = {
+-- {
+-- "WhoIsSethDaniel/mason-tool-installer.nvim",
+-- opts = { ensure_installed = M.opts.ensure_installed },
+-- opts = { ensure_installed = {} },
+-- },
+-- }
 
 return M

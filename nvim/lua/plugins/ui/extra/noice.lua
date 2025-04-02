@@ -1,17 +1,17 @@
 local cmdline_popup_view = {
-	position = {
-		row = 3,
-		col = "50%",
-	},
-	size = {
-		width = "48%",
-		height = "auto",
-	},
+	-- position = {
+	-- 	row = 3,
+	-- 	col = "50%",
+	-- },
+	-- size = {
+	-- 	width = "48%",
+	-- 	height = "auto",
+	-- },
 	border = {
 		style = vim.g.border.style,
 		padding = { 0, 1 },
 	},
-	filter_options = {},
+	-- filter_options = {},
 }
 
 local opts = {
@@ -36,27 +36,28 @@ local opts = {
 		long_message_to_split = true, -- long messages will be sent to a split
 		inc_rename = true, -- enables an input dialog for inc-rename.nvim
 		lsp_doc_border = true, -- add a border to hover docs and signature help
-		command_palette = {
-			views = {
-				cmdline_popup = {
-					position = {
-						row = "30%",
-						col = "50%",
-					},
-					size = {
-						min_width = 60,
-						width = "auto",
-						height = "auto",
-					},
-				},
-			},
-		},
+		command_palette = true, -- use a popup for command palette
+		-- command_palette = {
+		-- 	views = {
+		-- 		cmdline_popup = {
+		-- 			position = {
+		-- 				row = "30%",
+		-- 				col = "50%",
+		-- 			},
+		-- 			size = {
+		-- 				min_width = 60,
+		-- 				width = "auto",
+		-- 				height = "auto",
+		-- 			},
+		-- 		},
+		-- 	},
+		-- },
 	},
 	views = {
 		notify = {
 			replace = true,
 		},
-		cmdline_popup = cmdline_popup_view,
+		-- cmdline_popup = cmdline_popup_view,
 		mini = {
 			win_options = {
 				winblend = function()

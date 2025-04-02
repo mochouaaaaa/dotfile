@@ -1,88 +1,62 @@
 local M = {
 	"neovim/nvim-lspconfig", -- official lspconfig
-	dependencies = {
-		"mason.nvim",
-		"williamboman/mason-lspconfig.nvim",
-	},
-}
+	config = function()
+		local lspconfig = require("lspconfig")
+		local common = require("plugins.lsp.lang.common")
+		local lang_dir = vim.fn.stdpath("config") .. "/lua/plugins/lsp/lang"
 
-local common = require("plugins.lsp.lang.common")
-
-function M._sourcekit_lsp()
-	return {
-		capabilities = common.make_capabilities({
-			workspace = {
-				didChangeWatchedFiles = {
-					dynamicRegistration = true,
-				},
-			},
-		}),
-		on_attach = common.setup,
-		filetypes = { "swift", "c", "cpp", "objective-c", "objc", "objective-cpp" },
-		get_language_id = function(_, ftype)
-			if ftype == "objc" then
-				return "objective-c"
+		local function get_lang_servers()
+			local servers = {}
+			local scan = vim.fn.globpath(lang_dir, "*", false, true)
+			for _, file in ipairs(scan) do
+				if vim.fn.isdirectory(file) == 1 then
+					local name = file:match("([^/]+)$")
+					if name then
+						table.insert(servers, name)
+					end
+				end
 			end
-			return ftype
-		end,
-		root_dir = function(filename, _)
-			local util = require("lspconfig.util")
-			return util.root_pattern("buildServer.json")(filename)
-				or util.root_pattern("*.xcodeproj", "*.xcworkspace")(filename)
-				-- or util.find_git_ancestor(filename)
-				-- or vim.fs.dirname(vim.fs.find(".git", { path = filename, upward = true }))
-				or util.root_pattern("Package.swift")(filename)
-				or vim.fn.getcwd()
-		end,
-	}
-end
+			return servers
+		end
 
-function M.opts(_, opts)
-	opts.sourcekit = M._sourcekit_lsp()
-	require("mason-lspconfig").setup_handlers({
-		function(server_name)
-			local capabilities
+		for _, server in ipairs(get_lang_servers()) do
+			print(server)
+			local server_settings = "plugins.lsp.lang." .. server .. ".settings"
+			local server_config = "plugins.lsp.lang." .. server .. ".config"
 
-			local lsp_server = "plugins.lsp.lang." .. server_name
-			-- lsp custom config
-			local server_config = lsp_server .. ".config"
-
-			local server_config_attach, server_config_extra
-			if pcall(require, server_config) then
-				server_config_attach = require(server_config).on_attach
-				server_config_extra = require(server_config).extra
-
-				capabilities = common.make_capabilities(require(server_config).capabilities)
-			else
-				capabilities = common.make_capabilities()
+			local settings = {}
+			if pcall(require, server_settings) then
+				settings = require(server_settings)
 			end
 
-			-- lsp config
-			local settings = lsp_server .. ".settings"
+			-- print(vim.inspect(settings))
 
 			local config = {
-				capabilities = capabilities,
-				on_attach = function(client, bufnr)
-					common.setup(client, bufnr)
-
-					if server_config_attach ~= nil then
-						server_config_attach(client, bufnr)
-					end
-				end,
+				capabilities = common.make_capabilities(),
+				on_attach = common.setup,
+				settings = settings,
 			}
 
-			-- add extra params
-			if server_config_extra ~= nil and type(server_config_extra) == "function" then
-				config = vim.tbl_extend("force", config, server_config_extra(config))
+			if pcall(require, server_config) then
+				local extra = require(server_config).extra
+				local on_attach = require(server_config).on_attach
+
+				if extra and type(extra) == "function" then
+					config = vim.tbl_extend("force", config, extra(config))
+				end
+
+				if on_attach and type(on_attach) == "function" then
+					local default_on_attach = config.on_attach
+					config.on_attach = function(client, bufnr)
+						default_on_attach(client, bufnr)
+						on_attach(client, bufnr)
+					end
+				end
 			end
 
-			if pcall(require, settings) then
-				config.settings = require(settings)
-			end
+			lspconfig[server].setup(config)
+		end
+	end,
+}
 
-			opts[server_name] = config
-		end,
-	})
-	return opts
-end
 return M

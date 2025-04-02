@@ -4,17 +4,23 @@ local M = {
 	"saghen/blink.cmp",
 	dependencies = {},
 	opts = {
-		-- integrations = { blink_cmp = true },
 		appearance = {
 			highlight_ns = vim.api.nvim_create_namespace("blink_cmp"),
 		},
+		cmdline = {
+			enabled = true,
+			keymap = {
+				-- ["<Tab>"] = { "show", "fallback" },
+				[custom_key.platform_key.cmd .. "-e>"] = { "hide", "fallback" },
+			},
+			completion = {
+				menu = { auto_show = true },
+				ghost_text = { enabled = false },
+			},
+		},
 		completion = {
-			-- 'prefix' will fuzzy match on the text before the cursor
-			-- 'full' will fuzzy match on the text before *and* after the cursor
-			-- example: 'foo_|_bar' will match 'foo_' for 'prefix' and 'foo__bar' for 'full'
 			keyword = { range = "prefix" },
 			ghost_text = { enabled = true },
-
 			menu = {
 				border = vim.g.border.style,
 			},

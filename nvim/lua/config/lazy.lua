@@ -49,6 +49,7 @@ require("lazy").setup({
 
 		-- custom plugins
 		{ import = "plugins" },
+		-- { import = "lazyvim.plugins.extras.lang.nix" },
 
 		-- disabled
 		{ "nvim-lualine/lualine.nvim", enabled = false },

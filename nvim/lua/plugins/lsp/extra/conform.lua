@@ -62,8 +62,8 @@ local M = {
 	},
 	init = function()
 		-- Install the conform formatter on VeryLazy
-		require("lazyvim.util").on_very_lazy(function()
-			require("lazyvim.util").format.register({
+		Util.on_very_lazy(function()
+			Util.format.register({
 				name = "conform.nvim",
 				priority = 100,
 				primary = true,

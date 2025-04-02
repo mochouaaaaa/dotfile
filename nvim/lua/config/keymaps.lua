@@ -27,6 +27,8 @@ local mappings = {
 	-- 不将删除的数据放入寄存器
 	{ from = "x", to = '"_x', mode = mode_nv },
 	{ from = "dd", to = '"_dd', mode = mode_nv },
+	{ from = "dw", to = '"_dw', mode = mode_nv },
+	{ from = "d", to = '"_d', mode = mode_nv },
 
 	{ from = _key.platform_key.cmd .. "-j>", to = "<C-n>", mode = mode_c, opt = opt_ns },
 	{ from = _key.platform_key.cmd .. "-k>", to = "<C-p>", mode = mode_c, opt = opt_ns },
