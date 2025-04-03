@@ -47,7 +47,7 @@ local M = {
 		"vhyrro/luarocks.nvim",
 		priority = 1001, -- this plugin needs to run before anything else
 		opts = {
-			rocks = { "magick" },
+			-- rocks = { "magick" },
 		},
 	},
 	{
@@ -63,8 +63,6 @@ local M = {
 					only_render_image_at_cursor = true,
 				},
 			},
-			-- max_width = 100, -- tweak to preference
-			-- max_height = 12, -- ^
 		},
 	},
 }
