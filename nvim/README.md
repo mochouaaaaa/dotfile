@@ -1,6 +1,6 @@
 # neovim
 
-习惯问题，部分快捷键在向idea迁移
+**_treesitter 和 language 使用 nix安装,默认使用Mason管理,当存在NVIM_IS_NIX为1时,则禁用Mason使用nix安装的_**
 
 ### Lsp
 
@@ -102,12 +102,3 @@
 | 当前文件回退                   | \<leader>gr      |
 | 跳转到当前文件上一个变动代码块 | \<leader>[       |
 | 跳转到当前文件下一个变动代码块 | \<leader>]       |
-
-### MarkDown
-
--- 未使用 --
-| 功能 | 快捷键 |
-| :----------- | ------------ |
-| 预览 | \<leader>mkl |
-| 实时预览 | \<leader>mks |
-| 关闭实时预览 | \<leader>mkt |
