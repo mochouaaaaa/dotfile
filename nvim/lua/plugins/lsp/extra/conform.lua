@@ -186,6 +186,8 @@ function M.opts()
 			markdown = { "prettierd" },
 			["markdown.mdx"] = { "prettierd" },
 
+			-- toml
+			toml = { "taplo" },
 			-- Nix
 			nix = { "nixfmt" },
 
