@@ -245,33 +245,18 @@ class ZshCommandKeyMap(BaseCommandKeyMap):
         """
         Open file browser
         """
-        # import tempfile
-        # import os
+        self.boss.launch(
+            # "--hold",
+            "--copy-env",
+            "--type=overlay-main",
+            "--cwd=current",
+            "zsh",
+            "-c",
+            "yazi",
+        )
 
-        self.boss.launch("--copy-env", "--type=overlay-main", "--cwd=current", "yazi")
-
-        # self.window.write_to_child("yazi\n")
-        # 创建临时文件以存储子进程修改的工作目录
-        # temp_dir_file = tempfile.NamedTemporaryFile(delete=False, dir="/tmp")
-        # temp_dir_file.close()  # 我们仅需要文件名，立即关闭文件
-        #
-        # # 启动 yazi 进程并将修改后的工作目录写入临时文件
-        # self.boss.launch("--copy-env", "--cwd=current", "sh", "-c", f"yazi; pwd > {temp_dir_file.name}")
-        #
-        # # 读取临时文件中的新工作目录并在主进程中更新
-        # try:
-        #     with open(temp_dir_file.name, "r") as f:
-        #         new_dir = f.read().strip()
-        #         if new_dir:
-        #             os.chdir(new_dir)  # 更新主进程工作目录
-        #             print(f"Changed working directory to: {new_dir}")
-        #         else:
-        #             print("Failed to read new directory from yazi.")
-        # except FileNotFoundError:
-        #     print(f"Temporary file not found: {temp_dir_file.name}")
-        # finally:
-        #     # 删除临时文件
-        #     os.unlink(temp_dir_file.name)
+        # command = "kitten @ launch --copy-env --type=overlay-main --cwd=current yazi"
+        # subprocess.run(command.split(" "), check=True)
 
     def cmd_t(self):
         """

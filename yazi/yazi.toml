@@ -2,74 +2,148 @@
 show_hidden = true
 
 [opener]
-edit = [
-    { run = 'nvim "$@"', block = true, for = "unix" },
-    { run = 'code "$@"', orphan = true },
-]
-play = [
-    { run = 'mpv "$@"', orphan = true, for = "unix" },
-    { run = 'iina --no-stdin "$@"' },
+folder = [
+  { run = '/etc/profiles/per-user/mochou/bin/nvim "$@"', block = true, desc = "neovim" },
+  { run = 'code "$@"', orphan = true, desc = "vscode" },
+  { run = 'zed "$@"', orphan = true, desc = "zed" },
 ]
 archive = [
-    { run = 'unar "$1"', desc = "Extract here" },
-    { run = '/Applications/MacZip.app/Contents/MacOS/MacZip "$1"', orphan = true, desc = "MacZip" },
+  { run = 'unar "$1"', desc = "Extract here" },
+  { run = 'ouch decompress "$1" ', orphan = true, desc = "ouch decompress" },
+  { run = '/Applications/MacZip.app/Contents/MacOS/MacZip "$1"', orphan = true, desc = "MacZip" },
 ]
+text = [
+  { run = 'nvim "$@"', block = true, desc = "neovim" },
+  { run = 'code  "$@"', orphan = true, desc = "vscode" },
+  { run = 'zed "$@"', orphan = true, desc = "zed" },
+  { run = 'gedit "$@" ', block = true, orphan = true, desc = "gedit", for = "linux" },
+  { run = 'zathura "$@"', orphan = true, desc = "zathura", for = "linux" },
+]
+image = [
+  { run = 'mirage  "$@"', orphan = true, desc = "mirage", for = "linux" },
+  { run = 'chafa "$@"', orphan = true, desc = "chafa", for = "unix" },
+]
+
+video = [
+  { run = 'mpv "$@" ', orphan = true, desc = "mpv" },
+  { run = 'ffmpeg -i "$@" -vf "fps=10" -loop 0 "$@".gif', orphan = true, desc = "change to gif" },
+]
+audio = [{ run = 'mpv "$@" ', orphan = true, desc = "mpv" }]
+document = [
+  { run = 'open "$@"', orphan = true, desc = "open" },
+  { run = 'zathura "$@" ', orphan = true, desc = "zathura" },
+  { run = 'evince "$@" ', orphan = true, desc = "evince", for = "linux" },
+]
+
+fallback = [{ run = 'open "$@"', orphan = true, desc = "open" }]
 
 [open]
 rules = [
-    { name = "*/", use = [
-        "open",
-        "edit",
-        "reveal",
-    ] },
+  { name = "*/", use = [
+    "folder",
+  ] },
 
-    { mime = "text/*", use = [
-        "edit",
-        "reveal",
-    ] },
-    { mime = "image/*", use = [
-        "open",
-        "reveal",
-    ] },
-    { mime = "video/*", use = [
-        "play",
-        "reveal",
-    ] },
-    { mime = "audio/*", use = [
-        "play",
-        "reveal",
-    ] },
-    { mime = "inode/x-empty", use = [
-        "edit",
-        "reveal",
-    ] },
+  { mime = "text/*", use = [
+    "text",
+  ] },
+  { mime = "image/*", use = [
+    "image",
+  ] },
+  { mime = "video/*", use = [
+    "video",
+  ] },
+  { mime = "audio/*", use = [
+    "audio",
+  ] },
+  { mime = "application/octet-stream", use = [
+    "video",
+  ] },
+  { mime = "inode/x-empty", use = [
+    "edit",
+    "reveal",
+  ] },
 
-    { mime = "application/json", use = [
-        "edit",
-        "reveal",
-    ] },
-    { mime = "*/javascript", use = [
-        "edit",
-        "reveal",
-    ] },
+  { mime = "application/json", use = [
+    "text",
+  ] },
+  { mime = "*/javascript", use = [
+    "edit",
+    "reveal",
+  ] },
 
-    { name = "*", use = [
-        "open",
-        "reveal",
-    ] },
+  { mime = "application/zip", use = [
+    "archive",
+  ] },
+  { mime = "application/gzip", use = [
+    "archive",
+  ] },
+  { mime = "application/x-bzip", use = [
+    "archive",
+  ] },
+  { mime = "application/x-bzip2", use = [
+    "archive",
+  ] },
+  { mime = "application/x-tar", use = [
+    "archive",
+  ] },
+  { mime = "application/x-7z-compressed", use = [
+    "archive",
+  ] },
+  { mime = "application/x-rar", use = [
+    "archive",
+  ] },
+  { mime = "application/pdf", use = [
+    "document",
+  ] },
+  { mime = "application/epub+zip", use = [
+    "document",
+  ] },
+  { mime = "application/x-mobipocket-ebook", use = [
+    "document",
+  ] },
+
+  { name = "*", use = [
+    "fallback",
+  ] },
 ]
 
 [plugin]
 prepend_previewers = [
-    { name = "*.md", run = "glow" },
-    { mime = "application/*zip", run = "ouch" },
-    { mime = "application/x-tar", run = "ouch" },
-    { mime = "application/x-bzip2", run = "ouch" },
-    { mime = "application/x-7z-compressed", run = "ouch" },
-    { mime = "application/x-rar", run = "ouch" },
-    { mime = "application/x-xz", run = "ouch" },
+  { name = "*.md", run = "glow" },
+  { name = "*.html", run = "html" },
+
+  { name = "*.csv", run = "duckdb" },
+  { name = "*.tsv", run = "duckdb" },
+  { name = "*.json", run = "duckdb" },
+  { name = "*.parquet", run = "duckdb" },
+
+  { mime = "text/html", run = "html" },
+  { mime = "application/*zip", run = "ouch" },
+  { mime = "application/x-tar", run = "ouch" },
+  { mime = "application/x-bzip2", run = "ouch" },
+  { mime = "application/x-7z-compressed", run = "ouch" },
+  { mime = "application/x-rar", run = "ouch" },
+  { mime = "application/x-xz", run = "ouch" },
+  { mime = "application/epub+zip", run = "epub-preview" },
+  { mime = "application/octet-stream", run = "video" },
+]
+prepend_preloaders = [
+  { name = "*.csv", run = "duckdb", multi = false },
+  { name = "*.tsv", run = "duckdb", multi = false },
+  { name = "*.json", run = "duckdb", multi = false },
+  { name = "*.parquet", run = "duckdb", multi = false },
+  { name = "*.db", run = "duckdb" },
+  { name = "*.duckdb", run = "duckdb" },
 ]
 prepend_fetchers = [
-    { id = "git", name = "*", run = "git" },
-    { id = "git", name = "*/", run = "git" },
+  { id = "git", name = "*", run = "git" },
+  { id = "git", name = "*/", run = "git" },
 ]
+
+[log]
+enabled = true
+
+[tasks]
+micro_workers = 5
+macro_workers = 10
+bizarre_retry = 5
