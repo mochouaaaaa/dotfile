@@ -3,7 +3,7 @@ show_hidden = true
 
 [opener]
 folder = [
-  { run = '/etc/profiles/per-user/mochou/bin/nvim "$@"', block = true, desc = "neovim" },
+  { run = 'nvim "$@"', block = true, desc = "neovim" },
   { run = 'code "$@"', orphan = true, desc = "vscode" },
   { run = 'zed "$@"', orphan = true, desc = "zed" },
 ]
