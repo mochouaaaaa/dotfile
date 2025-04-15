@@ -61,7 +61,7 @@ local opts = {
 		mini = {
 			win_options = {
 				winblend = function()
-					if vim.g.neovide then
+					if vim.g.neovide_enabled then
 						return 75
 					else
 						return 10

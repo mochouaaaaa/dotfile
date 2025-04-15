@@ -4,9 +4,8 @@ return {
 	priority = 1000,
 	build = ":CatppuccinCompile",
 	opts = {
-		-- compile_path = vim.fn.stdpath("cache") .. "/catppuccin",
 		flavour = "mocha",
-		transparent_background = not vim.g.neovide,
+		transparent_background = not vim.g.neovide_enabled,
 		term_colors = true,
 		-- custom_highlights = require("plugins.ui.theme.override"),
 		dim_inactive = {

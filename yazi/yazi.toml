@@ -10,7 +10,7 @@ folder = [
 archive = [
   { run = 'unar "$1"', desc = "Extract here" },
   { run = 'ouch decompress "$1" ', orphan = true, desc = "ouch decompress" },
-  { run = '/Applications/MacZip.app/Contents/MacOS/MacZip "$1"', orphan = true, desc = "MacZip" },
+  { run = '/Applications/MacZip.app/Contents/MacOS/MacZip "$1"', orphan = true, desc = "MacZip", for = "unix" },
 ]
 text = [
   { run = 'nvim "$@"', block = true, desc = "neovim" },
