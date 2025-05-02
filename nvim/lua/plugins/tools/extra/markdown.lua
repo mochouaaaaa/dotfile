@@ -24,7 +24,7 @@ local M = {
 	},
 	{
 		"3rd/image.nvim",
-		build = true,
+		build = false,
 		enabled = not vim.g.vscode,
 		dependencies = { "luarocks.nvim" },
 		opts = {

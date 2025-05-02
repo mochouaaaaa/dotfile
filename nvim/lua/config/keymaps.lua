@@ -30,6 +30,19 @@ local mappings = {
 	{ from = "dw", to = '"_dw', mode = mode_nv },
 	{ from = "d", to = '"_d', mode = mode_nv },
 
+	{
+		from = "<Esc>",
+		desc = "Clear search highlight",
+		to = function()
+			if vim.v.hlsearch == 1 then
+				vim.cmd("nohlsearch")
+			end
+			return "<Esc>"
+		end,
+		mode = mode_n,
+		opt = vim.tbl_extend("force", opt_ns, { expr = true }),
+	},
+
 	{ from = _key.platform_key.cmd .. "-j>", to = "<C-n>", mode = mode_c, opt = opt_ns },
 	{ from = _key.platform_key.cmd .. "-k>", to = "<C-p>", mode = mode_c, opt = opt_ns },
 	{ from = _key.platform_key.cmd .. "-e>", to = "<Nop>", mode = mode_i, opt = opt_n },

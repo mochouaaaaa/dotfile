@@ -10,12 +10,35 @@ local M = {
 		cmdline = {
 			enabled = true,
 			keymap = {
+				preset = "none",
+				-- FIX: 会导致loading
 				-- ["<Tab>"] = { "show", "fallback" },
 				[custom_key.platform_key.cmd .. "-e>"] = { "hide", "fallback" },
+
+				[custom_key.platform_key.cmd .. "-k>"] = { "select_prev", "fallback" },
+				[custom_key.platform_key.cmd .. "-j>"] = { "select_next", "fallback" },
 			},
+			sources = function()
+				local type = vim.fn.getcmdtype()
+				-- Search forward and backward
+				if type == "/" or type == "?" then
+					return { "buffer" }
+				end
+				-- Commands
+				if type == ":" or type == "@" then
+					return { "cmdline" }
+				end
+				return {}
+			end,
 			completion = {
-				menu = { auto_show = true },
-				ghost_text = { enabled = false },
+				menu = {
+					auto_show = function(ctx)
+						return vim.fn.getcmdtype() == ":"
+						-- enable for inputs as well, with:
+						-- or vim.fn.getcmdtype() == '@'
+					end,
+				},
+				ghost_text = { enabled = true },
 			},
 		},
 		completion = {
@@ -70,4 +93,19 @@ for _, file in ipairs(vim.fn.readdir(util_dir)) do
 	end
 end
 
-return M
+local result = {
+	{
+		"saghen/blink.nvim",
+		build = "cargo build --release",
+		lazy = false,
+		opts = {
+			chartoggle = { enabled = true },
+			indent = { enabled = true },
+			paris = { enabled = true },
+			select = { enabled = true },
+			tree = { enabled = false },
+		},
+	},
+	M,
+}
+return result

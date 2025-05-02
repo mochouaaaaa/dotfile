@@ -163,17 +163,7 @@ local opts = {
 return {
 	{
 		"folke/noice.nvim",
-		opts = opts,
-		keys = function()
-			return {
-				{
-					"<leader>fn",
-					function()
-						require("noice").cmd("fzf")
-					end,
-					desc = "Noice Picker Fzf",
-				},
-			}
-		end,
+		-- opts = opts,
+		keys = function() end,
 	},
 }

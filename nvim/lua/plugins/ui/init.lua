@@ -1,6 +1,5 @@
 local M = {
 	{ import = "plugins.ui" },
-	{ import = "plugins.ui.extra" },
 	{
 		"nvim-tree/nvim-web-devicons",
 		lazy = true,
