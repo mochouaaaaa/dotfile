@@ -37,9 +37,7 @@ local function del_buffer_autocmd(augroup, bufnr)
 end
 
 function M.setup(client, bufnr)
-	vim.keymap.set("n", "<leader>wl", function()
-		vim.notify(vim.inspect(vim.lsp.buf.list_workspace_folders()))
-	end, {
+	vim.keymap.set("n", "<leader>wl", function() end, {
 		buffer = bufnr,
 		noremap = true,
 		silent = true,
@@ -113,7 +111,7 @@ function M.setup(client, bufnr)
 		vim.keymap.set(
 			"n",
 			"gd",
-			"<cmd>FzfLua lsp_definitions jump_to_single_result=true ignore_current_line=true<cr>",
+			"<cmd>FzfLua lsp_definitions jump_to_single_result=true silent=true ignore_current_line=true<cr>",
 			{ buffer = bufnr, desc = "Go to definition" }
 		)
 	end
@@ -123,7 +121,7 @@ function M.setup(client, bufnr)
 		vim.keymap.set(
 			"n",
 			"td",
-			"<cmd>FzfLua lsp_typedefs jump_to_single_result=true ignore_current_line=true<cr>",
+			"<cmd>FzfLua lsp_typedefs jump_to_single_result=true silent=true ignore_current_line=true<cr>",
 			{ buffer = bufnr, desc = "Definition of current type" }
 		)
 	end
@@ -136,22 +134,21 @@ function M.setup(client, bufnr)
 		vim.keymap.set(
 			"n",
 			"gr",
-			"<cmd>FzfLua lsp_references jump_to_single_result=true ignore_current_line=true<cr>",
+			"<cmd>FzfLua lsp_references jump_to_single_result=true silent=true ignore_current_line=true<cr>",
 			{ buffer = bufnr, desc = "Go to references" }
 		)
 	end
 
-	-- if client.supports_method("textDocument/rename") then
-	-- 	if Util.has("inc-rename.nvim") then
-	-- 		local inc_rename = require("inc_rename")
-	-- 		vim.keymap.set("n", "<leader>cr", function()
-	-- 			return ":" .. inc_rename.config.cmd_name .. " " .. vim.fn.expand("<cword>")
-	-- 			-- return ":IncRename " .. vim.fn.expand("<cword>")
-	-- 		end, { buffer = bufnr, desc = "Rename" })
-	-- 	else
-	-- 		vim.keymap.set("n", "<leader>rn", vim.lsp.buf.rename, { buffer = bufnr, desc = "Rename" })
-	-- 	end
-	-- end
+	if client.supports_method("textDocument/rename") then
+		if Util.has("inc-rename.nvim") then
+			local inc_rename = require("inc_rename")
+			vim.keymap.set("n", "<leader>cr", function()
+				return ":" .. inc_rename.config.cmd_name .. " " .. vim.fn.expand("<cword>")
+			end, { expr = true, desc = "Rename" })
+		else
+			vim.keymap.set("n", "<leader>cr", vim.lsp.buf.rename, { buffer = bufnr, desc = "Rename" })
+		end
+	end
 
 	if client.supports_method("textDocument/inlayHint") then
 		vim.lsp.inlay_hint.enable(true, { bufnr = bufnr })
