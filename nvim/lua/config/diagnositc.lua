@@ -1,8 +1,8 @@
 -- Diagnostic
-vim.fn.sign_define("DiagnosticSignError", { text = vim.g.icons.Diagnostic.Error, texthl = "DiagnosticSignError" })
-vim.fn.sign_define("DiagnosticSignWarn", { text = vim.g.icons.Diagnostic.Warning, texthl = "DiagnosticSignWarn" })
-vim.fn.sign_define("DiagnosticSignInfo", { text = vim.g.icons.Diagnostic.Info, texthl = "DiagnosticSignInfo" })
-vim.fn.sign_define("DiagnosticSignHint", { text = vim.g.icons.Diagnostic.Hint, texthl = "DiagnosticSignHint" })
+-- vim.fn.sign_define("DiagnosticSignError", { text = vim.g.icons.Diagnostic.Error, texthl = "DiagnosticSignError" })
+-- vim.fn.sign_define("DiagnosticSignWarn", { text = vim.g.icons.Diagnostic.Warning, texthl = "DiagnosticSignWarn" })
+-- vim.fn.sign_define("DiagnosticSignInfo", { text = vim.g.icons.Diagnostic.Info, texthl = "DiagnosticSignInfo" })
+-- vim.fn.sign_define("DiagnosticSignHint", { text = vim.g.icons.Diagnostic.Hint, texthl = "DiagnosticSignHint" })
 
 vim.diagnostic.config({
 	virtual_text = {
