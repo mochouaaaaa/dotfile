@@ -1,9 +1,11 @@
-local M = {
+local common = require("plugins.lsp.lang.common")
+
+local nvim_lspconfig = {
 	"neovim/nvim-lspconfig", -- official lspconfig
 	enabled = vim.g.IS_NIX,
 	config = function(_, opts)
 		local lspconfig = require("lspconfig")
-		local common = require("plugins.lsp.lang.common")
+
 		local lang_dir = vim.fn.stdpath("config") .. "/lua/plugins/lsp/lang"
 
 		local function get_lang_servers()
@@ -57,4 +59,39 @@ local M = {
 	end,
 }
 
-return M
+local typescript_ls = {
+	"pmizio/typescript-tools.nvim",
+	dependencies = { "nvim-lua/plenary.nvim", "neovim/nvim-lspconfig" },
+	opts = function()
+		local api = require("typescript-tools.api")
+		return {
+			on_attach = common.setup,
+			handlers = {
+				["textDocument/publishDiagnostics"] = api.filter_diagnostics(
+					-- Ignore 'This may be converted to an async function' diagnostics.
+					{ 80006, 7044 }
+				),
+			},
+
+			settings = {
+				separate_diagnostic_server = true,
+				publish_diagnostic_on = "insert_leave",
+				tsserver = {
+					diagnosticOptions = {
+						semantic = false, -- 关闭语义诊断
+						suggestion = true, -- 可以打开建议
+						syntactic = true, -- 保留语法检查
+					},
+				},
+				tsserver_plugins = {
+					"@styled/typescript-styled-plugin",
+				},
+			},
+		}
+	end,
+}
+
+return {
+	nvim_lspconfig,
+	typescript_ls,
+}
