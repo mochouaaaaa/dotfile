@@ -365,6 +365,9 @@ class TmuxCommandKeyMap(ZshCommandKeyMap):
                 self.default_keymap,
             )
 
+    def cmd_a(self):
+        self.send_keymap("ctrl+a")
+
     def cmd_t(self):
         self.send_keymap("ctrl+a->c")
 
@@ -411,7 +414,11 @@ def handle_result(args, answer, target_window_id, boss):
     if window is None:
         return
 
+    import os
+
+    # print(os.environ.get("TERM_PROGRAM"))
     cmd = window.child.foreground_cmdline[0].split("/")[-1].replace("-", "")
+    print(cmd)
     keymap = args[1]
 
     # 类映射字典，只实例化对应的类
