@@ -2,10 +2,25 @@ local custom_key = require("util.keymap")
 
 local M = {
 	"saghen/blink.cmp",
-	dependencies = {},
+	dependencies = {
+		"xzbdmw/colorful-menu.nvim",
+		opts = {},
+	},
 	opts = {
 		appearance = {
 			highlight_ns = vim.api.nvim_create_namespace("blink_cmp"),
+		},
+		sources = {
+			providers = {
+				cmdline = {
+					min_keyword_length = function(ctx)
+						if ctx.mode == "cmdline" and string.find(ctx.line, " ") == nil then
+							return 3
+						end
+						return 0
+					end,
+				},
+			},
 		},
 		cmdline = {
 			enabled = true,
@@ -44,16 +59,39 @@ local M = {
 		completion = {
 			keyword = { range = "prefix" },
 			ghost_text = { enabled = true },
-			menu = {
-				border = vim.g.border.style,
-			},
 			documentation = {
+				auto_show = true,
 				window = {
 					border = vim.g.border.style,
 				},
 			},
+			menu = {
+				border = vim.g.border.style,
+				draw = {
+					columns = {
+						{
+							"kind_icon",
+						},
+						{
+							"label",
+							gap = 1,
+						},
+					},
+				},
+				components = {
+					label = {
+						text = function(ctx)
+							return require("colorful-menu").blink_components_text(ctx)
+						end,
+						highlight = function(ctx)
+							return require("colorful-menu").blink_components_highlight(ctx)
+						end,
+					},
+				},
+			},
 		},
 		signature = {
+			enabled = true,
 			window = {
 				border = vim.g.border.style,
 			},
@@ -96,7 +134,7 @@ end
 local result = {
 	{
 		"saghen/blink.nvim",
-		build = "cargo build --release",
+		-- build = "cargo build --release",
 		lazy = false,
 		opts = {
 			chartoggle = { enabled = true },
