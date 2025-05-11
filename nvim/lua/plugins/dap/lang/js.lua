@@ -1,10 +1,8 @@
 return {
 	config = function(dap)
-		local dap_root = require("mason-registry").get_package("node-debug2-adapter"):get_install_path()
 		dap.adapters.node2 = {
 			type = "executable",
 			command = "node",
-			args = { dap_root .. "/out/src/nodeDebug.js" },
 		}
 		dap.configurations.javascript = {
 			{

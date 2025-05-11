@@ -1,5 +1,5 @@
 local M = {
-	import = "plugins.dap.extra",
+	-- import = "plugins.dap.extra",
 }
 
 return M

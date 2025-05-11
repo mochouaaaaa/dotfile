@@ -10,7 +10,7 @@ M.keys = {
 		desc = "list debug config",
 	},
 	{
-		"<leader>db",
+		"<leader>dbs",
 		function()
 			require("dap").toggle_breakpoint()
 		end,
@@ -22,6 +22,11 @@ M.keys = {
 			require("dap").clear_breakpoints()
 		end,
 		desc = "clear all points",
+	},
+	{
+		"<leader>dbl",
+		"<CMD>FzfLua clear_breakpoints<CR>",
+		desc = "list debug points",
 	},
 }
 

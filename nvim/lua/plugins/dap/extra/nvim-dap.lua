@@ -4,7 +4,9 @@ local M = {
 		"mfussenegger/nvim-dap",
 		"nvim-neotest/nvim-nio",
 		"mfussenegger/nvim-dap-python",
+		"mxsdev/nvim-dap-vscode-js",
 	},
+	enabled = true,
 }
 
 M.keys = require("plugins.dap.keys").keys
@@ -66,11 +68,11 @@ function M.config()
 			numhl = "DapStopped",
 		},
 	}
-	-- fn.sign_define("DapBreakpoint", dap_breakpoint.error)
-	-- fn.sign_define("DapBreakpointCondition", dap_breakpoint.condition)
-	-- fn.sign_define("DapBreakpointRejected", dap_breakpoint.rejected)
-	-- fn.sign_define("DapLogPoint", dap_breakpoint.logpoint)
-	-- fn.sign_define("DapStopped", dap_breakpoint.stopped)
+	fn.sign_define("DapBreakpoint", dap_breakpoint.error)
+	fn.sign_define("DapBreakpointCondition", dap_breakpoint.condition)
+	fn.sign_define("DapBreakpointRejected", dap_breakpoint.rejected)
+	fn.sign_define("DapLogPoint", dap_breakpoint.logpoint)
+	fn.sign_define("DapStopped", dap_breakpoint.stopped)
 
 	local dap, dapui = require("dap"), require("dapui")
 	dap.listeners.after.event_initialized["dapui_config"] = function()
@@ -89,7 +91,6 @@ function M.config()
 
 	require("plugins.dap.lang.python").config(dap)
 	require("plugins.dap.lang.go").config(dap)
-	require("plugins.dap.lang.rust").config(dap)
 	require("plugins.dap.lang.js").config(dap)
 end
 
