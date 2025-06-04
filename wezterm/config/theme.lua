@@ -17,7 +17,7 @@ return {
 	-- },
 	-- 设置主字体为 Monaco
 	font = wezterm.font_with_fallback {
-		"Monaco",
+		"Monaco Nerd Font Mono",
 		"Fira Code",
 		"JetBrainsMono Nerd Font Mono",
 	},
