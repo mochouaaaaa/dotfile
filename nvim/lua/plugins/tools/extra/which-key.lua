@@ -42,7 +42,7 @@ return {
 			{ "<leader>g", desc = "git" },
 			{ "<leader>s", desc = "search replace" },
 			{ "<leader>w", desc = "lsp workspace" },
-			{ "<leader>r", desc = "code rename" },
+			{ "<leader>r", desc = "code runner" },
 			{ "<leader>n", desc = "annotation" },
 			{ "<leader>x", desc = "lsp diagnostics" },
 		})

@@ -1,0 +1,7 @@
+{
+  "django": {
+    "name": "Django Project Template",
+    "description": "Project template for Django",
+    "filename": "manager.py"
+  }
+}

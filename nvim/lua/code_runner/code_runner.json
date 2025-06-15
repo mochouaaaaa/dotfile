@@ -1,0 +1,8 @@
+{
+  "python": "python -u",
+  "go": "go run",
+  "typescript": "deno run",
+  "javascript": "node -r",
+  "ruby": "ruby -w",
+  "rust": "cd $dir && rustc $fileName && $dir/$fileNameWithoutExt"
+}
