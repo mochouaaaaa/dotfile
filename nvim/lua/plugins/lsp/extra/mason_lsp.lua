@@ -1,4 +1,4 @@
-local M = {
+local lsp = {
 	"neovim/nvim-lspconfig",
 	dependencies = {
 		"mason.nvim",
@@ -11,7 +11,7 @@ local common = require("plugins.lsp.lang.common")
 local lspconfig = require("lspconfig")
 local util = require("lspconfig.util")
 
-function M._sourcekit_lsp()
+function lsp._sourcekit_lsp()
 	return {
 		capabilities = common.make_capabilities({
 			workspace = { didChangeWatchedFiles = { dynamicRegistration = true } },
@@ -30,8 +30,8 @@ function M._sourcekit_lsp()
 	}
 end
 
-function M.config(_, opts)
-	lspconfig.sourcekit.setup(M._sourcekit_lsp())
+function lsp.config(_, opts)
+	lspconfig.sourcekit.setup(lsp._sourcekit_lsp())
 
 	require("mason-lspconfig").setup_handlers({
 		function(server_name)
@@ -60,4 +60,39 @@ function M.config(_, opts)
 	})
 end
 
-return M
+local typescript_ls = {
+	"pmizio/typescript-tools.nvim",
+	dependencies = { "nvim-lua/plenary.nvim", "neovim/nvim-lspconfig" },
+	opts = function()
+		local api = require("typescript-tools.api")
+		return {
+			on_attach = common.setup,
+			handlers = {
+				["textDocument/publishDiagnostics"] = api.filter_diagnostics(
+					-- Ignore 'This may be converted to an async function' diagnostics.
+					{ 80006, 7044 }
+				),
+			},
+
+			settings = {
+				separate_diagnostic_server = true,
+				publish_diagnostic_on = "insert_leave",
+				tsserver = {
+					diagnosticOptions = {
+						semantic = false, -- 关闭语义诊断
+						suggestion = true, -- 可以打开建议
+						syntactic = true, -- 保留语法检查
+					},
+				},
+				tsserver_plugins = {
+					"@styled/typescript-styled-plugin",
+				},
+			},
+		}
+	end,
+}
+
+return {
+	lsp,
+	typescript_ls,
+}

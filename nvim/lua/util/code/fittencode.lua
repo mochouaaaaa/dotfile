@@ -9,6 +9,9 @@ return {
 			config = function()
 				local fitten_code = require("fittencode")
 				fitten_code.setup({
+					chat = {
+						highlight_conversation_at_cursor = true,
+					},
 					use_default_keymaps = false,
 					keymaps = {
 						inline = {},
@@ -38,6 +41,19 @@ return {
 					end
 				end)
 			end,
+			keys = {
+				{
+					mode = "v",
+					"<leader>af",
+					"<CMD>Fitten translate_text<CR>",
+					desc = "Translate text",
+				},
+				{
+					"<leader>at",
+					"<CMD>Fitten toggle_chat<CR>",
+					desc = "Toggle chat",
+				},
+			},
 		}
 	end,
 }

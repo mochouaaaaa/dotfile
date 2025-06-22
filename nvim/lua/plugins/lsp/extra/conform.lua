@@ -3,8 +3,6 @@ local Util = require("lazyvim.util")
 local M = {
 	"stevearc/conform.nvim",
 	event = { "BufWritePre" },
-	dependencies = { "mason.nvim" },
-	lazy = true,
 	cmd = "ConformInfo",
 	configs = {
 		stylua = {
@@ -34,24 +32,24 @@ local M = {
 			},
 			default = vim.fn.expand("$HOME/.config/rules/.prettierrc.json"),
 		},
-		stylelint = {
-			files = {
-				".stylelintrc",
-				".stylelintrc.js",
-				".stylelintrc.json",
-				".stylelintrc.yaml",
-				".stylelintrc.yml",
-				"stylelint.config.js",
-			},
-			default = vim.fn.expand("$HOME/.config/rules/stylelint/stylelint.config.js"),
-		},
+		-- stylelint = {
+		-- 	files = {
+		-- 		".stylelintrc",
+		-- 		".stylelintrc.js",
+		-- 		".stylelintrc.json",
+		-- 		".stylelintrc.yaml",
+		-- 		".stylelintrc.yml",
+		-- 		"stylelint.config.js",
+		-- 	},
+		-- 	default = vim.fn.expand("$HOME/.config/rules/stylelint/stylelint.config.js"),
+		-- },
 		python = {
 			files = {
 				"pyproject.toml",
 				"ruff.toml",
 				".ruff.toml",
 			},
-			default = vim.fn.expand("$HOME/.config/rules/pyproject.toml"),
+			default = vim.fn.expand("$HOME/.config/ruff/pyproject.toml"),
 		},
 		swiftlint = {
 			files = {
@@ -120,7 +118,7 @@ function M.opts()
 	local stylua_config = M.resolve_config("stylua")
 	local rustfmt_config = M.resolve_config("rustfmt")
 	local prettier_config = M.resolve_config("prettierd")
-	local stylelint_config = M.resolve_config("stylelint")
+	-- local stylelint_config = M.resolve_config("stylelint")
 	local python_config = M.resolve_config("python")
 
 	return {
@@ -140,11 +138,11 @@ function M.opts()
 					return { "--config", prettier_config() }
 				end,
 			},
-			stylelint = {
-				prepend_args = function()
-					return { "-c", stylelint_config(), "--stdin-filepath", "$FILENAME" }
-				end,
-			},
+			-- stylelint = {
+			-- 	prepend_args = function()
+			-- 		return { "-c", stylelint_config(), "--stdin-filepath", "$FILENAME" }
+			-- 	end,
+			-- },
 			ruff_format = {
 				prepend_args = function()
 					return { "format", "--config", python_config() }

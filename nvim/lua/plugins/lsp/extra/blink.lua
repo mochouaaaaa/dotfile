@@ -3,14 +3,19 @@ local custom_key = require("util.keymap")
 local M = {
 	"saghen/blink.cmp",
 	dependencies = {
-		"xzbdmw/colorful-menu.nvim",
-		opts = {},
+		{
+			"xzbdmw/colorful-menu.nvim",
+			opts = {},
+		},
+		{ "L3MON4D3/LuaSnip", version = "v2.*", config = function() end },
 	},
 	opts = {
+		snippets = { preset = "luasnip" },
 		appearance = {
 			highlight_ns = vim.api.nvim_create_namespace("blink_cmp"),
 		},
 		sources = {
+			default = { "lsp", "buffer", "snippets", "path" },
 			providers = {
 				cmdline = {
 					min_keyword_length = function(ctx)
@@ -76,6 +81,9 @@ local M = {
 							"label",
 							gap = 1,
 						},
+						{
+							"source_name",
+						},
 					},
 				},
 				components = {
@@ -138,7 +146,7 @@ local result = {
 		lazy = false,
 		opts = {
 			chartoggle = { enabled = true },
-			indent = { enabled = true },
+			-- indent = { enabled = true },
 			paris = { enabled = true },
 			select = { enabled = true },
 			tree = { enabled = false },

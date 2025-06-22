@@ -13,9 +13,6 @@ local M = {
 M.opts = {
 	automatic_installation = false,
 	ensure_installed = {
-		-- nix
-		-- "nil",
-
 		-- Lua
 		"lua-language-server", -- language server
 		"stylua", -- formatter
@@ -31,40 +28,40 @@ M.opts = {
 		"ruff",
 
 		-- Rust
-		-- "rust-analyzer", -- language server
-		-- "rustfmt",
+		"rust-analyzer", -- language server
+		"rustfmt",
 
 		--  swift
-		-- "swiftlint",
+		"swiftlint",
 
 		-- Shell
-		-- "bash-language-server", -- language server
-		-- "shfmt", -- formatting
+		"bash-language-server", -- language server
+		"shfmt", -- formatting
 
 		-- FE
-		-- "typescript-language-server", -- TypeScript language server
-		-- "css-lsp", -- CSS language server
-		-- "json-lsp", -- JSON language server
-		-- "tailwindcss-language-server", -- Tailwind language server
-		-- "prettier", -- formatter
-		-- "prettierd",
-		-- "eslint-lsp", -- linter
-		-- "stylelint", -- linter
-		-- "eslint_d",
-		-- "prisma-language-server",
+		"typescript-language-server", -- TypeScript language server
+		"css-lsp", -- CSS language server
+		"json-lsp", -- JSON language server
+		"tailwindcss-language-server", -- Tailwind language server
+		"prettier", -- formatter
+		"prettierd",
+		"eslint-lsp", -- linter
+		"stylelint", -- linter
+		"eslint_d",
+		"prisma-language-server",
 
 		-- XML
-		-- "html-lsp", -- HTML language server
-		-- "taplo", -- TOML language server
-		-- "yaml-language-server", -- YAML language server
-		-- "lemminx", -- XML language server
+		"html-lsp", -- HTML language server
+		"taplo", -- TOML language server
+		"yaml-language-server", -- YAML language server
+		"lemminx", -- XML language server
 
 		-- Docker
-		-- "dockerfile-language-server",
-		-- "docker-compose-language-service",
+		"dockerfile-language-server",
+		"docker-compose-language-service",
 
 		-- GitHub Action
-		-- "actionlint", -- linter
+		"actionlint", -- linter
 
 		-- Misc
 		"cspell", -- spell checker
@@ -104,11 +101,12 @@ M.opts = {
 	},
 }
 
--- M.dependencies = {
--- 	{
--- 		"WhoIsSethDaniel/mason-tool-installer.nvim",
--- 		opts = { ensure_installed = M.opts.ensure_installed },
--- 	},
--- }
+M.dependencies = {
+	{
+		"WhoIsSethDaniel/mason-tool-installer.nvim",
+		enabled = not vim.g.IS_NIX,
+		opts = { ensure_installed = M.opts.ensure_installed },
+	},
+}
 
 return M

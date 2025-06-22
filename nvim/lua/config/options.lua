@@ -100,7 +100,7 @@ opt.undofile = true
 opt.undodir = vim.fn.expand("$HOME/.cache/nvim/undo")
 opt.backupdir = vim.fn.expand("$HOME/.cache/nvim/backup")
 opt.viewdir = vim.fn.expand("$HOME/.cache/nvim/view")
-vim.lsp.set_log_level("info")
+vim.lsp.set_log_level("OFF")
 
 -- Misc
 opt.history = 1000

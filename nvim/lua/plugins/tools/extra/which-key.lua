@@ -34,6 +34,7 @@ return {
 		local wk = require("which-key")
 		wk.setup(opts)
 		wk.add({
+			{ "<leader>a", desc = "AI completion" },
 			{ "<leader>b", desc = "buffer / conversion" },
 			{ "<leader>c", desc = "code action / cd" },
 			{ "<leader>d", desc = "docker / debug / dagang" },

@@ -80,6 +80,15 @@ return {
 					end,
 					lib.component.virtual_env(),
 				},
+				{
+					provider = function()
+						local emoji = { "🚫", "⏸️", "⌛️", "⚠️", "0️⃣ ", "✅" }
+						return emoji[require("fittencode").get_current_status()]
+					end,
+					condition = function()
+						return package.loaded.fittencode
+					end,
+				},
 				util.SearchCount,
 				util.positioning,
 			},
