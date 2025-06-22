@@ -423,6 +423,7 @@ def handle_result(args, answer, target_window_id, boss):
 
     # 类映射字典，只实例化对应的类
     class_map = {
+        "bash": ZshCommandKeyMap,
         "zsh": ZshCommandKeyMap,
         "nvim": NvimCommandKeyMap,
         "tmux": TmuxCommandKeyMap,

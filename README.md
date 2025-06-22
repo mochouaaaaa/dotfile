@@ -34,7 +34,7 @@
 # QA
 
 - 为什么zsh不配置.zshrc为什么
-  因为zsh由nix接管, 如需不适用nix可以手动创建.zshrc然后创建以下内容
+  因为zsh由nix接管, 如需不使用nix可以手动创建.zshrc然后创建以下内容
 
   ```bash
   source $HOME/.config/zsh/init.zsh
