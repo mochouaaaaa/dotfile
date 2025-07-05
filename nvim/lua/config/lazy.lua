@@ -44,7 +44,6 @@ require("lazy").setup({
 				defaults = {
 					keymaps = false,
 				},
-				colorscheme = "catppuccin",
 			},
 		},
 

@@ -3,15 +3,22 @@ local _key = require("util.keymap")
 local M = {
 	"mikavilpas/yazi.nvim",
 	event = "VeryLazy",
-	config = function()
-		vim.env.PATH = os.getenv("PATH")
-		vim.keymap.set("n", _key.platform_key.cmd .. "-r>", function()
-			require("yazi").yazi({
-				open_for_directories = false,
-				-- log_level = vim.log.levels.DEBUG,
-			})
-		end)
+	opts = function()
+		return {
+			highlight_hovered_buffers_in_same_directory = false,
+			keymaps = {
+				show_help = "?",
+			},
+		}
 	end,
+	keys = {
+		{
+			_key.platform_key.cmd .. "-r>",
+			mode = { "n", "v" },
+			"<cmd>Yazi<cr>",
+			desc = "Open yazi at the current file",
+		},
+	},
 }
 
 return M

@@ -6,13 +6,13 @@ return {
 			"folke/zen-mode.nvim",
 			"stevearc/aerial.nvim",
 			"SmiteshP/nvim-navic",
-			"linrongbin16/lsp-progress.nvim",
 		},
 	},
-	event = "UIEnter",
+	-- event = "UIEnter",
 	opts = function()
 		local util = require("util.heirline")
 		local lib = require("heirline-components.all")
+
 		return {
 			opts = {
 				disable_winbar_cb = function(args) -- We do this to avoid showing it on the greeter.
@@ -27,7 +27,7 @@ return {
 			tabline = { -- UI upper bau
 				lib.component.tabline_conditional_padding(),
 				lib.component.tabline_buffers(),
-				lib.component.fill({ hl = { bg = "tabline_bg" } }),
+				lib.component.fill(),
 				lib.component.tabline_tabpages(),
 			},
 			winbar = { -- UI breadcrumbs bar
@@ -43,23 +43,13 @@ return {
 					},
 					util.navic(),
 					lib.component.fill(),
-					util.overseer(),
 				},
 			},
-			statuscolumn = { -- UI left column
-				init = function(self)
-					self.bufnr = vim.api.nvim_get_current_buf()
-				end,
-				lib.component.foldcolumn(),
-				lib.component.numbercolumn(),
-				lib.component.signcolumn(),
-			} or nil,
 			statusline = { -- UI statusbar
 				-- left
-				hl = { fg = "fg", bg = "bg" },
 				{
 					init = function()
-						left_components_length = 4
+						-- left_components_length = 4
 					end,
 					provider = function()
 						return "   "
@@ -100,6 +90,7 @@ return {
 
 		-- Setup
 		heirline_components.init.subscribe_to_events()
+
 		heirline.load_colors(heirline_components.hl.get_colors())
 		heirline.setup(opts)
 	end,

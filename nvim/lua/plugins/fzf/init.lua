@@ -5,6 +5,8 @@ return {
 		"ibhagwan/fzf-lua",
 		opts = function(_, opts)
 			return {
+				fzf_colors = true,
+				-- hls = { normal = "NormalFloat" },
 				files = {
 					follow = true,
 				},

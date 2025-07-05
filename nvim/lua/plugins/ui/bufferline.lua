@@ -12,10 +12,11 @@ local _key = require("util.keymap")
 
 return {
 	"akinsho/bufferline.nvim",
-	event = "BufRead",
 	dependencies = {
+		"catppuccin/nvim",
 		"echasnovski/mini.bufremove",
 	},
+	lazy = true,
 	keys = function()
 		return {
 			{
@@ -48,35 +49,26 @@ return {
 			-- 左右切换
 			{ "<S-h>", "<Cmd>BufferLineCyclePrev<CR>", desc = "swap right buffer" },
 			{ "<S-l>", "<Cmd>BufferLineCycleNext<CR>", desc = "swap left buffer" },
-			{ "<A-1>", "<cmd>BufferLineGoToBuffer 1<cr>", desc = "Buffer 1" },
-			{ "<A-2>", "<cmd>BufferLineGoToBuffer 2<cr>", desc = "Buffer 2" },
-			{ "<A-3>", "<cmd>BufferLineGoToBuffer 3<cr>", desc = "Buffer 3" },
-			{ "<A-4>", "<cmd>BufferLineGoToBuffer 4<cr>", desc = "Buffer 4" },
-			{ "<A-5>", "<cmd>BufferLineGoToBuffer 5<cr>", desc = "Buffer 5" },
-			{ "<A-6>", "<cmd>BufferLineGoToBuffer 6<cr>", desc = "Buffer 6" },
-			{ "<A-7>", "<cmd>BufferLineGoToBuffer 7<cr>", desc = "Buffer 7" },
-			{ "<A-8>", "<cmd>BufferLineGoToBuffer 8<cr>", desc = "Buffer 8" },
-			{ "<A-9>", "<cmd>BufferLineGoToBuffer 9<cr>", desc = "Buffer 9" },
 		}
 	end,
 	opts = function()
+		local catppuccin_palette = require("catppuccin.palettes")
 		return {
-			-- highlights = require("catppuccin.groups.integrations.bufferline").get(),
-			highlights = {
-				buffer_visible = {
-					bg = vim.api.nvim_get_hl(0, { name = "BufferLineBufferVisible", link = false }).bg,
+			highlights = require("catppuccin.groups.integrations.bufferline").get({
+				styles = { "italic", "bold" },
+				custom = {
+					mocha = {
+						fill = { bg = catppuccin_palette.get_palette("mocha").base },
+						background = { bg = catppuccin_palette.get_palette("mocha").base },
+					},
+					latte = {
+						fill = { bg = catppuccin_palette.get_palette("latte").base },
+						background = { bg = catppuccin_palette.get_palette("latte").base },
+					},
 				},
-				buffer_selected = {
-					bg = vim.api.nvim_get_hl(0, { name = "BufferLineBufferSelected", link = false }).bg,
-				},
-				background = {
-					bg = vim.api.nvim_get_hl(0, { name = "BufferLineBackground", link = false }).bg
-						or vim.api.nvim_get_hl(0, { name = "Normal", link = false }).bg,
-				},
-			},
+			}),
 			options = {
 				themable = true,
-
 				show_buffer_close_icons = false,
 				show_close_icon = false,
 				show_tab_indicators = true,

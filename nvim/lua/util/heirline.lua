@@ -57,7 +57,9 @@ M.primary_highlight = function()
 end
 
 M.secondary_highlight = function()
-	return M.secondary_mode_colors[M.get_mode()]
+	local tmp = M.secondary_mode_colors[M.get_mode()]
+	-- tmp["bg"] = "#eff1f6"
+	return tmp
 end
 
 M.SearchCount = {
@@ -84,54 +86,6 @@ M.positioning = {
 }
 
 ------------------------
-M.overseer = function()
-	local Spacer = { provider = " " }
-	local function rpad(child)
-		return {
-			condition = child.condition,
-			child,
-			Spacer,
-		}
-	end
-	local function OverseerTasksForStatus(status)
-		return {
-			condition = function(self)
-				return self.tasks[status]
-			end,
-			provider = function(self)
-				return string.format("%s%d", self.symbols[status], #self.tasks[status])
-			end,
-			-- hl = function(self)
-			--     return {
-			--         fg = utils.get_highlight(string.format("Overseer%s", status)).fg,
-			--     }
-			-- end,
-		}
-	end
-	return {
-		condition = function()
-			return package.loaded.overseer
-		end,
-		init = function(self)
-			local tasks = require("overseer.task_list").list_tasks({ unique = true })
-			local tasks_by_status = require("overseer.util").tbl_group_by(tasks, "status")
-			self.tasks = tasks_by_status
-		end,
-		static = {
-			symbols = {
-				["CANCELED"] = vim.g.icons.Overseer.Canceled,
-				["FAILURE"] = vim.g.icons.Overseer.Failure,
-				["SUCCESS"] = vim.g.icons.Overseer.Success,
-				["RUNNING"] = vim.g.icons.Overseer.Running,
-			},
-		},
-
-		rpad(OverseerTasksForStatus("CANCELED")),
-		rpad(OverseerTasksForStatus("RUNNING")),
-		rpad(OverseerTasksForStatus("SUCCESS")),
-		rpad(OverseerTasksForStatus("FAILURE")),
-	}
-end
 
 M.navic = function()
 	return {
