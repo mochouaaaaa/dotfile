@@ -14,14 +14,14 @@ vim.diagnostic.config({
 			min = vim.diagnostic.severity.WARN, -- 只显示警告及以上的诊断
 		},
 	},
-	-- float = { header = "", prefix = "", focusable = false, border = "rounded", source = true },
-	float = {
-		show_header = true,
-		source = "if_many",
-		focusable = true,
-		border = "rounded",
-		severity_sort = true,
-	},
+	float = { header = "", prefix = "", focusable = false, border = "rounded", source = true },
+	-- float = {
+	-- 	show_header = true,
+	-- 	source = "if_many",
+	-- 	focusable = true,
+	-- 	border = "rounded",
+	-- 	severity_sort = true,
+	-- },
 	signs = true, -- 启用符号显示
 	underline = true, -- 启用下划线显示
 	update_in_insert = false,

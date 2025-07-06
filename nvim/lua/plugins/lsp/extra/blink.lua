@@ -9,7 +9,9 @@ local M = {
 		},
 		{ "L3MON4D3/LuaSnip", version = "v2.*", config = function() end },
 	},
-	opts = function()
+	config = function(_, opts)
+		require("blink.cmp").setup(opts)
+
 		vim.api.nvim_create_autocmd("User", {
 			pattern = "BlinkCmpMenuOpen",
 			callback = function()
@@ -23,122 +25,122 @@ local M = {
 				vim.diagnostic.enable(true)
 			end,
 		})
+	end,
+	opts = {
+		snippets = { preset = "luasnip" },
+		appearance = {
+			highlight_ns = vim.api.nvim_create_namespace("blink_cmp"),
+		},
+		sources = {
+			default = { "lsp", "buffer", "snippets", "path" },
+			providers = {
+				cmdline = {
+					min_keyword_length = function(ctx)
+						if ctx.mode == "cmdline" and string.find(ctx.line, " ") == nil then
+							return 3
+						end
+						return 0
+					end,
+				},
+			},
+		},
+		cmdline = {
+			enabled = true,
+			keymap = {
+				preset = "none",
+				-- FIX: 会导致loading
+				-- ["<Tab>"] = { "show", "fallback" },
+				["<Tab>"] = { "snippet_forward", "fallback" },
+				[custom_key.platform_key.cmd .. "-e>"] = { "hide", "fallback" },
 
-		return {
-			snippets = { preset = "luasnip" },
-			appearance = {
-				highlight_ns = vim.api.nvim_create_namespace("blink_cmp"),
+				[custom_key.platform_key.cmd .. "-k>"] = { "select_prev", "fallback" },
+				[custom_key.platform_key.cmd .. "-j>"] = { "select_next", "fallback" },
 			},
-			sources = {
-				default = { "lsp", "buffer", "snippets", "path" },
-				providers = {
-					cmdline = {
-						min_keyword_length = function(ctx)
-							if ctx.mode == "cmdline" and string.find(ctx.line, " ") == nil then
-								return 3
-							end
-							return 0
-						end,
-					},
-				},
-			},
-			cmdline = {
-				enabled = true,
-				keymap = {
-					preset = "none",
-					-- FIX: 会导致loading
-					-- ["<Tab>"] = { "show", "fallback" },
-					[custom_key.platform_key.cmd .. "-e>"] = { "hide", "fallback" },
-
-					[custom_key.platform_key.cmd .. "-k>"] = { "select_prev", "fallback" },
-					[custom_key.platform_key.cmd .. "-j>"] = { "select_next", "fallback" },
-				},
-				sources = function()
-					local type = vim.fn.getcmdtype()
-					-- Search forward and backward
-					if type == "/" or type == "?" then
-						return { "buffer" }
-					end
-					-- Commands
-					if type == ":" or type == "@" then
-						return { "cmdline" }
-					end
-					return {}
-				end,
-				completion = {
-					menu = {
-						auto_show = function(ctx)
-							return vim.fn.getcmdtype() == ":"
-							-- enable for inputs as well, with:
-							-- or vim.fn.getcmdtype() == '@'
-						end,
-					},
-					ghost_text = { enabled = true },
-				},
-			},
+			sources = function()
+				local type = vim.fn.getcmdtype()
+				-- Search forward and backward
+				if type == "/" or type == "?" then
+					return { "buffer" }
+				end
+				-- Commands
+				if type == ":" or type == "@" then
+					return { "cmdline" }
+				end
+				return {}
+			end,
 			completion = {
-				keyword = { range = "prefix" },
-				ghost_text = { enabled = true },
-				documentation = {
-					auto_show = true,
-					window = {
-						border = vim.g.border.style,
-					},
-				},
 				menu = {
-					border = vim.g.border.style,
-					draw = {
-						columns = {
-							{
-								"kind_icon",
-							},
-							{
-								"label",
-								gap = 1,
-							},
-							{
-								"source_name",
-							},
-						},
-					},
-					components = {
-						label = {
-							text = function(ctx)
-								return require("colorful-menu").blink_components_text(ctx)
-							end,
-							highlight = function(ctx)
-								return require("colorful-menu").blink_components_highlight(ctx)
-							end,
-						},
-					},
+					auto_show = function(ctx)
+						return vim.fn.getcmdtype() == ":"
+						-- enable for inputs as well, with:
+						-- or vim.fn.getcmdtype() == '@'
+					end,
 				},
+				ghost_text = { enabled = true },
 			},
-			signature = {
-				enabled = true,
+		},
+		completion = {
+			keyword = { range = "prefix" },
+			ghost_text = { enabled = true },
+			documentation = {
+				auto_show = true,
 				window = {
 					border = vim.g.border.style,
 				},
 			},
-			keymap = {
-				preset = nil,
-				[custom_key.platform_key.cmd .. "-k>"] = { "select_prev", "fallback" },
-				[custom_key.platform_key.cmd .. "-j>"] = { "select_next", "fallback" },
-				["<Tab>"] = {
-					function(cmp)
-						if cmp.snippet_active() then
-							return cmp.accept()
-						else
-							return cmp.select_and_accept()
-						end
-					end,
-					"snippet_forward",
-					"fallback",
+			menu = {
+				border = vim.g.border.style,
+				draw = {
+					columns = {
+						{
+							"kind_icon",
+						},
+						{
+							"label",
+							gap = 1,
+						},
+						{
+							"source_name",
+						},
+					},
 				},
-				["<C-e>"] = { nil },
-				[custom_key.platform_key.cmd .. "-e>"] = { "hide", "fallback" },
+				components = {
+					label = {
+						text = function(ctx)
+							return require("colorful-menu").blink_components_text(ctx)
+						end,
+						highlight = function(ctx)
+							return require("colorful-menu").blink_components_highlight(ctx)
+						end,
+					},
+				},
 			},
-		}
-	end,
+		},
+		signature = {
+			enabled = true,
+			window = {
+				border = vim.g.border.style,
+			},
+		},
+		keymap = {
+			preset = nil,
+			[custom_key.platform_key.cmd .. "-k>"] = { "select_prev", "fallback" },
+			[custom_key.platform_key.cmd .. "-j>"] = { "select_next", "fallback" },
+			["<Tab>"] = {
+				function(cmp)
+					if cmp.snippet_active() then
+						return cmp.accept()
+					else
+						return cmp.select_and_accept()
+					end
+				end,
+				"snippet_forward",
+				"fallback",
+			},
+			["<C-e>"] = { nil },
+			[custom_key.platform_key.cmd .. "-e>"] = { "hide", "fallback" },
+		},
+	},
 }
 
 local util_dir = vim.fn.stdpath("config") .. "/lua/util/code/"
