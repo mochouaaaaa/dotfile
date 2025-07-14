@@ -1,25 +1,25 @@
 vim.g.mapleader = " "
 vim.g.maplocalleader = " "
 
--- 0.9 版本开始自带缓存加速
-vim.loader.enable()
-
 -- disabled default keymaps
-package.loaded["lazyvim.config.options"] = true
+-- package.loaded["lazyvim.config.options"] = true
+package.loaded["lazyvim.config.mappings"] = true
 
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
-if not vim.loop.fs_stat(lazypath) then
-	vim.fn.system({
-		"git",
-		"clone",
-		"--filter=blob:none",
-		"https://github.com/folke/lazy.nvim.git",
-		"--branch=stable", -- latest stable release
-		lazypath,
-	})
+if not (vim.uv or vim.loop).fs_stat(lazypath) then
+	local lazyrepo = "https://github.com/folke/lazy.nvim.git"
+	local out = vim.fn.system({ "git", "clone", "--filter=blob:none", "--branch=stable", lazyrepo, lazypath })
+	if vim.v.shell_error ~= 0 then
+		vim.api.nvim_echo({
+			{ "Failed to clone lazy.nvim:\n", "ErrorMsg" },
+			{ out, "WarningMsg" },
+			{ "\nPress any key to exit..." },
+		}, true, {})
+		vim.fn.getchar()
+		os.exit(1)
+	end
 end
-
-vim.opt.rtp:prepend(vim.env.LAZY or lazypath)
+vim.opt.rtp:prepend(lazypath)
 
 require("config.icons")
 require("config.init")
@@ -36,7 +36,6 @@ vim.g.border = {
 require("lazy").setup({
 	spec = {
 		{ "nvim-lua/plenary.nvim" },
-		{ "folke/lazy.nvim", version = false },
 		{
 			"LazyVim/LazyVim",
 			import = "lazyvim.plugins",
@@ -44,6 +43,7 @@ require("lazy").setup({
 				defaults = {
 					keymaps = false,
 				},
+				colorscheme = "catppuccin",
 			},
 		},
 
@@ -51,8 +51,9 @@ require("lazy").setup({
 		{ import = "plugins" },
 
 		-- disabled
+		{ "folke/tokyonight.nvim", enabled = false },
 		{ "nvim-lualine/lualine.nvim", enabled = false },
-		{ "nvim-ts-autotag", enabled = false },
+		-- { "nvim-ts-autotag", enabled = false },
 	},
 	ui = {
 		border = vim.g.border.style,

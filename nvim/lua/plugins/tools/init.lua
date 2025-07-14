@@ -1,5 +1,5 @@
 return {
 	{
-		import = "plugins.tools.extra",
+		import = "plugins.tools",
 	},
 }

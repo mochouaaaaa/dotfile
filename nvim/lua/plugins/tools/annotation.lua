@@ -2,22 +2,18 @@ local util = require("util.keymap")
 
 return {
 	{
-		"numToStr/Comment.nvim",
-		config = function()
-			-- gcc和gc注释修改为D-/
-			require("Comment").setup({
-				toggler = {
-					line = util.platform_key.cmd .. "-/>",
-				},
-				opleader = {
-					line = util.platform_key.cmd .. "-/>",
-				},
-			})
-		end,
+		"echasnovski/mini.comment",
+		opts = {
+			mappings = {
+				comment = util.platform_key.cmd .. "-/>",
+				comment_line = util.platform_key.cmd .. "-/>",
+				comment_visual = util.platform_key.cmd .. "-/>",
+				textobject = util.platform_key.cmd .. "-/>",
+			},
+		},
 	},
 	{
 		"folke/todo-comments.nvim",
-		cmd = { "TodoTrouble", "TodoTelescope", "TodoQuickFix", "TodoLocList", "TodoFixFixme", "TodoFixFixmeTrouble" },
 		keys = function()
 			return {
 				{

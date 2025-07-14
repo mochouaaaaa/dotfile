@@ -4,11 +4,6 @@ end
 
 vim.g.neovide_enabled = vim.g.neovide
 
-vim.g.python_lsp = "basedpyright"
-
-require("config.keymaps")
-require("config.autocmds")
-require("config.options")
 require("config.diagnositc")
 require("config.filetype")
 require("config.shell")

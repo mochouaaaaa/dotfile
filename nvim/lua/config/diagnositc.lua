@@ -1,9 +1,3 @@
--- Diagnostic
--- vim.fn.sign_define("DiagnosticSignError", { text = vim.g.icons.Diagnostic.Error, texthl = "DiagnosticSignError" })
--- vim.fn.sign_define("DiagnosticSignWarn", { text = vim.g.icons.Diagnostic.Warning, texthl = "DiagnosticSignWarn" })
--- vim.fn.sign_define("DiagnosticSignInfo", { text = vim.g.icons.Diagnostic.Info, texthl = "DiagnosticSignInfo" })
--- vim.fn.sign_define("DiagnosticSignHint", { text = vim.g.icons.Diagnostic.Hint, texthl = "DiagnosticSignHint" })
-
 vim.diagnostic.config({
 	virtual_text = {
 		-- 显示诊断信息在代码旁
@@ -27,9 +21,3 @@ vim.diagnostic.config({
 	update_in_insert = false,
 	severity_sort = true,
 })
-
--- kitty terminal background
--- vim.cmd([[highlight Normal guibg=none]])
--- vim.cmd([[highlight NonText guibg=none]])
--- vim.cmd([[highlight Normal ctermbg=none]])
--- vim.cmd([[highlight NonText ctermbg=none]])

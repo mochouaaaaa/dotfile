@@ -2,9 +2,6 @@ local autocmd = vim.api.nvim_create_autocmd
 local augroup = vim.api.nvim_create_augroup
 local opt = vim.opt
 
--- Automatic save
--- require("util.autosave").setup()
-
 -- 取消回车自动添加注释
 vim.api.nvim_create_autocmd("FileType", {
 	pattern = "*",

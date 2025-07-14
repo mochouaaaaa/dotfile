@@ -26,7 +26,7 @@ local M = {
 		"3rd/image.nvim",
 		build = false,
 		enabled = not vim.g.vscode,
-		dependencies = { "luarocks.nvim" },
+		--dependencies = { "luarocks.nvim" },
 		opts = {
 			backend = "kitty",
 			processor = "magick_rock", -- or "magick_cli"

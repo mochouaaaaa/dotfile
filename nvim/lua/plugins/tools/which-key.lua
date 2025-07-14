@@ -32,7 +32,6 @@ return {
 	},
 	config = function(_, opts)
 		local wk = require("which-key")
-		wk.setup(opts)
 		wk.add({
 			{ "<leader>a", desc = "AI completion" },
 			{ "<leader>b", desc = "buffer / conversion" },
@@ -47,5 +46,7 @@ return {
 			{ "<leader>n", desc = "annotation" },
 			{ "<leader>x", desc = "lsp diagnostics" },
 		})
+
+		wk.setup(opts)
 	end,
 }

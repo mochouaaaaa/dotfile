@@ -2,7 +2,6 @@
 -- * add extra plugins
 -- * disable/enabled LazyVim plugins
 -- * override the uration of LazyVim plugins
-_G.lazyvim_util = require("lazyvim.util")
 
 return {
 	{

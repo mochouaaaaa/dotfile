@@ -67,6 +67,7 @@ local mappings = {
 	-- ------ 视图模式
 	-- 单行或多行移动
 	{ from = "J", to = "<Cmd>m '>+1<CR>gv=gv<CR>", mode = mode_v },
+	{ from = "J", to = "<Nop>", mode = mode_n, opt = opt_n },
 	{ from = "K", to = "<Cmd>m '<-2<CR>gv=gv<CR>", mode = mode_v },
 	{ from = "H", to = "<gv", mode = mode_v },
 	{ from = "L", to = ">gv", mode = mode_v },

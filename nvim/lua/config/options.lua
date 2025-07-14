@@ -20,6 +20,7 @@ opt.tabstop = 4
 opt.shiftwidth = 4
 opt.expandtab = true
 opt.autoindent = true
+opt.list = false
 
 g.max_file = { size = 100 * 1024 * 1024, lines = 10000 }
 g.ui_notifications_enabled = true
@@ -33,8 +34,6 @@ opt.cursorline = true
 
 -- 启用鼠标
 opt.mouse:append("a")
--- 系统剪切板
-opt.clipboard:append("unnamedplus")
 
 -- 默认新窗口由和下
 opt.splitright = true
@@ -110,15 +109,6 @@ o.timeout = true
 o.ttimeoutlen = 50
 o.timeoutlen = 100
 
--- g.loaded_gzip = 1
--- g.loaded_netrw = 1
--- g.loaded_netrwPlugin = 1
--- g.loaded_matchparen = 1
--- g.loaded_tar = 1
--- g.loaded_tarPlugin = 1
--- g.loaded_zip = 1
--- g.loaded_zipPlugin = 1
-
 g.loaded_python3_provider = 0
 g.loaded_ruby_provider = 0
 g.loaded_node_provider = 0
@@ -128,7 +118,6 @@ opt.smoothscroll = true
 
 -- folding
 o.foldlevel = 99
-o.foldtext = "v:lua.require'lazyvim.util'.ui.foldtext()"
 
 -- Fix markdown indentation settings
 vim.g.markdown_recommended_style = 0
