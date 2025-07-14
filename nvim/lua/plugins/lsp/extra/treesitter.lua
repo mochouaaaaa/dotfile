@@ -1,71 +1,16 @@
-local ts_langs = {
-	-- https://github.com/nvim-treesitter/nvim-treesitter#supported-languages
-	"bash",
-	"c",
-	"cmake",
-	"comment",
-	"cpp",
-	"css",
-	"dart",
-	"diff",
-	"dockerfile",
-	"git_rebase",
-	"gitattributes",
-	"gitcommit",
-	"gitignore",
-	"go",
-	"gomod",
-	"gosum",
-	"gowork",
-	"graphql",
-	"html",
-	"ini",
-	"javascript",
-	"json",
-	"json5",
-	"jsonc",
-	"lua",
-	"luap",
-	"make",
-	"markdown",
-	"markdown_inline",
-	"php",
-	"prisma",
-	"python",
-	"regex",
-	"ruby",
-	"rust",
-	"scss",
-	"smali",
-	"sql",
-	"svelte",
-	"swift",
-	"toml",
-	"tsx",
-	"typescript",
-	"vim",
-	"vue",
-	"yaml",
-	"zig",
-}
-
 return {
-	{
-		"nvim-treesitter/nvim-treesitter",
-		lazy = false,
-		opts = {
-			ensure_installed = ts_langs,
+	"nvim-treesitter/nvim-treesitter",
+	opts = function(_, opts)
+		opts = vim.tbl_deep_extend("force", opts, {
 			auto_install = not vim.g.IS_NIX,
 			sync_install = not vim.g.IS_NIX,
-			ignore_install = vim.g.IS_NIX and ts_langs or {},
-			modules = {},
+			ignore_install = {},
 
-			highlight = { enable = true, additional_vim_regex_highlighting = false },
-			autotag = {
+			highlight = {
 				enable = true,
+				additional_vim_regex_highlighting = false,
 			},
-			indent = { enable = true },
-			context_commentstring = { enable = true, enable_autocmd = false },
+
 			incremental_selection = {
 				enable = true,
 				keymaps = {
@@ -75,20 +20,7 @@ return {
 					node_decremental = "<S-CR>",
 				},
 			},
-			textobjects = {
-				select = {
-					enabled = true,
-					lookahead = true,
-					keymaps = {
-						-- You can use the capture groups defined in textobjects.scm
-						["[f"] = "@function.outer",
-						["]f"] = "@function.inner",
-						["[c"] = "@class.outer",
-						["]c"] = "@class.inner",
-					},
-					include_surrounding_whitespace = true,
-				},
-			},
-		},
-	},
+		})
+		return opts
+	end,
 }

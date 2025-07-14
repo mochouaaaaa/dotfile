@@ -37,4 +37,5 @@ return {
 		end,
 	},
 	{ import = "plugins.lsp.extra" },
+	{ import = "plugins.lsp.lang" },
 }

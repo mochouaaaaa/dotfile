@@ -1,18 +1,15 @@
 local M = {
 	"mfussenegger/nvim-lint",
-	lazy = true,
 }
 
 M.opts = function(_, opts)
-	local rc = require("plugins.lsp.extra.conform")
+	local rc = require("plugins.lsp.global.conform")
 
 	return {
 		-- Event to trigger linters
 		events = { "BufWritePost", "BufReadPost", "InsertLeave" },
 		linters_by_ft = {
 			lua = { "luacheck" },
-			python = { "ruff" },
-			go = { "revive" },
 			css = { "stylelint" },
 			less = { "stylelint" },
 			scss = { "stylelint" },
@@ -28,29 +25,6 @@ M.opts = function(_, opts)
 			swift = { "swiftlint" },
 		},
 		linters = {
-			luacheck = {
-				args = {
-					"--config",
-					rc.resolve_config("luacheck"),
-					"--formatter",
-					"plain",
-					"--codes",
-					"--ranges",
-					"-",
-				},
-			},
-			revive = {
-				args = { "--config", rc.resolve_config("revive") },
-			},
-			ruff = {
-				args = {
-					"check",
-					"--stdin-filepath",
-					"$FILENAME",
-					"--config",
-					rc.resolve_config("python"),
-				},
-			},
 			stylelint = {
 				args = {
 					"-c",
