@@ -1,15 +1,14 @@
-
 local M = {
 	"stevearc/conform.nvim",
 	event = { "BufWritePre" },
 	cmd = "ConformInfo",
 }
 
-function M.opts()
-    local rc = require("plugins.lsp.global.conform")
+function M.opts(_, opts)
+	local rc = require("plugins.lsp.global.conform")
 	local prettier_config = rc.resolve_config("prettierd")
 
-	return {
+	return vim.tbl_deep_extend("force", opts, {
 		formatters = {
 			prettier = {
 				prepend_args = function()
@@ -54,7 +53,7 @@ function M.opts()
 			-- Use the "*" filetype to run formatters on all filetypes.
 			swift = { "swiftformat" },
 		},
-	}
+	})
 end
 
 return M

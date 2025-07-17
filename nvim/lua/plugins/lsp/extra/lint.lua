@@ -5,7 +5,7 @@ local M = {
 M.opts = function(_, opts)
 	local rc = require("plugins.lsp.global.conform")
 
-	return {
+	return vim.tbl_deep_extend("force", opts, {
 		-- Event to trigger linters
 		events = { "BufWritePost", "BufReadPost", "InsertLeave" },
 		linters_by_ft = {
@@ -63,7 +63,7 @@ M.opts = function(_, opts)
 				},
 			},
 		},
-	}
+	})
 end
 
 return M

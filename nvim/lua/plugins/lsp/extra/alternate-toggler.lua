@@ -1,20 +1,18 @@
 local M = {
 	"rmagatti/alternate-toggler",
 	event = { "BufReadPost" },
-}
 
-function M.keys()
-	return {
-		{
-			"<leader>bt",
-			"<cmd>lua require('alternate-toggler').toggleAlternate()<CR>",
-			desc = "bool conversion",
-		},
-	}
-end
+	keys = function()
+		return {
+			{
+				"<leader>bt",
+				"<cmd>lua require('alternate-toggler').toggleAlternate()<CR>",
+				desc = "bool conversion",
+			},
+		}
+	end,
 
-function M.opts(_, opts)
-	return {
+	opts = {
 		alternates = {
 			["=="] = "!=",
 			["true"] = "false",
@@ -32,7 +30,7 @@ function M.opts(_, opts)
 			["+"] = "-",
 			["==="] = "!==",
 		},
-	}
-end
+	},
+}
 
 return M
