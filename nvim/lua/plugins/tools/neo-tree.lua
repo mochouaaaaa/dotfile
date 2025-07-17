@@ -5,12 +5,12 @@ return {
 	opts = {
 		close_if_last_window = true,
 		event_handlers = {
-			{
-				event = "file_opened",
-				handler = function(file_path)
-					require("neo-tree.sources.filesystem").reset_search(state)
-				end,
-			},
+			-- {
+			-- 	event = "file_opened",
+			-- 	handler = function(file_path)
+			-- 		require("neo-tree.sources.filesystem").reset_search(state)
+			-- 	end,
+			-- },
 			{
 				event = "neo_tree_buffer_enter",
 				handler = function()

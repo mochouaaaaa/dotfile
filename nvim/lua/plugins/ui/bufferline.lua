@@ -52,18 +52,19 @@ return {
 		}
 	end,
 	opts = function()
-		local catppuccin_palette = require("catppuccin.palettes")
+		local mocha = require("plugins.ui.theme.dark").colors
+		local latte = require("plugins.ui.theme.light").colors
 		return {
 			highlights = require("catppuccin.groups.integrations.bufferline").get({
 				styles = { "italic", "bold" },
 				custom = {
 					mocha = {
-						fill = { bg = catppuccin_palette.get_palette("mocha").base },
-						background = { bg = catppuccin_palette.get_palette("mocha").base },
+						fill = { bg = mocha.base },
+						background = { bg = mocha.base },
 					},
 					latte = {
-						fill = { bg = catppuccin_palette.get_palette("latte").base },
-						background = { bg = catppuccin_palette.get_palette("latte").base },
+						fill = { bg = latte.base },
+						background = { bg = latte.base },
 					},
 				},
 			}),
