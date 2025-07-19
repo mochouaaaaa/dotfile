@@ -1,6 +1,7 @@
 return {
 	"neovim/nvim-lspconfig",
 	opts = function(_, opts)
+		local lsp_name = "gopls"
 		local common = require("plugins.lsp.global.common")
 
 		opts.gopls = {
@@ -47,8 +48,8 @@ return {
 		}
 
 		if vim.g.IS_NIX then
-			local lspconfig = require("lspconfig")
-			lspconfig.gopls.setup(opts.gopls)
+			vim.lsp.config(lsp_name, opts.gopls)
+			vim.lsp.enable(lsp_name)
 		end
 		return opts
 	end,

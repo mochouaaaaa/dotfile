@@ -55,8 +55,9 @@ return {
 			}
 
 			if vim.g.IS_NIX then
-				local lspconfig = require("lspconfig")
-				lspconfig.basedpyright.setup(opts.basedpyright)
+				vim.lsp.config("basedpyright", opts.basedpyright)
+				vim.lsp.config("ruff", opts.ruff)
+				vim.lsp.enable({ "ruff", "basedpyright" })
 			end
 			return opts
 		end,

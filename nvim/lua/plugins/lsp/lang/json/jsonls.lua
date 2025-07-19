@@ -2,6 +2,7 @@ return {
 	{
 		"neovim/nvim-lspconfig",
 		opts = function(_, opts)
+			local lsp_name = "jsonls"
 			local common = require("plugins.lsp.global.common")
 
 			opts.jsonls = {
@@ -21,8 +22,8 @@ return {
 			}
 
 			if vim.g.IS_NIX then
-				local lspconfig = require("lspconfig")
-				lspconfig.jsonls.setup(opts.jsonls)
+				vim.lsp.config(lsp_name, opts.jsonls)
+				vim.lsp.enable(lsp_name)
 			end
 			return opts
 		end,

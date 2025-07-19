@@ -2,6 +2,7 @@ return {
 	{
 		"neovim/nvim-lspconfig",
 		opts = function(_, opts)
+			local lsp_name = "lua_ls"
 			local common = require("plugins.lsp.global.common")
 
 			opts.lua_ls = {
@@ -56,8 +57,8 @@ return {
 			}
 
 			if vim.g.IS_NIX then
-				local lspconfig = require("lspconfig")
-				lspconfig.lua_ls.setup(opts.lua_ls)
+				vim.lsp.config(lsp_name, opts.lua_ls)
+				vim.lsp.enable(lsp_name)
 			end
 			return opts
 		end,
