@@ -3,7 +3,10 @@ local utils = require("util.keymap")
 return {
 	"nvim-neo-tree/neo-tree.nvim",
 	opts = {
+		auto_clean_after_session_restore = true,
 		close_if_last_window = true,
+		sort_case_insensitive = true,
+		popup_border_style = vim.g.border.style,
 		event_handlers = {
 			-- {
 			-- 	event = "file_opened",
@@ -25,6 +28,7 @@ return {
 			},
 		},
 		filesystem = {
+			use_libuv_file_watcher = true,
 			window = {
 				mappings = {
 					["o"] = "system_open",
@@ -58,6 +62,12 @@ return {
 				utils.platform_key.cmd .. "-e>",
 				"<Cmd>Neotree toggle<CR>",
 				mode = "n",
+			},
+			{
+				"<leader>eg",
+				"<Cmd>Neotree git_status<CR>",
+				mode = "n",
+				desc = "Toggle git status in neo-tree",
 			},
 		}
 	end,

@@ -25,7 +25,7 @@ local M = {
 	{
 		"3rd/image.nvim",
 		build = false,
-		enabled = not vim.g.vscode,
+		enabled = not (vim.g.vscode or vim.g.neovide_enabled),
 		--dependencies = { "luarocks.nvim" },
 		opts = {
 			backend = "kitty",
