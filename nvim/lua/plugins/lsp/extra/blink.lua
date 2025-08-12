@@ -3,7 +3,10 @@ local custom_key = require("util.keymap")
 local M = {
 	"saghen/blink.cmp",
 	dependencies = {
-		{ "L3MON4D3/LuaSnip", version = "v2.*", config = function() end },
+		{ "L3MON4D3/LuaSnip", version = "v2.*" },
+		{
+			"saghen/blink.compat",
+		},
 	},
 	config = function(_, opts)
 		require("blink.cmp").setup(opts)
@@ -65,13 +68,6 @@ local M = {
 					return {}
 				end,
 				completion = {
-					menu = {
-						auto_show = function(ctx)
-							return vim.fn.getcmdtype() == ":"
-							-- enable for inputs as well, with:
-							-- or vim.fn.getcmdtype() == '@'
-						end,
-					},
 					ghost_text = { enabled = true },
 				},
 			},
@@ -110,7 +106,7 @@ local M = {
 				},
 			},
 			keymap = {
-				preset = nil,
+				preset = "enter",
 				[custom_key.platform_key.cmd .. "-k>"] = { "select_prev", "fallback" },
 				[custom_key.platform_key.cmd .. "-j>"] = { "select_next", "fallback" },
 				["<Tab>"] = {

@@ -1,6 +1,7 @@
 return {
 	{
 		"neovim/nvim-lspconfig",
+		event = "VeryLazy",
 		opts = function(_, opts)
 			local lsp_name = "lua_ls"
 			local common = require("plugins.lsp.global.common")

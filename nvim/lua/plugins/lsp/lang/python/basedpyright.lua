@@ -3,6 +3,7 @@ local common = require("plugins.lsp.global.common")
 return {
 	{
 		"neovim/nvim-lspconfig",
+		event = "VeryLazy",
 		opts = function(_, opts)
 			opts.ruff = {
 				init_options = {
