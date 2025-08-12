@@ -11,7 +11,7 @@ local color_overrides = {
 	teal = "#007E7D",
 	sky = "#007E7D",
 	sapphire = "#007E7D",
-	blue = "#1675AB",
+	blue = "#1675ab",
 	lavender = "#1675AB",
 	text = "#706F7A",
 	subtext1 = "#757480",
@@ -23,8 +23,8 @@ local color_overrides = {
 	surface1 = "#EBDFD3",
 	surface0 = "#EBDFD3",
 	base = "#eff1f5",
-	mantle = "#FCF9F5",
-	crust = "#FCF9F5",
+	mantle = "#fcf9f5",
+	crust = "#fcf9f5",
 }
 
 -- parameter: colors color_overrides

@@ -118,13 +118,6 @@ local highlight_overrides = function(colors)
 		},
 	}
 
-	if vim.g.neovide then
-		result.Normal = {
-			fg = "#89b4fa",
-			bg = "#1e1e2e",
-		}
-	end
-
 	return result
 end
 

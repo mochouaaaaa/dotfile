@@ -1,10 +1,7 @@
 local M = {}
 
 local global_overrides = function(colors)
-	-- vim.api.nvim_set_hl(0, "YaziHovered", { bg = colors.blue })
-	-- vim.api.nvim_set_hl(0, "YaziHoveredSameDir", { bg = colors.blue })
-
-	return {
+	local result = {
 
 		Search = {
 			link = "IncSearch",
@@ -13,10 +10,16 @@ local global_overrides = function(colors)
 			bg = colors.sky,
 		},
 
+		Identifier = {
+			fg = colors.blue,
+			bg = colors.base,
+		},
+
 		StatusLine = { bg = colors.base }, -- status line
 
 		NormalFloat = {
 			link = "Normal",
+			bg = colors.base,
 		},
 		TermCursor = {
 			link = "Cursor",
@@ -81,7 +84,18 @@ local global_overrides = function(colors)
 		MiniIndentscopeSymbol = {
 			link = "MoreMsg",
 		},
+		Normal = {
+			bg = colors.base,
+		},
+		Cursor = {
+			bg = colors.base,
+		},
+		FloatBorder = {
+			bg = colors.base,
+		},
 	}
+
+	return result
 end
 
 M.dark = function()

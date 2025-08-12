@@ -1,31 +1,33 @@
 return {
 	-- 分屏边框颜色
 	"nvim-zh/colorful-winsep.nvim",
-	config = true,
-	lazy = true,
 	event = "WinNew",
-	opts = {
-		-- highlight for Window separator
-		hi = {
-			link = "Identifier",
-		},
-		-- This plugin will not be activated for filetype in the following table.
-		no_exec_files = {
-			"packer",
-			"TelescopePrompt",
-			"mason",
-			"NvimTree",
-		},
-		-- Symbols for separator lines, the order: horizontal, vertical, top left, top right, bottom left, bottom right.
-		symbols = { "─", "│", "╭", "╮", "╰", "╯" },
-		-- Smooth moving switch
-		smooth = false,
-		zindex = 20,
-		anchor = {
-			left = { height = 1, x = -1, y = -1 },
-			right = { height = 1, x = -1, y = 0 },
-			up = { width = 0, x = -1, y = 0 },
-			bottom = { width = 0, x = 1, y = 0 },
-		},
-	},
+	config = function()
+		get_hi = vim.api.nvim_get_hl(0, { name = "Identifier" })
+		require("colorful-winsep").setup({
+			highlight = { fg = get_hi.fg, bg = get_hi.bg },
+			excluded_ft = {
+				"packer",
+				"TelescopePrompt",
+				"mason",
+				"NvimTree",
+			},
+			border = "rounded",
+			indicator_for_2wins = {
+				-- only work when the total of windows is two
+				position = nil, -- nil to disable or choose between "center", "start", "end" and "both"
+				symbols = {
+					-- the meaning of left, down ,up, right is the position of separator
+					start_left = "󱞬",
+					end_left = "󱞪",
+					start_down = "󱞾",
+					end_down = "󱟀",
+					start_up = "󱞢",
+					end_up = "󱞤",
+					start_right = "󱞨",
+					end_right = "󱞦",
+				},
+			},
+		})
+	end,
 }
