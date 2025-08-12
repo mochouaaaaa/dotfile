@@ -6,6 +6,8 @@ folder = [
   { run = 'nvim "$@"', block = true, desc = "neovim" },
   { run = 'code "$@"', orphan = true, desc = "vscode" },
   { run = 'zed "$@"', orphan = true, desc = "zed" },
+  { run = 'neovide "$@"', block = true, desc = "neovide" },
+  { run = 'open "$@"', orphan = true, desc = "open" },
 ]
 archive = [
   { run = 'unar "$1"', desc = "Extract here" },
@@ -26,6 +28,7 @@ image = [
 
 video = [
   { run = 'mpv "$@" ', orphan = true, desc = "mpv" },
+  { run = '/Applications/IINA.app/Contents/MacOS/IINA "$@"', desc = "IINA", for = "unix" },
   { run = 'ffmpeg -i "$@" -vf "fps=10" -loop 0 "$@".gif', orphan = true, desc = "change to gif" },
 ]
 audio = [{ run = 'mpv "$@" ', orphan = true, desc = "mpv" }]
