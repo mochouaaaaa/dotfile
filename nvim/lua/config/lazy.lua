@@ -64,7 +64,7 @@ require("lazy").setup({
 		version = false, -- 永远使用最新的 git commit 版本
 		keymaps = false,
 	},
-	checker = { enabled = true }, -- 自动检查插件更新
+	checker = { enabled = false }, -- 自动检查插件更新
 	performance = {
 		rtp = {
 			disabled_plugins = {
