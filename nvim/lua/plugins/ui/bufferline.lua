@@ -51,11 +51,11 @@ return {
 			{ "<S-l>", "<Cmd>BufferLineCycleNext<CR>", desc = "swap left buffer" },
 		}
 	end,
-	opts = function()
+	opts = function(_, opts)
 		local mocha = require("plugins.ui.theme.dark").colors
 		local latte = require("plugins.ui.theme.light").colors
-		return {
-			highlights = require("catppuccin.groups.integrations.bufferline").get({
+		return vim.tbl_deep_extend("keep", opts, {
+			highlights = require("catppuccin.groups.integrations.bufferline").get_theme({
 				styles = { "italic", "bold" },
 				custom = {
 					mocha = {
@@ -107,6 +107,6 @@ return {
 				},
 				hover = { enabled = false },
 			},
-		}
+		})
 	end,
 }

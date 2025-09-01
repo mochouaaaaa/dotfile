@@ -65,7 +65,7 @@ function BaseConfig:background()
 	vim.g.neovide_normal_opacity = 0.75
 	vim.g.neovide_window_blurred = true
 
-	vim.g.neovide_floating_shadow = true
+	vim.g.neovide_floating_shadow = false
 	vim.g.neovide_floating_z_height = 10
 	vim.g.neovide_light_angle_degrees = 45
 	vim.g.neovide_light_radius = 0
