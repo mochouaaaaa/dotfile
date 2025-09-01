@@ -5,7 +5,7 @@ show_hidden = true
 folder = [
   { run = 'nvim "$@"', block = true, desc = "neovim" },
   { run = 'code "$@"', orphan = true, desc = "vscode" },
-  { run = 'zed "$@"', orphan = true, desc = "zed" },
+  { run = 'zeditor "$@"', orphan = true, desc = "zed" },
   { run = 'neovide "$@"', block = true, desc = "neovide" },
   { run = 'open "$@"', orphan = true, desc = "open" },
 ]
@@ -17,7 +17,7 @@ archive = [
 text = [
   { run = 'nvim "$@"', block = true, desc = "neovim" },
   { run = 'code  "$@"', orphan = true, desc = "vscode" },
-  { run = 'zed "$@"', orphan = true, desc = "zed" },
+  { run = 'zeditor "$@"', orphan = true, desc = "zed" },
   { run = 'gedit "$@" ', block = true, orphan = true, desc = "gedit", for = "linux" },
   { run = 'zathura "$@"', orphan = true, desc = "zathura", for = "linux" },
 ]
