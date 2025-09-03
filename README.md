@@ -5,10 +5,6 @@
 - master use telescope search
 - fzf use fzf-lua search
 
-## Rules
-
-- 该文件夹是全局规则
-
 ## Kitty/Wezterm(Tmux) Termianl keymap
 
 | 功能               | 快捷键               |  Kitty   | Wezterm  |   Tmux   |
@@ -33,22 +29,18 @@
 
 # QA
 
-- 为什么zsh不配置.zshrc为什么
-  因为zsh由nix接管, 如需不使用nix可以手动创建.zshrc然后创建以下内容
+- Q: ZSH, NVIM, KITTY缺少入口文件
 
-  ```bash
-  source $HOME/.config/zsh/init.zsh
-  ```
+```bash
+cat $HOME/.zshrc << EOF
+source $HOME/.config/zsh/init.zsh
+EOF
 
-- nvim 为什么没有init.lua文件
-  因为neovim由nix接管, 如需不使用nix可以手动创建init.lua然后创建以下内容
+cat $HOME/.config/nvim/init.lua << EOF
+require('config.lazy')
+EOF
 
-  ```lua
-  require('config.lazy')
-  ```
-
-- kitty为什么没有kitty.conf文件
-  因为kitty由nix接管, 如需不使用nix可以手动创建kitty.conf然后创建以下内容
-  ```conf
-  include init.conf
-  ```
+cat $HOME/.config/kitty/kitty.conf << EOF
+include init.conf
+EOF
+```
