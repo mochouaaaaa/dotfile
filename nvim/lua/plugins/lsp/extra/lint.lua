@@ -16,7 +16,6 @@ M.opts = function(_, opts)
 			sass = { "stylelint" },
 			yaml = { "actionlint" },
 
-			markdown = { "cspell" },
 			javascript = { "eslint_d" },
 			typescript = { "eslint_d" },
 			javascriptreact = { "eslint_d" },

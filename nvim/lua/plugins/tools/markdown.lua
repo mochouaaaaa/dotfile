@@ -97,7 +97,7 @@ local M = {
 			code = {
 				-- general
 				width = "block",
-				min_width = 80,
+				min_width = 120,
 				-- borders
 				border = "thin",
 				left_pad = 1,
