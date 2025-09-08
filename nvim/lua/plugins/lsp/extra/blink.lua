@@ -3,7 +3,15 @@ local custom_key = require("util.keymap")
 local M = {
 	"saghen/blink.cmp",
 	dependencies = {
-		{ "L3MON4D3/LuaSnip", version = "v2.*" },
+		{
+			"L3MON4D3/LuaSnip",
+			version = "v2.*",
+			config = function()
+				require("luasnip.loaders.from_lua").lazy_load({
+					paths = vim.fn.stdpath("config") .. "/snippets",
+				})
+			end,
+		},
 		{
 			"saghen/blink.compat",
 		},
@@ -32,6 +40,7 @@ local M = {
 				highlight_ns = vim.api.nvim_create_namespace("blink_cmp"),
 			},
 			sources = {
+				default = { "lsp", "path", "snippets", "buffer" },
 				providers = {
 					cmdline = {
 						min_keyword_length = function(ctx)
