@@ -36,6 +36,26 @@ return {
 			})
 		end,
 	},
+	{
+		"linux-cultist/venv-selector.nvim",
+		branch = "main",
+		dependencies = {
+			"neovim/nvim-lspconfig",
+		},
+		ft = "python", -- Load when opening Python files
+		keys = function()
+			return {
+				-- Keymap to open VenvSelector to pick a venv.
+				{ "<leader>vs", "<cmd>VenvSelect<cr>", desc = "Open VenvSelector" },
+			}
+		end,
+		opts = { -- this can be an empty lua table - just showing below for clarity.
+			search = {}, -- if you add your own searches, they go here.
+			options = {
+				debug = true,
+				picker = "fzf-lua",
+			}, -- if you add plugin options, they go here.
+		},
+	},
 	{ import = "plugins.lsp.extra" },
-	{ import = "plugins.lsp.lang" },
 }
