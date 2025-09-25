@@ -5,5 +5,5 @@ return {
 		common.setup(client, bufnr)
 	end,
 	capabilities = common.make_capabilities(),
-	filetypes = { "qml" },
+	filetypes = { "css", "scss", "less", "typescriptreact", "javascriptreact" },
 }
