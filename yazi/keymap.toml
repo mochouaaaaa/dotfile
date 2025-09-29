@@ -10,6 +10,13 @@ prepend_keymap = [
 
   { on = "p", run = "plugin smart-paste", desc = "Paste into the hovered directory or CWD" },
 
+  { on = "s", run = "plugin jump-to-char", desc = "Jump to char" },
+  { on = "f", run = "plugin smart-filter", desc = "Smart filter" },
+
+  { on = [
+    "g",
+    "c",
+  ], run = "plugin vcs-files", desc = "Show Git file changes" },
   { on = [
     "c",
     "m",

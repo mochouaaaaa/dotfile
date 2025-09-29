@@ -112,13 +112,16 @@ rules = [
 
 [plugin]
 prepend_previewers = [
-  { name = "*.md", run = "glow" },
+  { name = "*/", run = 'piper -- eza -TL=3 --color=always --icons=always --group-directories-first --no-quotes "$1"' },
   { name = "*.html", run = "html" },
+  { name = "*.md", run = 'piper -- CLICOLOR_FORCE=1 glow -w=$w "$1"' },
 
   { name = "*.csv", run = "duckdb" },
   { name = "*.tsv", run = "duckdb" },
   { name = "*.json", run = "duckdb" },
   { name = "*.parquet", run = "duckdb" },
+
+  { name = "*.tar*", run = 'piper --format=url -- tar tf "$1"' },
 
   { mime = "text/html", run = "html" },
   { mime = "application/*zip", run = "ouch" },
