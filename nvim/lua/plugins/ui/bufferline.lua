@@ -14,7 +14,7 @@ return {
 	"akinsho/bufferline.nvim",
 	dependencies = {
 		"catppuccin/nvim",
-		"echasnovski/mini.bufremove",
+		"nvim-mini/mini.bufremove",
 	},
 	lazy = true,
 	keys = function()
@@ -55,7 +55,7 @@ return {
 		local mocha = require("plugins.ui.theme.dark").colors
 		local latte = require("plugins.ui.theme.light").colors
 		return vim.tbl_deep_extend("keep", opts, {
-			highlights = require("catppuccin.groups.integrations.bufferline").get_theme({
+			highlights = require("catppuccin.special.bufferline").get_theme({
 				styles = { "italic", "bold" },
 				custom = {
 					mocha = {

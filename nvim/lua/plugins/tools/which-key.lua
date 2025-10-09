@@ -1,6 +1,6 @@
 return {
 	"folke/which-key.nvim",
-	dependencies = { "echasnovski/mini.nvim", "nvim-tree/nvim-web-devicons" },
+	dependencies = { "nvim-mini/mini.nvim", "nvim-tree/nvim-web-devicons" },
 	opts = {
 		layout = {
 			height = { min = 4, max = 25 }, -- min and max height of the columns

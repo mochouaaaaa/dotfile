@@ -2,7 +2,7 @@ local util = require("util.keymap")
 
 return {
 	{
-		"echasnovski/mini.comment",
+		"nvim-mini/mini.comment",
 		opts = {
 			mappings = {
 				comment = util.platform_key.cmd .. "-/>",
