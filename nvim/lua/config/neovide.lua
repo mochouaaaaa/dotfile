@@ -88,7 +88,7 @@ DarwinConfig.__index = DarwinConfig
 
 function DarwinConfig:keymaps()
 	BaseConfig.keymaps(self)
-	g.neovide_input_macos_option_key_is_meta = "only_left"
+	vim.g.neovide_input_macos_option_key_is_meta = "only_left"
 end
 
 function DarwinConfig:background()
