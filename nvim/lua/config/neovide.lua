@@ -11,12 +11,17 @@ function BaseConfig:new()
 
 	refresh()
 
+	_self.config(self)
 	_self.window_settings(self)
 	_self.cursor(self)
 	_self.background(self)
 	_self.keymaps(self)
 
 	return _self
+end
+
+function BaseConfig:config()
+	vim.g.neovide_theme = "auto"
 end
 
 function BaseConfig:keymaps()

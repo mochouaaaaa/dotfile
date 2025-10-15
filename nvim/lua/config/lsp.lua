@@ -1,6 +1,5 @@
 vim.lsp.enable("lua_ls")
 vim.lsp.enable("basedpyright")
-vim.lsp.enable("rust")
 vim.lsp.enable("gopls")
 vim.lsp.enable("jsonls")
 vim.lsp.enable("qmlls")

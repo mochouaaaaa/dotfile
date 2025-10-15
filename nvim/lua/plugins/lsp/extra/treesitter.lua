@@ -1,7 +1,9 @@
 return {
-	"nvim-treesitter/nvim-treesitter",
-	opts = function(_, opts)
-		opts = vim.tbl_deep_extend("force", opts, {
+	{ "williamboman/mason-nvim-treesitter.nvim", enabled = not vim.g.IS_NIX },
+	{
+		"nvim-treesitter/nvim-treesitter",
+		build = false,
+		opts = {
 			auto_install = not vim.g.IS_NIX,
 			sync_install = not vim.g.IS_NIX,
 			ignore_install = {},
@@ -20,7 +22,6 @@ return {
 					node_decremental = "<S-CR>",
 				},
 			},
-		})
-		return opts
-	end,
+		},
+	},
 }
