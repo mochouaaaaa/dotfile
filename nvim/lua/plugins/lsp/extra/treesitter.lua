@@ -1,5 +1,4 @@
 return {
-	{ "williamboman/mason-nvim-treesitter.nvim", enabled = not vim.g.IS_NIX },
 	{
 		"nvim-treesitter/nvim-treesitter",
 		build = false,
