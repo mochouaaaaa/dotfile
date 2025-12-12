@@ -1,74 +1,11 @@
 return {
-	"catppuccin/nvim",
-	name = "catppuccin",
-	priority = 1000,
-	opts = {
-		compile_path = vim.fn.stdpath("cache") .. "/catppuccin",
-		flavour = "auto",
-		background = { -- :h background
-			light = "latte",
-			dark = "mocha",
-		},
-		highlight_overrides = {
-			mocha = require("plugins.ui.theme.mode").dark(),
-			latte = require("plugins.ui.theme.mode").light(),
-		},
-		transparent_background = not vim.g.neovide_enabled,
-		term_colors = true,
-		default_integrations = false,
-		integrations = {
-			blink_cmp = true,
-			copilot_vim = true,
-			dap = true,
-			dap_ui = true,
-			dashboard = true,
-			flash = false,
-			fzf = true,
-			notifier = true,
-			noice = true,
-			neotree = false,
-			gitsigns = true,
-			markdown = true,
-			render_markdown = true,
-			headlines = true,
-			telekasten = true,
-			ts_rainbow2 = false,
-			lsp_trouble = true,
-			native_lsp = {
-				enabled = true,
-				virtual_text = {
-					errors = { "italic" },
-					hints = { "italic" },
-					warnings = { "italic" },
-					information = { "italic" },
-				},
-				underlines = {
-					errors = { "underline" },
-					hints = { "underline" },
-					warnings = { "underline" },
-					information = { "underline" },
-				},
-				inlay_hints = {
-					background = true,
-				},
-			},
-			rainbow_delimiters = true,
-			treesitter = true,
-			treesitter_context = false,
-			telescope = {
-				enabled = true,
-			},
-
-			navic = { enabled = true, custom_bg = "NONE" },
-			-- leap               = true,
-			mason = false,
-			indent_blankline = {
-				enable = true,
-				colored_indent_levels = true,
-			},
-			window_picker = true,
-			which_key = true,
-			symbols_outline = false,
-		},
+	{
+		"catppuccin/nvim",
+		name = "catppuccin",
+		priority = 1000,
+		enabled = true,
+		config = function()
+			require("plugins.ui.theme.mode").setup()
+		end,
 	},
 }

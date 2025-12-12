@@ -1,6 +1,6 @@
 local M = {}
 
-colors = {
+local colors = {
 	darkblue = "#152538",
 	inactive = "#1B2733",
 	dark_gray = "#4d5566",
@@ -30,23 +30,6 @@ M.primary_mode_colors = {
 	t = { fg = colors.purple },
 }
 
-M.secondary_mode_colors = {
-	-- n = { fg = colors.dark_gray },
-	n = { fg = colors.blue },
-	i = { fg = colors.green },
-	v = { fg = colors.orange },
-	V = { fg = colors.orange },
-	["\22"] = { fg = colors.orange },
-	c = { fg = colors.blue },
-	s = { fg = colors.purple },
-	S = { fg = colors.purple },
-	["\19"] = { fg = colors.purple },
-	R = { fg = colors.red },
-	r = { fg = colors.red },
-	["!"] = { fg = colors.blue },
-	t = { fg = colors.purple },
-}
-
 function M.get_mode()
 	local mode = vim.fn.mode(1) or "n"
 	return mode:sub(1, 1)
@@ -54,12 +37,6 @@ end
 
 M.primary_highlight = function()
 	return M.primary_mode_colors[M.get_mode()]
-end
-
-M.secondary_highlight = function()
-	local tmp = M.secondary_mode_colors[M.get_mode()]
-	-- tmp["bg"] = "#eff1f6"
-	return tmp
 end
 
 M.SearchCount = {

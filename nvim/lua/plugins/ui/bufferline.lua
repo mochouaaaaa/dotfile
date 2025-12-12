@@ -52,22 +52,22 @@ return {
 		}
 	end,
 	opts = function(_, opts)
-		local mocha = require("plugins.ui.theme.dark").colors
-		local latte = require("plugins.ui.theme.light").colors
+		-- local mocha = require("plugins.ui.theme.dark").colors
+		-- local latte = require("plugins.ui.theme.light").colors
 		return vim.tbl_deep_extend("keep", opts, {
-			highlights = require("catppuccin.special.bufferline").get_theme({
-				styles = { "italic", "bold" },
-				custom = {
-					mocha = {
-						fill = { bg = mocha.base },
-						background = { bg = mocha.base },
-					},
-					latte = {
-						fill = { bg = latte.base },
-						background = { bg = latte.base },
-					},
-				},
-			}),
+			-- highlights = require("catppuccin.special.bufferline").get_theme({
+			-- 	styles = { "italic", "bold" },
+			-- 	custom = {
+			-- 		mocha = {
+			-- 			fill = { bg = mocha.base },
+			-- 			background = { bg = mocha.base },
+			-- 		},
+			-- 		latte = {
+			-- 			fill = { bg = latte.base },
+			-- 			background = { bg = latte.base },
+			-- 		},
+			-- 	},
+			-- }),
 			options = {
 				themable = true,
 				show_buffer_close_icons = false,

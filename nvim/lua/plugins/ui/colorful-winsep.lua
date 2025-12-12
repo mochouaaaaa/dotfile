@@ -3,9 +3,9 @@ return {
 	"nvim-zh/colorful-winsep.nvim",
 	event = "WinNew",
 	config = function()
-		get_hi = vim.api.nvim_get_hl(0, { name = "Identifier" })
+		-- get_hi = vim.api.nvim_get_hl(0, { name = "Identifier" })
 		require("colorful-winsep").setup({
-			highlight = { fg = get_hi.fg, bg = get_hi.bg },
+			-- highlight = { fg = get_hi.fg, bg = get_hi.bg },
 			excluded_ft = {
 				"packer",
 				"TelescopePrompt",

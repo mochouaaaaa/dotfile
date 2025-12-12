@@ -2,6 +2,7 @@ local custom_key = require("util.keymap")
 
 local M = {
 	"saghen/blink.cmp",
+	version = "1.*",
 	dependencies = {
 		{
 			"L3MON4D3/LuaSnip",
@@ -39,6 +40,7 @@ local M = {
 			appearance = {
 				highlight_ns = vim.api.nvim_create_namespace("blink_cmp"),
 			},
+			fuzzy = { implementation = "lua" },
 			sources = {
 				default = { "lsp", "path", "snippets", "buffer" },
 				providers = {

@@ -21,6 +21,7 @@ return {
 					desc = "file",
 				},
 
+				{ "<leader>gm", "<CMD>Gitsigns blame_line<CR>", desc = "commint message" },
 				{ "<leader>gt", group = "toggle" },
 				{
 					"<leader>gth",
@@ -130,11 +131,11 @@ return {
 		current_line_blame_opts = {
 			virt_text = true,
 			virt_text_pos = "eol", -- 'eol' | 'overlay' | 'right_align'
-			delay = 0,
+			delay = 1000,
 			ignore_whitespace = false,
 		},
-		-- current_line_blame_formatter_opts = { relative_time = true },
 		current_line_blame_formatter = "   <author>, <author_time:%R> - <summary>",
+		word_diff = false,
 		sign_priority = 6,
 		update_debounce = 100,
 		status_formatter = nil, -- Use default

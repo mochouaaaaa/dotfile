@@ -2,6 +2,7 @@ return {
 	"nvim-neo-tree/neo-tree.nvim",
 	opts = {
 		filesystem = {
+			follow_symlinks = false,
 			hijack_netrw_behavior = "open_current",
 			event_handlers = {
 				{

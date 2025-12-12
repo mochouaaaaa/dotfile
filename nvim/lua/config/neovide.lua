@@ -46,14 +46,14 @@ function BaseConfig:cursor()
 	vim.g.neovide_cursor_vfx_particle_phase = 1.5 -- railgun
 	vim.g.neovide_cursor_vfx_particle_curl = 1.0 -- railgun
 
-	vim.g.neovide_cursor_vfx_opacity = 195.0 -- 200.0
-	vim.g.neovide_cursor_vfx_particle_speed = 30.0 -- 10.0
-	vim.g.neovide_cursor_vfx_particle_lifetime = 0.3 -- 0.5 (railgun, torpedo, pixiedust)
-	vim.g.neovide_cursor_vfx_particle_density = 1.0 -- 0.7
+	vim.g.neovide_cursor_vfx_opacity = 150.0 -- 200.0
+	vim.g.neovide_cursor_vfx_particle_speed = 20.0 -- 10.0
+	vim.g.neovide_cursor_vfx_particle_lifetime = 0.4 -- 0.5 (railgun, torpedo, pixiedust)
+	vim.g.neovide_cursor_vfx_particle_density = 0.7 -- 0.7
 
-	vim.g.neovide_cursor_animation_length = 0.04 -- Default 0.06
-	vim.g.neovide_scroll_animation_length = 0.2
-	vim.g.neovide_cursor_trail_length = 0.01
+	vim.g.neovide_cursor_animation_length = 0.08 -- Default 0.06
+	vim.g.neovide_scroll_animation_length = 0.15
+	vim.g.neovide_cursor_trail_length = 0.05
 	vim.g.neovide_cursor_antialiasing = true
 	vim.g.neovide_cursor_animate_in_insert_mode = true
 
