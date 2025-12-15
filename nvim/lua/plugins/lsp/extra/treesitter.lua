@@ -2,6 +2,7 @@ return {
 	{
 		"nvim-treesitter/nvim-treesitter",
 		branch = "master",
+		enable = not vim.g.IS_NIX,
 		config = function()
 			require("nvim-treesitter.configs").setup({
 				auto_install = not vim.g.IS_NIX,
