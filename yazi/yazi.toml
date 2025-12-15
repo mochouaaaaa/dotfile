@@ -18,7 +18,7 @@ text = [
   { run = 'nvim "$@"', block = true, desc = "neovim" },
   { run = 'code  "$@"', orphan = true, desc = "vscode" },
   { run = 'zeditor "$@"', orphan = true, desc = "zed" },
-  { run = 'gedit "$@" ', block = true, orphan = true, desc = "gedit", for = "linux" },
+  { run = 'gedit "$@" ', orphan = true, desc = "gedit", for = "linux" },
   { run = 'zathura "$@"', orphan = true, desc = "zathura", for = "linux" },
 ]
 image = [
