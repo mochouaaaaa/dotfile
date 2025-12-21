@@ -5,6 +5,9 @@ return {
 	opts = function(_, opts)
 		return {
 			fzf_colors = true,
+			fzf_opts = {
+				["--color"] = "bg:-1",
+			},
 			border = "rounded",
 			files = {
 				follow = true,
@@ -15,6 +18,19 @@ return {
 				follow = true,
 			},
 			winopts = {
+				hl = {
+					normal = "NormalFloat", -- 对应 fzf 的 bg
+					border = "FloatBorder", -- 对应 fzf 的 border
+
+					cursor = "Cursor",
+					-- cursorline = "CursorLine", -- 对应 fzf 的 bg+
+					cursorline = "Visual", -- 使用主题的选中高亮组
+					cursorlinenbr = "CursorLineNr",
+
+					search = "Search", -- 对应 fzf 的 hl
+					preview_normal = "NormalFloat",
+					preview_border = "FloatBorder",
+				},
 				on_create = function()
 					vim.keymap.set("t", custom_key.platform_key.cmd .. "-k>", function()
 						vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes("<C-k>", true, false, true), "n", true)

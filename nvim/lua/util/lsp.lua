@@ -87,10 +87,12 @@ function M.setup(client, bufnr)
 			code_actions = require("actions-preview").code_actions
 		else
 			code_actions = function()
-				local context = { diagnostic = vim.lsp.diagnostic.get_line_diagnostics() }
-				local params = vim.lsp.util.make_range_params()
-				params.context = context
-				vim.lsp.buf_request(0, "textDocument/codeAction", params, function(err, result, ctx, config) end)
+				-- local context = { diagnostic = vim.lsp.diagnostic.get_line_diagnostics() }
+				-- local params = vim.lsp.util.make_range_params()
+				-- params.context = context
+				-- vim.lsp.buf_request(0, "textDocument/codeAction", params, function(err, result, ctx, config) end)
+
+				require("fzf-lua").lsp_code_actions()
 			end
 		end
 		vim.keymap.set({ "n", "v" }, "<leader>ca", code_actions, { buffer = bufnr, desc = "Code Action Diagnostic" })
@@ -127,7 +129,7 @@ function M.setup(client, bufnr)
 	end
 
 	if client.supports_method("textDocument/references") then
-		local context = { ignore_current_line = true, includeDeclaration = false }
+		-- local context = { ignore_current_line = true, includeDeclaration = false }
 		-- vim.keymap.set("n", "gr", function()
 		-- vim.lsp.buf.references({ context, nil })
 		-- end, { buffer = bufnr, desc = "Go to references" })
