@@ -1,3 +1,7 @@
+zstyle ':fzf-tab:*' use-fzf-default-opts yes
+zstyle ':fzf-tab:*' fzf-command fzf
+
+
 # disable sort when completing options of any command
 zstyle ':completion:complete:*:options' sort false
 # use input as query string when completing zlua
