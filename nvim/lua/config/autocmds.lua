@@ -44,24 +44,6 @@ vim.api.nvim_create_autocmd("BufRead", {
 	end,
 })
 
-vim.api.nvim_create_autocmd("LspAttach", {
-	group = vim.api.nvim_create_augroup("lsp_attach_auto_diag", { clear = true }),
-	callback = function(args)
-		-- the buffer where the lsp attached
-		---@type number
-		local buffer = args.buf
-
-		-- create the autocmd to show diagnostics
-		vim.api.nvim_create_autocmd({ "CursorHold", "CursorHoldI" }, {
-			group = vim.api.nvim_create_augroup("float_diagnostic", { clear = true }),
-			buffer = buffer,
-			callback = function()
-				vim.diagnostic.open_float(nil, { focus = false })
-			end,
-		})
-	end,
-})
-
 -- Hyprlang LSP
 if vim.fn.has("unix") == 1 and vim.env.XDG_CURRENT_DESKTOP == "Hyprland" then
 	vim.api.nvim_create_autocmd({ "BufEnter", "BufWinEnter" }, {
