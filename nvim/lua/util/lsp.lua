@@ -36,7 +36,13 @@ local function del_buffer_autocmd(augroup, bufnr)
 	end
 end
 
+local navic = require("nvim-navic")
+
 function M.setup(client, bufnr)
+	if client.server_capabilities.documentSymbolProvider then
+		navic.attach(client, bufnr)
+	end
+
 	vim.keymap.set("n", "<leader>wl", function() end, {
 		buffer = bufnr,
 		noremap = true,
