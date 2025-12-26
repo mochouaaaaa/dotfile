@@ -30,7 +30,7 @@ return {
 				},
 			},
 			diagnostics = {
-				disable = { "lowercase-global", "duplicate-set-field", "unused-function" },
+				disable = { "lowercase-global", "duplicate-set-field", "unused-function", "unused-local" },
 				-- Get the language server to recognize the `vim` global
 				globals = { "vim" },
 			},
