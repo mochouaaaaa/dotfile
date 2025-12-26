@@ -2,50 +2,56 @@ local separator_char = "-"
 local unfocused = "NonText"
 local focused = "Identifier"
 
-local function get_diagnostic_label(props)
-	local icons = require("lazyvim.config").icons.diagnostics
-	local label = {}
+local lazy_icons = require("lazyvim.config").icons
 
+-- 获取诊断标签
+local function get_diagnostic_label(buf, is_focused)
+	local icons = lazy_icons.diagnostics
+	local labels = {}
 	for severity, icon in pairs(icons) do
-		local n = #vim.diagnostic.get(props.buf, { severity = vim.diagnostic.severity[string.upper(severity)] })
+		local n = #vim.diagnostic.get(buf, { severity = vim.diagnostic.severity[string.upper(severity)] })
 		if n > 0 then
-			table.insert(
-				label,
-				{ icon .. n .. " ", group = props.focused and "DiagnosticSign" .. severity or unfocused }
-			)
+			labels[#labels + 1] = {
+				icon .. n .. " ",
+				group = is_focused and ("DiagnosticSign" .. severity) or unfocused,
+			}
 		end
 	end
-	return label
+	return labels
 end
 
-local function get_git_diff(props)
-	local git_icons = require("lazyvim.config").icons.git
+-- 获取 git diff 标签
+local function get_git_diff(buf, is_focused)
+	local git_icons = lazy_icons.git
 	local icons = { removed = git_icons.removed, changed = git_icons.modified, added = git_icons.added }
 	local highlight = { removed = "GitSignsDelete", changed = "GitSignsChange", added = "GitSignsAdd" }
 	local labels = {}
-	local ok, signs = pcall(vim.api.nvim_buf_get_var, props.buf, "gitsigns_status_dict")
+	local ok, signs = pcall(vim.api.nvim_buf_get_var, buf, "gitsigns_status_dict")
 	if ok then
 		for name, icon in pairs(icons) do
-			if tonumber(signs[name]) and signs[name] > 0 then
-				table.insert(labels, {
-					icon .. signs[name] .. " ",
-					group = props.focused and highlight[name] or unfocused,
-				})
+			local count = tonumber(signs[name]) or 0
+			if count > 0 then
+				labels[#labels + 1] = {
+					icon .. count .. " ",
+					group = is_focused and highlight[name] or unfocused,
+				}
 			end
 		end
 	end
 	return labels
 end
 
-local function get_toggleterm_id(props)
-	local id = " " .. vim.fn.bufname(props.buf):sub(-1) .. " "
-	return { { id, group = props.focused and "FloatTitle" or "Title" } }
+-- ToggleTerm 显示 ID
+local function get_toggleterm_id(buf, is_focused)
+	local id = " " .. vim.fn.bufname(buf):sub(-1) .. " "
+	return { { id, group = is_focused and "FloatTitle" or "Title" } }
 end
 
-local function is_toggleterm(bufnr)
-	return vim.bo[bufnr].filetype == "toggleterm"
+local function is_toggleterm(buf)
+	return vim.bo[buf].filetype == "toggleterm"
 end
 
+-- Edgy 文件类型
 local edgy_filetypes = {
 	"neotest-output-panel",
 	"neotest-summary",
@@ -85,22 +91,23 @@ local edgy_titles = {
 	["ogpt-input"] = "ogpt-input",
 }
 
-local function is_edgy_group(props, filename)
-	return vim.tbl_contains(edgy_filetypes, vim.bo[props.buf].filetype)
+local function is_edgy(buf)
+	return vim.tbl_contains(edgy_filetypes, vim.bo[buf].filetype)
 end
 
-local function get_trouble_name(props)
-	local win_trouble = vim.w[props.win].trouble
-	local trouble_name = win_trouble and win_trouble.mode or ""
-	return trouble_name == "" and "trouble" or trouble_name
+local function get_trouble_name(win)
+	local win_trouble = vim.w[win].trouble
+	return win_trouble and win_trouble.mode or "trouble"
 end
 
-local function get_title(props, filename)
+-- 获取标题
+local function get_title(props)
 	local filetype = vim.bo[props.buf].filetype
-	local name = edgy_titles[filetype] or filetype or filename
-	name = filetype == "trouble" and get_trouble_name(props) or name
-	local title = " " .. name .. " "
-	return { { title, group = props.focused and "FloatTitle" or "Title" } }
+	local name = edgy_titles[filetype] or filetype
+	if filetype == "trouble" then
+		name = get_trouble_name(props.win)
+	end
+	return { { " " .. name .. " ", group = props.focused and "FloatTitle" or "Title" } }
 end
 
 return {
@@ -111,54 +118,40 @@ return {
 		window = {
 			zindex = 30,
 			margin = {
-				vertical = { top = vim.o.laststatus == 3 and 0 or 1, bottom = 0 }, -- shift to overlap window borders
-				horizontal = { left = 0, right = 2 }, -- shift for scrollbar
+				vertical = { top = vim.o.laststatus == 3 and 0 or 1, bottom = 0 },
+				horizontal = { left = 0, right = 2 },
 			},
-			overlap = {
-				borders = true,
-				statusline = true,
-				tabline = false,
-				winbar = true,
-			},
+			overlap = { borders = true, statusline = true, tabline = false, winbar = true },
 		},
-		hide = {
-			cursorline = false,
-		},
-		ignore = {
-			buftypes = {},
-			filetypes = { "neo-tree", "dashboard" },
-			unlisted_buffers = false,
-		},
+		hide = { cursorline = false },
+		ignore = { buftypes = {}, filetypes = { "neo-tree", "dashboard" }, unlisted_buffers = false },
 		render = function(props)
 			if vim.api.nvim_win_get_config(0).relative ~= "" then
 				return nil
 			end
 
-			local name = vim.api.nvim_buf_get_name(props.buf)
-			if name == "" then
+			local buf = props.buf
+			local filename = vim.fn.fnamemodify(vim.fn.bufname(buf), ":t")
+			if filename == "" then
 				return nil
 			end
 
-			local filename = vim.fn.fnamemodify(vim.fn.bufname(props.buf), ":t")
-
-			if is_toggleterm(props.buf) then
-				return get_toggleterm_id(props)
+			if is_toggleterm(buf) then
+				return get_toggleterm_id(buf, props.focused)
 			end
-
-			if is_edgy_group(props, filename) then
-				return get_title(props, filename)
+			if is_edgy(buf) then
+				return get_title(props)
 			end
 
 			local filetype_icon, filetype_color = require("nvim-web-devicons").get_icon_color(filename)
-			local diagnostics = get_diagnostic_label(props)
-			local diffs = get_git_diff(props)
+			local diagnostics = get_diagnostic_label(buf, props.focused)
+			local diffs = get_git_diff(buf, props.focused)
 
-			local color = props.focused and focused or unfocused
-			local icon = props.focused and { filetype_icon, guifg = filetype_color }
-				or { filetype_icon, group = unfocused }
-			local separator = (#diagnostics > 0 and #diffs > 0) and { separator_char .. " ", group = color } or ""
+			local color_group = props.focused and focused or unfocused
+			local icon = { filetype_icon, group = props.focused and nil or unfocused }
+			local separator = (#diagnostics > 0 and #diffs > 0) and { separator_char .. " ", group = color_group } or ""
 			local filename_separator = (#diagnostics > 0 or #diffs > 0)
-					and { " " .. separator_char .. " ", group = color }
+					and { " " .. separator_char .. " ", group = color_group }
 				or ""
 
 			local filename_component =
@@ -168,13 +161,8 @@ return {
 				filename_component = {}
 			end
 
-			local buffer = {
-				filename_component,
-				{ diagnostics },
-				{ separator },
-				{ diffs },
-			}
-			return buffer
+			return { {}, { diagnostics }, {}, { diffs } }
+			-- return { {}, { diagnostics }, { separator }, { diffs } }
 		end,
 	},
 }

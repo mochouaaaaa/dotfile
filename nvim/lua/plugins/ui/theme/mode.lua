@@ -41,18 +41,6 @@ local global_overrides = function(colors)
 			bg = colors.base,
 		},
 
-		------ FZF
-		-- FzfLuaBackdrop = {
-		-- 	bg = colors.base,
-		-- },
-
-		FzfLuaBorder = {
-			link = "Normal",
-		},
-		FzfLuaFzfBorder = {
-			fg = colors.base,
-		},
-
 		NavicSeparator = {
 			link = "@keyword",
 		},

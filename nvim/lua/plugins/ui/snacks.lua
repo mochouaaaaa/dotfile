@@ -1,7 +1,7 @@
 return {
 	"snacks.nvim",
-	opts = function()
-		return {
+	opts = function(_, opts)
+		local config = {
 			animate = {
 				duration = 20,
 				fps = 60,
@@ -10,7 +10,7 @@ return {
 			dashboard = { enabled = true },
 			explorer = { enabled = false },
 			notifier = { enabled = true },
-			-- indent = { enabled = true },
+			indent = { enabled = true },
 			input = { enabled = true },
 			picker = {
 				enabled = true,
@@ -30,6 +30,8 @@ return {
 			words = { enabled = true },
 			image = { enabled = true },
 		}
+
+		return vim.tbl_deep_extend("force", opts, config)
 	end,
 	keys = function()
 		return {

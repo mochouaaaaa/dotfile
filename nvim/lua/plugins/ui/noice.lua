@@ -8,6 +8,15 @@ return {
 				inc_rename = true, -- enables an input dialog for inc-rename.nvim
 				lsp_doc_border = true, -- add a border to hover docs and signature help
 			},
+			lsp = {
+				signature = {
+					enabled = true,
+					auto_open = {
+						enabled = true,
+						trigger = false, -- 不在 insert 自动弹
+					},
+				},
+			},
 		},
 		keys = function()
 			return {
