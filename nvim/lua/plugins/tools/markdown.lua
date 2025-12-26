@@ -2,6 +2,7 @@ local M = {
 	{
 		"MeanderingProgrammer/render-markdown.nvim",
 		dependencies = { "nvim-treesitter/nvim-treesitter", "nvim-mini/mini.nvim" }, -- if you use the mini.nvim suite
+		ft = { "markdown", "md", "norg" },
 		---@module 'render-markdown'
 		---@type render.md.UserConfig
 		opts = {
@@ -194,39 +195,24 @@ local M = {
 		},
 	},
 	{
-		"AndrewRadev/switch.vim",
-		config = function()
-			vim.keymap.set("n", "`", function()
-				vim.cmd([[Switch]])
-			end, { desc = "Switch strings" })
-			vim.g.switch_custom_definitions = {
-				{ "> [!TODO]", "> [!WIP]", "> [!DONE]", "> [!FAIL]" },
-			}
-		end,
-	},
-	{
-		"bullets-vim/bullets.vim",
-		ft = { "markdown" },
-	},
-	{
 		"HakonHarnes/img-clip.nvim",
 		ft = { "tex", "markdown", "typst" },
 		opts = {
 			default = {
-				dir_path = "./attachments",
+				dir_path = "./asset",
 				use_absolute_path = false,
 				copy_images = true,
 				prompt_for_file_name = false,
 				file_name = "%y%m%d-%H%M%S",
 				extension = "avif",
-				process_cmd = "magick convert - -quality 75 avif:-",
+				process_cmd = "magick convert - -quality 75 webp:-",
 			},
 			filetypes = {
 				markdown = {
 					template = "![image$CURSOR]($FILE_PATH)",
 				},
 				tex = {
-					dir_path = "./figs",
+					dir_path = "./aseet/figs",
 					extension = "png",
 					process_cmd = "",
 					template = [[
@@ -237,7 +223,7 @@ local M = {
         ]], ---@type string | fun(context: table): string
 				},
 				typst = {
-					dir_path = "./figs",
+					dir_path = "./asset/figs",
 					extension = "png",
 					process_cmd = "magick convert - -density 300 png:-",
 				},
@@ -257,7 +243,6 @@ local M = {
 		"3rd/image.nvim",
 		build = false,
 		enabled = not (vim.g.vscode or vim.g.neovide_enabled),
-		--dependencies = { "luarocks.nvim" },
 		opts = {
 			backend = "kitty",
 			processor = "magick_rock", -- or "magick_cli"

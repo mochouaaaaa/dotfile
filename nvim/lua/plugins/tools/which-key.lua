@@ -37,7 +37,7 @@ return {
 			{ "<leader>b", desc = "buffer / conversion" },
 			{ "<leader>c", desc = "code action / cd" },
 			{ "<leader>d", desc = "docker / debug / dagang" },
-			{ "<leader>f", desc = "telescope" },
+			{ "<leader>f", desc = "fzf" },
 			{ "<leader>t", desc = "fitten code" },
 			{ "<leader>g", desc = "git" },
 			{ "<leader>s", desc = "search replace" },

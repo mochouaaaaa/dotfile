@@ -33,9 +33,14 @@ return {
 			}
 		end,
 		opts = {
-			signs = false,
+			signs = true,
 			sign_priority = 8, -- sign priority
 			-- keywords recognized as todo comments
+			-- TODO(): xxxx
+			-- FIX(): xxx
+			-- XXX(): xxx
+			-- TEST(): xxx
+			-- NOTE():
 			keywords = {
 				FIX = {
 					icon = " ", -- icon used for the sign, and in search results
