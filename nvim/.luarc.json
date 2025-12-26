@@ -1,6 +1,4 @@
 {
-    "diagnostics.disable": [
-        "lowercase-global",
-        "missing-fields"
-    ]
+  "diagnostics.disable": ["lowercase-global", "missing-fields", "unused-local"]
 }
+
