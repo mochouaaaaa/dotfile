@@ -142,7 +142,7 @@ function M.setup(client, bufnr)
 		vim.keymap.set(
 			"n",
 			"gr",
-			"<cmd>FzfLua lsp_references jump_to_single_result=true silent=true ignore_current_line=true<cr>",
+			"<cmd>FzfLua lsp_references jump_to_single_result=true silent=true ignore_current_line=true includeDeclaration=false<cr>",
 			{ buffer = bufnr, desc = "Go to references" }
 		)
 	end
