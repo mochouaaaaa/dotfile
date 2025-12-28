@@ -90,10 +90,4 @@ return {
 			end
 		end,
 	},
-	{
-		"szw/vim-maximizer",
-		keys = {
-			{ "<D-CR>", "<cmd>MaximizerToggle<CR>", desc = "Toggle maximize" },
-		},
-	},
 }
