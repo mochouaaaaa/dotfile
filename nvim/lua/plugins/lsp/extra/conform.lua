@@ -115,7 +115,7 @@ function M.opts(_, opts)
 			python = function(bufnr)
 				return { "ruff_format" }
 			end,
-			go = { "goimports", "gofumpt" },
+			go = { "goimports-reviser", "gofumpt" },
 			rust = { "rustfmt" },
 
 			-- JavaScript

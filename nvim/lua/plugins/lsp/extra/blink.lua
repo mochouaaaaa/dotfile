@@ -1,4 +1,4 @@
-local custom_key = require("util.keymap")
+local keymap = require("util.keymap")
 
 local M = {
 	"saghen/blink.cmp",
@@ -43,10 +43,10 @@ local M = {
 				-- FIX: 会导致loading
 				-- ["<Tab>"] = { "show", "fallback" },
 				["<Tab>"] = { "snippet_forward", "fallback" },
-				[custom_key.platform_key.cmd .. "-e>"] = { "hide", "fallback" },
+				[keymap.platform_key.cmd .. "-e>"] = { "hide", "fallback" },
 
-				[custom_key.platform_key.cmd .. "-k>"] = { "select_prev", "fallback" },
-				[custom_key.platform_key.cmd .. "-j>"] = { "select_next", "fallback" },
+				[keymap.platform_key.cmd .. "-k>"] = { "select_prev", "fallback" },
+				[keymap.platform_key.cmd .. "-j>"] = { "select_next", "fallback" },
 			},
 			sources = function()
 				local type = vim.fn.getcmdtype()
@@ -61,6 +61,7 @@ local M = {
 				return {}
 			end,
 			completion = {
+				menu = { auto_show = false },
 				ghost_text = { enabled = true },
 			},
 		},
@@ -70,11 +71,11 @@ local M = {
 			documentation = {
 				auto_show = true,
 				window = {
-					border = vim.g.border.style,
+					border = rounded,
 				},
 			},
 			menu = {
-				border = vim.g.border.style,
+				border = rounded,
 				draw = {
 					treesitter = { "lsp" },
 					columns = {
@@ -95,13 +96,13 @@ local M = {
 		signature = {
 			enabled = true,
 			window = {
-				border = vim.g.border.style,
+				border = rounded,
 			},
 		},
 		keymap = {
 			preset = "enter",
-			[custom_key.platform_key.cmd .. "-k>"] = { "select_prev", "fallback" },
-			[custom_key.platform_key.cmd .. "-j>"] = { "select_next", "fallback" },
+			[keymap.platform_key.cmd .. "-k>"] = { "select_prev", "fallback" },
+			[keymap.platform_key.cmd .. "-j>"] = { "select_next", "fallback" },
 			["<Tab>"] = {
 				function(cmp)
 					if cmp.snippet_active() then
@@ -114,7 +115,7 @@ local M = {
 				"fallback",
 			},
 			["<C-e>"] = { nil },
-			[custom_key.platform_key.cmd .. "-e>"] = { "hide", "fallback" },
+			[keymap.platform_key.cmd .. "-e>"] = { "hide", "fallback" },
 		},
 	},
 }
@@ -125,7 +126,7 @@ for _, file in ipairs(vim.fn.readdir(util_dir)) do
 		local module_name = "util.code." .. file:match("(.+)%.lua")
 		local ok, module = pcall(require, module_name)
 		if ok and module and module.enabled then
-			local config_result = module.config and module.config(custom_key) or nil
+			local config_result = module.config and module.config(keymap) or nil
 			if config_result then
 				table.insert(M.dependencies, config_result)
 			end
@@ -133,19 +134,4 @@ for _, file in ipairs(vim.fn.readdir(util_dir)) do
 	end
 end
 
-local result = {
-	-- {
-	-- 	"saghen/blink.nvim",
-	-- 	build = "cargo build --release",
-	-- 	version = "rust-delimiters",
-	-- 	opts = {
-	-- 		chartoggle = { enabled = true },
-	-- 		-- indent = { enabled = true },
-	-- 		paris = { enabled = true },
-	-- 		select = { enabled = true },
-	-- 		tree = { enabled = false },
-	-- 	},
-	-- },
-	M,
-}
-return result
+return M
