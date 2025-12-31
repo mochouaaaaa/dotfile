@@ -3,17 +3,14 @@ local utils = require("util.keymap")
 return {
 	"nvim-neo-tree/neo-tree.nvim",
 	opts = {
+		clipboard = {
+			sync = "global",
+		},
 		auto_clean_after_session_restore = true,
 		close_if_last_window = true,
 		sort_case_insensitive = true,
-		popup_border_style = vim.g.border.style,
+		popup_border_style = "rounded",
 		event_handlers = {
-			-- {
-			-- 	event = "file_opened",
-			-- 	handler = function(file_path)
-			-- 		require("neo-tree.sources.filesystem").reset_search(state)
-			-- 	end,
-			-- },
 			{
 				event = "neo_tree_buffer_enter",
 				handler = function()
@@ -25,14 +22,6 @@ return {
 				handler = function()
 					vim.cmd("highlight! Cursor guibg=#5f87af blend=0")
 				end,
-			},
-		},
-		filesystem = {
-			use_libuv_file_watcher = true,
-			window = {
-				mappings = {
-					["o"] = "system_open",
-				},
 			},
 		},
 		commands = {
@@ -56,19 +45,4 @@ return {
 			end,
 		},
 	},
-	keys = function()
-		return {
-			{
-				utils.platform_key.cmd .. "-e>",
-				"<Cmd>Neotree toggle<CR>",
-				mode = "n",
-			},
-			{
-				"<leader>eg",
-				"<Cmd>Neotree git_status<CR>",
-				mode = "n",
-				desc = "Toggle git status in neo-tree",
-			},
-		}
-	end,
 }

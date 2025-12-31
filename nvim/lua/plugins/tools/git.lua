@@ -74,29 +74,29 @@ return {
 			},
 			{
 				"<leader>gtd",
-				gs.toggle_deleted,
+				function()
+					gs.preview_hunk_inline()
+				end,
 				desc = "Toggle Deleted",
 			},
-			{ "<leader>ghp", gs.preview_hunk, desc = "Preview Hunk" },
+			{
+				"<leader>ghp",
+				function()
+					gs.preview_hunk()
+				end,
+				desc = "Preview Hunk",
+			},
 			{
 				"<leader>ghk",
 				function()
-					if vim.wo.diff then
-						return "g["
-					end
-					vim.schedule(gs.prev_hunk)
-					return "<Ignore>"
+					gs.nav_hunk({ preview = true })
 				end,
 				desc = "Prev Hunk",
 			},
 			{
 				"<leader>ghj",
 				function()
-					if vim.wo.diff then
-						return "g]"
-					end
-					gs.next_hunk()
-					return "<Ignore>"
+					gs.nav_hunk()
 				end,
 				desc = "Next Hunk",
 			},

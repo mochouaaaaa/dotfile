@@ -15,6 +15,12 @@ return {
 				mode = "n",
 				desc = "Toggle git status in neo-tree",
 			},
+			{
+				"<leader>ef",
+				"<Cmd>Neotree buffers<CR>",
+				mode = "n",
+				desc = "Toggle buffers in neo-tree",
+			},
 		}
 	end,
 }

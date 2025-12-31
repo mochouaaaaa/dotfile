@@ -4,9 +4,9 @@ return {
 	{
 		on_attach = function(client, bufnr)
 			common.setup(client, bufnr)
-			if client.name == "ruff" then
-				client.server_capabilities.hoverProvider = false
-			end
+			-- if client.name == "ruff" then
+			-- 	client.server_capabilities.hoverProvider = false
+			-- end
 		end,
 		capabilities = common.make_capabilities(),
 		settings = {

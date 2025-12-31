@@ -1,4 +1,5 @@
 {
-  "diagnostics.disable": ["lowercase-global", "missing-fields", "unused-local"]
+  "diagnostics.disable": ["lowercase-global", "missing-fields", "unused-local"],
+    "completion.autoRequire": false
 }
 

@@ -3,6 +3,7 @@ return {
 	opts = {
 		git_status = {
 			window = {
+				position = "float",
 				mappings = {
 					["A"] = "git_add_all",
 					["u"] = "git_unstage_file",
