@@ -1,110 +1,7 @@
 return {
 	"lewis6991/gitsigns.nvim",
 	event = "VeryLazy",
-	lazy = true,
 	opts = {
-		on_attach = function(bufnr)
-			local gitsigns = require("gitsigns")
-			local gs = package.loaded.gitsigns
-
-			local wk = require("which-key")
-			wk.add({
-				{ "<leader>ga", group = "add" },
-				{
-					"<leader>gab",
-					gs.stage_hunk,
-					desc = "hunk",
-				},
-				{
-					"<leader>gaf",
-					gs.stage_buffer,
-					desc = "file",
-				},
-
-				{ "<leader>gm", "<CMD>Gitsigns blame_line<CR>", desc = "commint message" },
-				{ "<leader>gt", group = "toggle" },
-				{
-					"<leader>gth",
-					function()
-						gs.diffthis("~")
-					end,
-					desc = "diff file",
-				},
-				{
-					"<leader>gtd",
-					gs.toggle_deleted,
-					desc = "deleted",
-				},
-				{ "<leader>gh", group = "hunk" },
-				{
-					"<leader>ghp",
-					function()
-						gitsigns.preview_hunk()
-					end,
-					desc = "preview ",
-				},
-				{
-					"<leader>ghk",
-					function()
-						if vim.wo.diff then
-							return "g["
-						end
-						vim.schedule(function()
-							gs.prev_hunk()
-						end)
-						return "<Ignore>"
-					end,
-					desc = "previous",
-				},
-				{
-					"<leader>ghj",
-					function()
-						if vim.wo.diff then
-							return "g]"
-						end
-						vim.schedule(function()
-							gs.next_hunk()
-						end)
-						return "<Ignore>"
-					end,
-					desc = "next",
-				},
-				{ "<leader>gr", group = "undo" },
-				{
-					"<leader>grb",
-					gs.reset_hunk,
-					desc = "revert hunk",
-				},
-				{
-					"<leader>grf",
-					gs.reset_buffer_index,
-					desc = "stage file",
-				},
-				{
-					mode = "v",
-					{
-						{ "<leader>ga", group = "add" },
-						{
-							"<leader>gab",
-							function()
-								gs.stage_hunk({ vim.fn.line("."), vim.fn.line("v") })
-							end,
-							desc = "stage hunk",
-						},
-
-						{ "<leader>gr", group = "undo" },
-						{
-							"<leader>grb",
-							function()
-								gs.reset_hunk({ vim.fn.line("."), vim.fn.line("v") })
-							end,
-							desc = "reset hunk",
-						},
-					},
-				},
-			})
-		end,
-
 		signs = {
 			add = {
 				text = "+",
@@ -137,7 +34,7 @@ return {
 		current_line_blame_formatter = "   <author>, <author_time:%R> - <summary>",
 		word_diff = false,
 		sign_priority = 6,
-		update_debounce = 100,
+		update_debounce = 500,
 		status_formatter = nil, -- Use default
 		max_file_length = 40000,
 		preview_config = {
@@ -149,4 +46,78 @@ return {
 			col = 1,
 		},
 	},
+	keys = function()
+		local gs = require("gitsigns")
+
+		return {
+			{
+				"<leader>gab",
+				gs.stage_hunk,
+				desc = "Stage Hunk",
+			},
+			{
+				"<leader>gaf",
+				gs.stage_buffer,
+				desc = "Stage Buffer",
+			},
+			{
+				"<leader>gm",
+				"<CMD>Gitsigns blame_line<CR>",
+				desc = "Commit Message",
+			},
+			{
+				"<leader>gth",
+				function()
+					gs.diffthis()
+				end,
+				desc = "Diff File",
+			},
+			{
+				"<leader>gtd",
+				gs.toggle_deleted,
+				desc = "Toggle Deleted",
+			},
+			{ "<leader>ghp", gs.preview_hunk, desc = "Preview Hunk" },
+			{
+				"<leader>ghk",
+				function()
+					if vim.wo.diff then
+						return "g["
+					end
+					vim.schedule(gs.prev_hunk)
+					return "<Ignore>"
+				end,
+				desc = "Prev Hunk",
+			},
+			{
+				"<leader>ghj",
+				function()
+					if vim.wo.diff then
+						return "g]"
+					end
+					gs.next_hunk()
+					return "<Ignore>"
+				end,
+				desc = "Next Hunk",
+			},
+			{ "<leader>grb", gs.reset_hunk, desc = "Reset Hunk" },
+			{ "<leader>grf", gs.reset_buffer, desc = "Reset Buffer" },
+			{
+				"<leader>gab",
+				mode = "v",
+				function()
+					gs.stage_hunk({ vim.fn.line("."), vim.fn.line("v") })
+				end,
+				desc = "Stage Hunk",
+			},
+			{
+				"<leader>grb",
+				mode = "v",
+				function()
+					gs.reset_hunk({ vim.fn.line("."), vim.fn.line("v") })
+				end,
+				desc = "Reset Hunk",
+			},
+		}
+	end,
 }

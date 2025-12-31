@@ -6,10 +6,9 @@ local g = vim.g
 local o = vim.o
 
 opt.conceallevel = 0
--- opt.list = true
--- opt.listchars = "tab:»·,nbsp:+,trail:·,extends:→,precedes:←"
 g.lazyredraw = true
-opt.updatetime = 50
+opt.clipboard = "unnamedplus"
+opt.updatetime = 200
 
 -- 行号
 opt.relativenumber = true
@@ -21,6 +20,8 @@ opt.shiftwidth = 4
 opt.expandtab = true
 opt.autoindent = true
 opt.list = false
+-- opt.list = true
+-- opt.listchars = "tab:»·,nbsp:+,trail:·,extends:→,precedes:←"
 
 g.max_file = { size = 100 * 1024 * 1024, lines = 10000 }
 g.ui_notifications_enabled = true
@@ -65,7 +66,10 @@ o.virtualedit = "block" -- Allow cursor to move where there is no text in visual
 
 -- UI
 
-vim.opt.fillchars = {
+opt.wildoptions = "pum"
+opt.winborder = "rounded"
+
+opt.fillchars = {
 	diff = "╱",
 	eob = " ",
 	stl = " ",
@@ -90,8 +94,14 @@ o.cmdheight = 0
 o.laststatus = 3
 
 o.ruler = false
-o.signcolumn = "yes"
 o.shortmess = "fimnxsTAIcF"
+
+-- 增强搜索
+opt.inccommand = "split"
+
+-- ================== 性能与行为 ==================
+opt.scrolloff = 8
+opt.sidescrolloff = 8
 
 -- Cache/Log file
 opt.swapfile = false

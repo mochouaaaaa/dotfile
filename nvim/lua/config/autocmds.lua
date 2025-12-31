@@ -10,19 +10,6 @@ vim.api.nvim_create_autocmd("FileType", {
 	end,
 })
 
--- Terminal option
-vim.api.nvim_create_autocmd({ "TermOpen" }, {
-	pattern = { "*" },
-	callback = function()
-		vim.b.minianimate_disable = true
-		vim.b.miniindentscope_disable = true
-		vim.opt_local.spell = false
-		vim.opt_local.number = false
-		vim.opt_local.relativenumber = false
-	end,
-	desc = "Set terminal buffer options",
-})
-
 -- Restore cursor position when opening a file -- https://github.com/neovim/neovim/issues/16339#issuecomment-1457394370
 vim.api.nvim_create_autocmd("BufRead", {
 	callback = function(opts)
@@ -33,7 +20,7 @@ vim.api.nvim_create_autocmd("BufRead", {
 				local ft = vim.bo[opts.buf].filetype
 				local last_known_line = vim.api.nvim_buf_get_mark(opts.buf, '"')[1]
 				if
-					not (ft:match("commit") and ft:match("rebase"))
+					not (ft:match("commit") or ft:match("rebase"))
 					and last_known_line > 1
 					and last_known_line <= vim.api.nvim_buf_line_count(opts.buf)
 				then

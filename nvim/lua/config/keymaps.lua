@@ -26,9 +26,9 @@ local mappings = {
 
 	-- 不将删除的数据放入寄存器
 	{ from = "x", to = '"_x', mode = mode_nv },
-	{ from = "dd", to = '"_dd', mode = mode_nv },
-	{ from = "dw", to = '"_dw', mode = mode_nv },
-	{ from = "d", to = '"_d', mode = mode_nv },
+	{ from = "dd", to = '"_dd', mode = mode_n },
+	{ from = "dw", to = '"_dw', mode = mode_n },
+	{ from = "d", to = '"_d', mode = mode_v },
 
 	{
 		from = "<Esc>",
@@ -58,7 +58,6 @@ local mappings = {
 	{ from = "jk", to = "<ESC>", mode = mode_i },
 
 	{ from = "q", to = "<Cmd>q<CR>", mode = mode_n },
-	{ from = "qq", to = "<Cmd>q!<CR>", mode = mode_n },
 	{ from = "Q", to = "<Cmd>qa!<CR>", mode = mode_n },
 	{ from = _key.platform_key.cmd .. "-s>", to = "<Cmd>w<CR>", mode = mode_n, desc = "save file" },
 	{ from = "<C-r>", to = "<Cmd>undo<CR>", mode = mode_ni, desc = "Undo" },
@@ -86,8 +85,8 @@ local mappings = {
 	-- 窗口
 	{ from = "<leader>|", to = "<C-w>v", mode = mode_n, desc = "垂直新增窗" },
 	{ from = "<leader>_", to = "<C-w>s", mode = mode_n, desc = "水平新增窗" },
-	{ from = "sc", to = "<C-w>c", mode = mode_n, desc = "关闭当前窗" },
-	{ from = "so", to = "<C-w>o", mode = mode_n, desc = "关闭其他窗" },
+	{ from = "<leader>sc", to = "<C-w>c", mode = mode_n, desc = "关闭当前窗" },
+	{ from = "<leader>so", to = "<C-w>o", mode = mode_n, desc = "关闭其他窗" },
 }
 
 for _, mapping in ipairs(mappings) do
