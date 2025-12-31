@@ -22,22 +22,22 @@ return {
 				desc = "Word (cwd)",
 			},
 			{ "<leader>fk", "<cmd>FzfLua keymaps<cr>", desc = "Key Maps" },
-			{
-				"<leader>ghl",
-				function()
-					fzf_lua.fzf_live(
-						"git rev-list --all | xargs git grep --line-number --column --color=always <query>",
-						{
-							fzf_opts = {
-								["--delimiter"] = ":",
-								["--preview-window"] = "nohidden,down,60%,border-top,+{3}+3/3,~3",
-							},
-							preview = "git show {1}:{2} | "
-								.. "bat --style=default --color=always --file-name={2} --highlight-line={3}",
-						}
-					)
-				end,
-			},
+			-- {
+			-- 	"<leader>ghl",
+			-- 	function()
+			-- 		fzf_lua.fzf_live(
+			-- 			"git rev-list --all | xargs git grep --line-number --column --color=always <query>",
+			-- 			{
+			-- 				fzf_opts = {
+			-- 					["--delimiter"] = ":",
+			-- 					["--preview-window"] = "nohidden,down,60%,border-top,+{3}+3/3,~3",
+			-- 				},
+			-- 				preview = "git show {1}:{2} | "
+			-- 					.. "bat --style=default --color=always --file-name={2} --highlight-line={3}",
+			-- 			}
+			-- 		)
+			-- 	end,
+			-- },
 		}
 	end,
 }

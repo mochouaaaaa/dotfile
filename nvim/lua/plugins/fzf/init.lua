@@ -3,9 +3,6 @@ return {
 	{
 		"ibhagwan/fzf-lua",
 		lazy = false,
-		-- config = function()
-
-		-- end,
 		opts = {
 			"hide", --"telescope",
 			border = "rounded",
