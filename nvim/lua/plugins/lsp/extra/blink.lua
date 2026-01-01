@@ -96,7 +96,7 @@ local M = {
 		signature = {
 			enabled = true,
 			window = {
-				border = rounded,
+				border = "rounded",
 			},
 		},
 		keymap = {
@@ -120,18 +120,18 @@ local M = {
 	},
 }
 
-local util_dir = vim.fn.stdpath("config") .. "/lua/util/code/"
-for _, file in ipairs(vim.fn.readdir(util_dir)) do
-	if file:match("%.lua$") then
-		local module_name = "util.code." .. file:match("(.+)%.lua")
-		local ok, module = pcall(require, module_name)
-		if ok and module and module.enabled then
-			local config_result = module.config and module.config(keymap) or nil
-			if config_result then
-				table.insert(M.dependencies, config_result)
-			end
-		end
-	end
-end
+-- local util_dir = vim.fn.stdpath("config") .. "/lua/util/code/"
+-- for _, file in ipairs(vim.fn.readdir(util_dir)) do
+-- 	if file:match("%.lua$") then
+-- 		local module_name = "util.code." .. file:match("(.+)%.lua")
+-- 		local ok, module = pcall(require, module_name)
+-- 		if ok and module and module.enabled then
+-- 			local config_result = module.config and module.config(keymap) or nil
+-- 			if config_result then
+-- 				table.insert(M.dependencies, config_result)
+-- 			end
+-- 		end
+-- 	end
+-- end
 
 return M

@@ -1,4 +1,4 @@
-local border_style = rounded
+local border_style = "rounded"
 
 return {
 	"SmiteshP/nvim-navbuddy",

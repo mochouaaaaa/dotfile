@@ -10,3 +10,9 @@ vim.lsp.enable("emmet_ls")
 vim.lsp.enable("marksman")
 
 vim.lsp.set_log_level("OFF")
+
+vim.g.CODE = {
+	fittencode = true,
+	codeium = false,
+	copilot = false,
+}

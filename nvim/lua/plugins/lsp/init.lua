@@ -61,5 +61,6 @@ return {
 			}, -- if you add plugin options, they go here.
 		},
 	},
+	{ import = "plugins.lsp.code" },
 	{ import = "plugins.lsp.extra" },
 }

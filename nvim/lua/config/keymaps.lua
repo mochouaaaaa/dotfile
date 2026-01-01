@@ -28,7 +28,7 @@ local mappings = {
 	{ from = "x", to = '"_x', mode = mode_nv },
 	{ from = "dd", to = '"_dd', mode = mode_n },
 	{ from = "dw", to = '"_dw', mode = mode_n },
-	{ from = "d", to = '"_d', mode = mode_v },
+	{ from = "d", to = '"_d', mode = mode_nv },
 
 	{
 		from = "<Esc>",
