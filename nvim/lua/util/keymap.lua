@@ -10,8 +10,12 @@ return {
 	-- option: option
 	-- @return string
 	platform_key = {
-		cmd = "<D",
-		option = "<A",
+		cmd = function(key)
+			return string.format("<D-%s>", key)
+		end,
+		option = function(key)
+			return string.format("<A-%s>", key)
+		end,
 	},
 	is_mac = is_mac,
 	is_linux = function()

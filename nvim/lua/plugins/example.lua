@@ -45,7 +45,6 @@ return {
 				kitty_password = "kitty",
 			})
 			local utils = require("util.keymap")
-			local cmd = utils.platform_key.cmd
 
 			vim.keymap.set({ "n", "t" }, "<C-S-k>", function()
 				smart_splits.resize_up()
@@ -60,31 +59,31 @@ return {
 				smart_splits.resize_right()
 			end)
 
-			vim.keymap.set({ "n", "t" }, cmd .. "-k>", function()
+			vim.keymap.set({ "n", "t" }, utils.platform_key.cmd("k"), function()
 				smart_splits.move_cursor_up()
 			end)
-			vim.keymap.set({ "n", "t" }, cmd .. "-j>", function()
+			vim.keymap.set({ "n", "t" }, utils.platform_key.cmd("j"), function()
 				smart_splits.move_cursor_down()
 			end)
-			vim.keymap.set({ "n", "t" }, cmd .. "-h>", function()
+			vim.keymap.set({ "n", "t" }, utils.platform_key.cmd("h"), function()
 				smart_splits.move_cursor_left()
 			end)
-			vim.keymap.set({ "n", "t" }, cmd .. "-l>", function()
+			vim.keymap.set({ "n", "t" }, utils.platform_key.cmd("l"), function()
 				smart_splits.move_cursor_right()
 			end)
 
 			local mux = require("smart-splits.mux").get()
 			if mux ~= nil then
-				vim.keymap.set("n", cmd .. "-C-k>", function()
+				vim.keymap.set("n", utils.platform_key.cmd("C-k"), function()
 					mux.split_pane("up")
 				end)
-				vim.keymap.set("n", cmd .. "-C-j>", function()
+				vim.keymap.set("n", utils.platform_key.cmd("C-j"), function()
 					mux.split_pane("down")
 				end)
-				vim.keymap.set("n", cmd .. "-C-h>", function()
+				vim.keymap.set("n", utils.platform_key.cmd("C-h"), function()
 					mux.split_pane("left")
 				end)
-				vim.keymap.set("n", cmd .. "-C-l>", function()
+				vim.keymap.set("n", utils.platform_key.cmd("C-l"), function()
 					mux.split_pane("right")
 				end)
 			end

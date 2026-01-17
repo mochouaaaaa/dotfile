@@ -14,7 +14,7 @@ local M = {
 	end,
 	keys = {
 		{
-			_key.platform_key.cmd .. "-r>",
+			_key.platform_key.cmd("r"),
 			mode = { "n", "v" },
 			"<cmd>Yazi<cr>",
 			desc = "Open yazi at the current file",

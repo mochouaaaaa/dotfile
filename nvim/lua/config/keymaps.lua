@@ -43,13 +43,13 @@ local mappings = {
 		opt = vim.tbl_extend("force", opt_ns, { expr = true }),
 	},
 
-	{ from = _key.platform_key.cmd .. "-j>", to = "<C-n>", mode = mode_c, opt = opt_ns },
-	{ from = _key.platform_key.cmd .. "-k>", to = "<C-p>", mode = mode_c, opt = opt_ns },
-	{ from = _key.platform_key.cmd .. "-e>", to = "<Nop>", mode = mode_i, opt = opt_n },
-	{ from = _key.platform_key.cmd .. "-f>", to = "<Nop>", mode = mode_i, opt = opt_n },
-	{ from = _key.platform_key.cmd .. "-F>", to = "<Nop>", mode = mode_i, opt = opt_n },
-	{ from = _key.platform_key.cmd .. "-s>", to = "<Nop>", mode = mode_i, opt = opt_n },
-	{ from = _key.platform_key.cmd .. "-S>", to = "<Nop>", mode = mode_i, opt = opt_n },
+	{ from = _key.platform_key.cmd("j"), to = "<C-n>", mode = mode_c, opt = opt_ns },
+	{ from = _key.platform_key.cmd("k"), to = "<C-p>", mode = mode_c, opt = opt_ns },
+	{ from = _key.platform_key.cmd("e"), to = "<Nop>", mode = mode_i, opt = opt_n },
+	{ from = _key.platform_key.cmd("f"), to = "<Nop>", mode = mode_i, opt = opt_n },
+	{ from = _key.platform_key.cmd("F"), to = "<Nop>", mode = mode_i, opt = opt_n },
+	{ from = _key.platform_key.cmd("s"), to = "<Nop>", mode = mode_i, opt = opt_n },
+	{ from = _key.platform_key.cmd("S"), to = "<Nop>", mode = mode_i, opt = opt_n },
 
 	-- special keys
 	{ from = ";", to = ":", mode = mode_nv },
@@ -59,9 +59,9 @@ local mappings = {
 
 	{ from = "q", to = "<Cmd>q<CR>", mode = mode_n },
 	{ from = "Q", to = "<Cmd>qa!<CR>", mode = mode_n },
-	{ from = _key.platform_key.cmd .. "-s>", to = "<Cmd>w<CR>", mode = mode_n, desc = "save file" },
+	{ from = _key.platform_key.cmd("s"), to = "<Cmd>w<CR>", mode = mode_n, desc = "save file" },
 	{ from = "<C-r>", to = "<Cmd>undo<CR>", mode = mode_ni, desc = "Undo" },
-	{ from = _key.platform_key.cmd .. "-S-r>", to = "<Cmd>redo<CR>", mode = mode_ni, desc = "Redo" },
+	{ from = _key.platform_key.cmd("S-r"), to = "<Cmd>redo<CR>", mode = mode_ni, desc = "Redo" },
 
 	-- ------ 视图模式
 	-- 单行或多行移动
@@ -76,10 +76,10 @@ local mappings = {
 	{ from = "<Tab>", to = ">gv", mode = mode_v },
 
 	-- insert 模式下，跳到行首行尾
-	{ from = _key.platform_key.cmd .. "-h>", to = "<ESC>I", mode = mode_i },
-	{ from = _key.platform_key.cmd .. "-l>", to = "<ESC>A", mode = mode_i },
-	{ from = _key.platform_key.cmd .. "-j>", to = "<C-o>j", mode = mode_i, opt = opt_ns },
-	{ from = _key.platform_key.cmd .. "-k>", to = "<C-o>k", mode = mode_i, opt = opt_ns },
+	{ from = _key.platform_key.cmd("h"), to = "<ESC>I", mode = mode_i },
+	{ from = _key.platform_key.cmd("l"), to = "<ESC>A", mode = mode_i },
+	{ from = _key.platform_key.cmd("j"), to = "<C-o>j", mode = mode_i, opt = opt_ns },
+	{ from = _key.platform_key.cmd("k"), to = "<C-o>k", mode = mode_i, opt = opt_ns },
 
 	-- 正常模式
 	-- 窗口

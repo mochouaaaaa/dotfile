@@ -20,7 +20,7 @@ return {
 				desc = "move left buffer",
 			},
 			{
-				keymap.platform_key.cmd .. "-w>",
+				keymap.platform_key.cmd("w"),
 				function()
 					buffer.wipe()
 				end,

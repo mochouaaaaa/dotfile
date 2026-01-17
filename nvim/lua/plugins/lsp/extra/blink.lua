@@ -43,10 +43,10 @@ local M = {
 				-- FIX: 会导致loading
 				-- ["<Tab>"] = { "show", "fallback" },
 				["<Tab>"] = { "snippet_forward", "fallback" },
-				[keymap.platform_key.cmd .. "-e>"] = { "hide", "fallback" },
+				[keymap.platform_key.cmd("e")] = { "hide", "fallback" },
 
-				[keymap.platform_key.cmd .. "-k>"] = { "select_prev", "fallback" },
-				[keymap.platform_key.cmd .. "-j>"] = { "select_next", "fallback" },
+				[keymap.platform_key.cmd("k")] = { "select_prev", "fallback" },
+				[keymap.platform_key.cmd("j")] = { "select_next", "fallback" },
 			},
 			sources = function()
 				local type = vim.fn.getcmdtype()
@@ -101,8 +101,8 @@ local M = {
 		},
 		keymap = {
 			preset = "enter",
-			[keymap.platform_key.cmd .. "-k>"] = { "select_prev", "fallback" },
-			[keymap.platform_key.cmd .. "-j>"] = { "select_next", "fallback" },
+			[keymap.platform_key.cmd("k")] = { "select_prev", "fallback" },
+			[keymap.platform_key.cmd("j")] = { "select_next", "fallback" },
 			["<Tab>"] = {
 				function(cmp)
 					if cmp.snippet_active() then
@@ -115,7 +115,7 @@ local M = {
 				"fallback",
 			},
 			["<C-e>"] = { nil },
-			[keymap.platform_key.cmd .. "-e>"] = { "hide", "fallback" },
+			[keymap.platform_key.cmd("e")] = { "hide", "fallback" },
 		},
 	},
 }

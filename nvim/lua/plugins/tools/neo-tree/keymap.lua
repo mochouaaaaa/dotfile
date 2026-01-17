@@ -5,7 +5,7 @@ return {
 	keys = function()
 		return {
 			{
-				utils.platform_key.cmd .. "-e>",
+				utils.platform_key.cmd("e"),
 				"<Cmd>Neotree toggle<CR>",
 				mode = "n",
 			},

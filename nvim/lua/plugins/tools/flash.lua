@@ -17,17 +17,6 @@ local M = {
 
 	config = function(_, opts)
 		require("flash").setup(opts)
-		local api, _ = vim.api, vim.fn
-
-		local set_hl = api.nvim_set_hl
-		set_hl(0, "FlashLabel", {
-			bg = "#ff007c",
-			fg = "#c8d3f5",
-		})
-		set_hl(0, "FlashMatch", {
-			bg = "#5377da",
-			fg = "#b6c5f0",
-		})
 	end,
 	keys = function()
 		return {

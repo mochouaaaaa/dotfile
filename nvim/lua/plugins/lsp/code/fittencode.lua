@@ -1,21 +1,21 @@
 return {
-	{
-		"saghen/blink.cmp",
-		opts = {
-			sources = {
-				completion = {
-					enabled_providers = { "lsp", "path", "snippets", "buffer", "fittencode" },
-				},
-				-- set custom providers with fittencode
-				providers = {
-					fittencode = {
-						name = "fittencode",
-						module = "fittencode.sources.blink",
-					},
-				},
-			},
-		},
-	},
+	-- {
+	-- 	"saghen/blink.cmp",
+	-- 	opts = {
+	-- 		sources = {
+	-- 			completion = {
+	-- 				enabled_providers = { "lsp", "path", "snippets", "buffer", "fittencode" },
+	-- 			},
+	-- 			-- set custom providers with fittencode
+	-- 			providers = {
+	-- 				fittencode = {
+	-- 					name = "fittencode",
+	-- 					module = "fittencode.sources.blink",
+	-- 				},
+	-- 			},
+	-- 		},
+	-- 	},
+	-- },
 	{
 		"luozhiya/fittencode.nvim",
 		enabled = vim.g.CODE.fittencode,
@@ -46,12 +46,12 @@ return {
 				end
 			end, { silent = true, desc = "fittencode accept" })
 
-			vim.keymap.set("i", utils.platform_key.cmd .. "-e>", function()
+			vim.keymap.set("i", utils.platform_key.cmd("e"), function()
 				if fitten_code.has_suggestions() then
 					fitten_code.dismiss_suggestions()
 				else
 					vim.api.nvim_feedkeys(
-						vim.api.nvim_replace_termcodes(utils.platform_key.cmd .. "-e>", true, false, true),
+						vim.api.nvim_replace_termcodes(utils.platform_key.cmd("e"), true, false, true),
 						"n",
 						false
 					)
