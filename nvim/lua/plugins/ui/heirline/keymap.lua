@@ -22,7 +22,7 @@ return {
 			{
 				keymap.platform_key.cmd("w"),
 				function()
-					buffer.wipe()
+					require("mini.bufremove").delete()
 				end,
 				desc = "Close the current window.",
 			},
