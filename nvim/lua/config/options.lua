@@ -10,6 +10,27 @@ g.lazyredraw = true
 opt.clipboard = "unnamedplus"
 opt.updatetime = 200
 
+if vim.env.SSH_TTY then
+	local function paste()
+		return {
+			vim.split(vim.fn.getreg(""), "\n"),
+			vim.fn.getregtype(""),
+		}
+	end
+
+	vim.g.clipboard = {
+		name = "OSC 52",
+		copy = {
+			["+"] = require("vim.ui.clipboard.osc52").copy("+"),
+			["*"] = require("vim.ui.clipboard.osc52").copy("*"),
+		},
+		paste = {
+			["+"] = paste,
+			["*"] = paste,
+		},
+	}
+end
+
 -- 行号
 opt.relativenumber = true
 opt.number = true
@@ -52,7 +73,6 @@ opt.showmode = false
 
 -- 当文件被外部程序修改时，自动加载
 opt.autoread = true
-vim.bo.autoread = true
 
 -- 禁止创建备份文件
 opt.backup = false

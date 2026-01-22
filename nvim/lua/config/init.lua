@@ -6,6 +6,5 @@ vim.g.neovide_enabled = vim.g.neovide
 
 require("config.diagnositc")
 require("config.filetype")
-require("config.shell")
 require("config.neovide")
 require("config.lsp")
