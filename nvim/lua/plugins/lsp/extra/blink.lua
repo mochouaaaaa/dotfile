@@ -71,11 +71,11 @@ local M = {
 			documentation = {
 				auto_show = true,
 				window = {
-					border = rounded,
+					-- border = rounded,
 				},
 			},
 			menu = {
-				border = rounded,
+				-- border = rounded,
 				draw = {
 					treesitter = { "lsp" },
 					columns = {
