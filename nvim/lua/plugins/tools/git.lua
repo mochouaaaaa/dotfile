@@ -53,6 +53,7 @@ return {
 			{
 				"<leader>gab",
 				gs.stage_hunk,
+				mode = { "v" },
 				desc = "Stage Hunk",
 			},
 			{

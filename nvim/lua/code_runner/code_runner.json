@@ -1,5 +1,5 @@
 {
-  "python": "python -u",
+  "python": "uv run",
   "go": "go run",
   "typescript": "deno run",
   "javascript": "node -r",

@@ -1,5 +1,8 @@
 {
   "diagnostics.disable": ["lowercase-global", "missing-fields", "unused-local"],
-    "completion.autoRequire": false
+    "completion.autoRequire": false,
+    "diagnostics.globals": [
+        "vim"
+    ]
 }
 
