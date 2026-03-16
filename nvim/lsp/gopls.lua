@@ -1,12 +1,12 @@
 local common = require("util.lsp")
 
 return {
-	{
-		on_attach = function(client, bufnr)
-			common.setup(client, bufnr)
-		end,
-		capabilities = common.make_capabilities(),
-		settings = {
+	on_attach = function(client, bufnr)
+		common.setup(client, bufnr)
+	end,
+	capabilities = common.make_capabilities(),
+	settings = {
+		gopls = {
 			experimentalPostfixCompletions = true,
 			gofumpt = true,
 			codelenses = {
@@ -38,7 +38,6 @@ return {
 			staticcheck = true,
 			usePlaceholders = true,
 			completeUnimported = true,
-			-- staticcheck = true,
 			directoryFilters = { "-.git", "-.vscode", "-.idea", "-.vscode-test", "-node_modules" },
 			semanticTokens = true,
 		},
