@@ -7,7 +7,11 @@ local rep = require("luasnip.extras").rep
 
 ls.add_snippets("go", {
 	s(
-		"go",
+		{
+			trig = "go",
+			name = "Go Routing",
+			dscr = "生成标准匿名异步函数",
+		},
 		fmt(
 			[[
 go func({}) {{
@@ -18,7 +22,11 @@ go func({}) {{
 		)
 	),
 	s(
-		"select",
+		{
+			trig = "select",
+			name = "select chanel",
+			dscr = "生成标准队列查询模版",
+		},
 		fmt(
 			[[
 select {{
@@ -35,7 +43,11 @@ case <-time.After({}):
 	-- === 常用工具片段 ===
 	-- Append 元素
 	s(
-		"append",
+		{
+			trig = "append",
+			name = "append args",
+			dscr = "生成标准的Append函数",
+		},
 		fmt([[{} = append({}, {})]], {
 			i(1, "list"), -- 第 1 个节点：变量名，默认值设为 list
 			rep(1), -- 重复第 1 个节点的内容
@@ -45,7 +57,11 @@ case <-time.After({}):
 
 	-- Check Map Key (ok idiom)
 	s(
-		"ifok",
+		{
+			trig = "ifok",
+			name = "if ok ?",
+			dscr = "生成标准的if ok 模版",
+		},
 		fmt(
 			[[
 if {}, ok := {}[{}]; ok {{
@@ -71,7 +87,11 @@ defer cancel()
 
 	-- Main 函数模板
 	s(
-		"main",
+		{
+			trig = "main",
+			name = "Go Main Function",
+			dscr = "生成标准的 Go 语言入口主函数 main()",
+		},
 		fmt(
 			[[
 func main() {{
@@ -85,6 +105,11 @@ func main() {{
 	-- 1. 基础错误检查
 	s(
 		"ifre",
+		{
+			trig = "ifre",
+			name = "ifre",
+			dscr = "生成基础错误检查",
+		},
 		fmt(
 			[[
 if err != nil {{
@@ -97,7 +122,11 @@ if err != nil {{
 
 	-- 2. 带有格式化的错误包装
 	s(
-		"ifree",
+		{
+			trig = "ifree",
+			name = "ifree",
+			dscr = "生成格式化的错误包装",
+		},
 		fmt(
 			[[
 if err != nil {{
@@ -110,7 +139,11 @@ if err != nil {{
 
 	-- 3. 结构体定义
 	s(
-		"ty",
+		{
+			trig = "ty",
+			name = "ty",
+			dscr = "生成标准的struct模版",
+		},
 		fmt(
 			[[
 type {} struct {{
@@ -122,7 +155,11 @@ type {} struct {{
 	),
 
 	s(
-		"ti",
+		{
+			trig = "ti",
+			name = "ti",
+			dscr = "生成标准的intelface模版",
+		},
 		fmt(
 			[[
 type {} interface {{
@@ -135,7 +172,11 @@ type {} interface {{
 
 	-- 4. 标准函数
 	s(
-		"func",
+		{
+			trig = "func",
+			name = "func",
+			dscr = "生成标准的func函数",
+		},
 		fmt(
 			[[
 func {}({}) {} {{
@@ -146,9 +187,17 @@ func {}({}) {} {{
 		)
 	),
 
-	s("fmp", fmt([[fmt.Println({})]], { i(1) })),
+	s({
+		trig = "fmp",
+		name = "fmp",
+		dscr = "生成标准的标准输出函数",
+	}, fmt([[fmt.Println({})]], { i(1) })),
 
-	s("json", fmt([[ `json:"{}"`]], { i(1) })),
+	s({
+		trig = "json",
+		name = "json",
+		dscr = "生成标准的json tag",
+	}, fmt([[ `json:"{}"`]], { i(1) })),
 	-- JSON 序列化处理 (常见于 API)
 	s(
 		"jsonencode",

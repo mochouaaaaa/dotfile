@@ -67,20 +67,43 @@ end
 -- and returns the text-/insert- or restore-nodes
 local function to_init_assign(args)
 	local tab = {}
-	local a = args[1][1]
-	if #a == 0 then
+	local input = args[1][1] or ""
+
+	-- 去掉开头的逗号和多余空格
+	local cleaned_input = input:gsub("^%s*,%s*", "")
+
+	if #cleaned_input == 0 then
 		table.insert(tab, t({ "", "\tpass" }))
 	else
 		local cnt = 1
-		for e in string.gmatch(a, " ?([^,]*) ?") do
-			if #e > 0 then
+		-- 按逗号分割每一个参数，例如 "demo:str"
+		for part in string.gmatch(cleaned_input, "([^,]+)") do
+			local full_arg = part:match("^%s*(.-)%s*$")
+			if #full_arg > 0 then
+				-- 拆分 变量名 和 类型 (例如 "demo" 和 "str")
+				local var_name, type_annot = full_arg:match("([^:%s]+)%s*:?%s*(.*)")
+
+				-- 如果用户没写类型，就默认为空
+				if type_annot == "" then
+					type_annot = nil
+				end
+
 				table.insert(tab, t({ "", "\tself." }))
-				-- use a restore-node to be able to keep the possibly changed attribute name
-				-- (otherwise this function would always restore the default, even if the user
-				-- changed the name)
-				table.insert(tab, r(cnt, tostring(cnt), i(nil, e)))
+
+				-- 1. 左侧变量名 (Restore Node 允许用户手动微调)
+				table.insert(tab, r(cnt, tostring(cnt), i(nil, var_name)))
+
+				-- 2. 如果有类型注解，添加 ": type"
+				if type_annot then
+					table.insert(tab, t(": "))
+					table.insert(tab, t(type_annot))
+				end
+
 				table.insert(tab, t(" = "))
-				table.insert(tab, t(e))
+
+				-- 3. 右侧赋值 (仅变量名，不带注解)
+				table.insert(tab, t(var_name))
+
 				cnt = cnt + 1
 			end
 		end
@@ -93,14 +116,22 @@ local ct = choice_text_node
 ls.add_snippets("python", {
 	-- create the actual snippet
 	s(
-		"definit",
+		{
+			trig = "definit",
+			name = "definit",
+			dscr = "生成标准的__ini__函数",
+		},
 		fmt([[def __init__(self{}):{}]], {
 			d(1, py_init),
 			d(2, to_init_assign, { 1 }),
 		})
 	),
 	s(
-		"ryaml",
+		{
+			trig = "ryaml",
+			name = "ryaml",
+			dscr = "yaml读取",
+		},
 		fmt(
 			[[
 with open({}, "r") as f:
@@ -110,7 +141,11 @@ with open({}, "r") as f:
 		)
 	),
 	s(
-		"ifmain",
+		{
+			trig = "ifmain",
+			name = "ifmain",
+			dscr = "生成标准的__main__入口函数",
+		},
 		fmt(
 			[[
 def main():
