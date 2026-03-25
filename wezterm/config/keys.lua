@@ -1,6 +1,24 @@
 local keymap = require("utils.send_keys")
+local wezterm = require("wezterm")
 
 local keys = {
+	{
+		key = "=",
+		mods = "SUPER",
+		action = wezterm.action.IncreaseFontSize,
+	},
+	-- 字体缩小 Cmd + -
+	{
+		key = "-",
+		mods = "SUPER",
+		action = wezterm.action.DecreaseFontSize,
+	},
+	-- 字体重置 Cmd + 0
+	{
+		key = "0",
+		mods = "SUPER",
+		action = wezterm.action.ResetFontSize,
+	},
 	-- copy/paste
 	keymap.create_key_binding("CMD", "c"),
 	keymap.create_key_binding("CMD", "v"),
