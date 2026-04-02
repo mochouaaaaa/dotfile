@@ -9,7 +9,7 @@ return {
 			fzf_opts = {
 				["--color"] = "bg:-1,marker:-1,pointer:4", --,bg+:1
 				["--ansi"] = false,
-				["--pointer"] = vim.g.icons.Telescope.Care,
+				["--pointer"] = " ",
 			},
 			hls = {
 				title = "Normal",

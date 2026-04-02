@@ -6,7 +6,7 @@ return {
 	opts = {
 		files = {
 			header = HEADER,
-			prompt = vim.g.icons.Telescope.Prefix,
+			prompt = " ",
 			git_icons = true,
 			path_shorten = 6,
 			cwd = vim.fn.exepath("%:p:h"),
@@ -16,7 +16,7 @@ return {
 		},
 		grep = {
 			header = false,
-			prompt = vim.g.icons.Telescope.Prefix,
+			prompt = " ",
 			input_prompt = "Grep For❯ ",
 			git_icons = true,
 			rg_glob = true,
