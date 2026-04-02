@@ -1,10 +1,5 @@
 # Config
 
-# Branch
-
-- master use telescope search
-- fzf use fzf-lua search
-
 ## Kitty/Wezterm(Tmux) Termianl keymap
 
 | 功能               | 快捷键               |  Kitty   | Wezterm  |   Tmux   |
