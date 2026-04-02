@@ -150,3 +150,8 @@ o.foldlevel = 99
 
 -- Fix markdown indentation settings
 vim.g.markdown_recommended_style = 0
+
+vim.g.lazyvim_python_lsp = "ty"
+vim.g.lazyvim_picker = "fzf"
+-- vim.g.snacks_animate = false
+vim.g.lazyvim_picker = "snacks"

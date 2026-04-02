@@ -3,7 +3,7 @@ vim.g.maplocalleader = " "
 
 -- disabled default keymaps
 -- package.loaded["lazyvim.config.options"] = true
-package.loaded["lazyvim.config.mappings"] = true
+-- package.loaded["lazyvim.config.mappings"] = true
 
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
 if not (vim.uv or vim.loop).fs_stat(lazypath) then
@@ -26,14 +26,11 @@ require("config.init")
 
 require("lazy").setup({
 	spec = {
-		{ "nvim-lua/plenary.nvim" },
+		-- { "nvim-lua/plenary.nvim" },
 		{
 			"LazyVim/LazyVim",
 			import = "lazyvim.plugins",
 			opts = {
-				defaults = {
-					keymaps = false,
-				},
 				colorscheme = "catppuccin",
 			},
 		},
@@ -45,7 +42,6 @@ require("lazy").setup({
 		{ "folke/tokyonight.nvim", enabled = false },
 		{ "nvim-lualine/lualine.nvim", enabled = false },
 		{ "akinsho/bufferline.nvim", enabled = false },
-		-- { "nvim-ts-autotag", enabled = false },
 	},
 	ui = {
 		border = "rounded",
@@ -54,7 +50,7 @@ require("lazy").setup({
 	defaults = {
 		lazy = false,
 		version = false, -- 永远使用最新的 git commit 版本
-		keymaps = false,
+		-- keymaps = false,
 	},
 	checker = { enabled = false }, -- 自动检查插件更新
 	performance = {

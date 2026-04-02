@@ -1,7 +1,6 @@
 vim.diagnostic.config({
 	virtual_lines = { only_current_line = true },
 	virtual_text = {
-		-- 显示诊断信息在代码旁
 		prefix = "●", -- 可以根据需要自定义前缀
 		source = true, -- 显示诊断的来源
 		spacing = 4, -- 虚拟文本与代码的距离

@@ -4,7 +4,6 @@ return {
 	-- 	"CccConvert",
 	-- },
 	config = function(plugin)
-		vim.notify(plugin.ft)
 		local ccc = require("ccc")
 		-- local mapping = ccc.mapping
 		ccc.setup({
@@ -36,11 +35,5 @@ return {
 				filetypes = { "lua", "conf", "yaml", "toml", "nix" },
 			},
 		})
-	end,
-	keys = function()
-		return {
-			{ "<leader>hl", "<Cmd>CccHighlighterToggle<CR>", desc = "Buffer Color highlight" },
-			{ "<leader>hp", "<Cmd>CccPick<CR>", desc = "Color Picker" },
-		}
 	end,
 }

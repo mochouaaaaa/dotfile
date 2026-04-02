@@ -89,4 +89,18 @@ return {
 			end
 		end,
 	},
+	{
+		"NotAShelf/direnv.nvim",
+		config = function()
+			require("direnv").setup({})
+
+			vim.api.nvim_create_autocmd("User", {
+				pattern = "DirenvLoaded",
+				callback = function()
+					-- Code to run after direnv environment is loaded
+					vim.notify("Direnv environment loaded!")
+				end,
+			})
+		end,
+	},
 }

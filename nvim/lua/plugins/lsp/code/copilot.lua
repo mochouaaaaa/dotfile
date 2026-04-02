@@ -17,7 +17,6 @@ return {
 						jump_prev = "[[",
 						jump_next = "]]",
 						accept = "<Tab>",
-						refresh = "gr",
 						open = "<M-CR>",
 					},
 					layout = {

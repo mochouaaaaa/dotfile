@@ -229,9 +229,9 @@ local M = {
 				},
 			},
 		},
-		keys = {
-			{ "<leader>P", "<cmd>PasteImage<cr>", desc = "Paste image from system clipboard" },
-		},
+		-- keys = {
+		-- 	{ "<leader>P", "<cmd>PasteImage<cr>", desc = "Paste image from system clipboard" },
+		-- },
 	},
 	{
 		"let-def/texpresso.vim",

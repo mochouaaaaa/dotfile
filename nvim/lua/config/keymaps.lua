@@ -19,7 +19,6 @@ original_map = {}
 local mappings = {
 
 	-- disbaled insert mode
-	-- { from = "<Tab>", to = "<Nop>", mode = mode_ni }, -- Will be handled in `plugins/completion.lua`
 	{ from = "<Space>", to = "<Nop>", mode = mode_n },
 	{ from = "<C-j>", to = "<Nop>", mode = mode_n },
 	{ from = "<C-k>", to = "<Nop>", mode = mode_n },
@@ -83,10 +82,8 @@ local mappings = {
 
 	-- 正常模式
 	-- 窗口
-	{ from = "<leader>|", to = "<C-w>v", mode = mode_n, desc = "垂直新增窗" },
-	{ from = "<leader>_", to = "<C-w>s", mode = mode_n, desc = "水平新增窗" },
-	{ from = "<leader>sc", to = "<C-w>c", mode = mode_n, desc = "关闭当前窗" },
-	{ from = "<leader>so", to = "<C-w>o", mode = mode_n, desc = "关闭其他窗" },
+	{ from = "<leader>|", to = "<C-w>v", mode = mode_n, desc = "Vertical Split" },
+	{ from = "<leader>_", to = "<C-w>s", mode = mode_n, desc = "Horizontal Split" },
 }
 
 for _, mapping in ipairs(mappings) do

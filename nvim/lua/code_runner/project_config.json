@@ -2,6 +2,6 @@
   "django": {
     "name": "Django Project Template",
     "description": "Project template for Django",
-    "filename": "manager.py"
+    "filename": "python manager.py runserver"
   }
 }

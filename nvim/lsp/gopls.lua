@@ -1,10 +1,7 @@
-local common = require("util.lsp")
-
 return {
 	on_attach = function(client, bufnr)
-		common.setup(client, bufnr)
+		vim.lsp.codelens.enable()
 	end,
-	capabilities = common.make_capabilities(),
 	settings = {
 		gopls = {
 			experimentalPostfixCompletions = true,

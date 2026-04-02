@@ -1,11 +1,6 @@
 return {
 	"danymat/neogen",
-	dependencies = {
-		"nvim-treesitter/nvim-treesitter",
-	},
-
-	cmd = "Neogen", -- 支持 :Neogen，也用于 lazy load
-
+	cmd = "Neogen",
 	opts = {
 		input_after_comment = true,
 

@@ -97,11 +97,11 @@ function M.opts(_, opts)
 					return { "--config-path", M.resolve_config("stylua")(), "--no-editorconfig" }
 				end,
 			},
-			ruff_format = {
-				prepend_args = function()
-					return { "format", "--config", M.resolve_config("python")() }
-				end,
-			},
+			-- ruff = {
+			-- 	prepend_args = function()
+			-- 		return { "format", "--config", M.resolve_config("python")() }
+			-- 	end,
+			-- },
 			rustfmt = {
 				prepend_args = function()
 					return { "--config-path", M.resolve_config("rustfmt")() }
@@ -112,9 +112,9 @@ function M.opts(_, opts)
 			lua = { "stylua" },
 			luau = { "stylua" },
 
-			python = function(bufnr)
-				return { "ruff_format" }
-			end,
+			-- python = function(bufnr)
+			-- 	return { "ruff" }
+			-- end,
 			go = { "goimports-reviser", "gofumpt" },
 			rust = { "rustfmt" },
 
@@ -136,7 +136,6 @@ function M.opts(_, opts)
 
 			-- Markdown
 			markdown = { "prettierd" },
-			["markdown.mdx"] = { "prettierd" },
 
 			-- toml
 			toml = { "taplo" },

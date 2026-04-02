@@ -1,51 +1,56 @@
+local keymap = require("util.keymap")
+
 return {
 	"snacks.nvim",
-	opts = function(_, opts)
-		local config = {
-			animate = {
-				duration = 20,
-				fps = 60,
-			},
-			bigfile = { enabled = true },
-			dashboard = { enabled = true },
-			explorer = { enabled = false },
-			notifier = { enabled = true },
-			indent = { enabled = true },
-			input = { enabled = true },
-			picker = {
-				enabled = true,
-				win = {
-					input = {
-						keys = {
-							["<D-j>"] = { "list_down", mode = { "i", "n" } },
-							["<D-k>"] = { "list_up", mode = { "i", "n" } },
-						},
+	opts = {
+		animate = {
+			duration = 20,
+			fps = 60,
+		},
+		image = {
+			enabled = true,
+		},
+		picker = {
+			ui_select = true,
+			win = {
+				input = {
+					keys = {
+						["<Esc>"] = { "close", mode = { "n", "i" } },
+						[keymap.platform_key.cmd("j")] = { "list_down", mode = { "i", "n" } },
+						[keymap.platform_key.cmd("k")] = { "list_up", mode = { "i", "n" } },
+						[keymap.platform_key.cmd("J")] = { "preview_scroll_down", mode = { "i", "n" } },
+						[keymap.platform_key.cmd("K")] = { "preview_scroll_up", mode = { "i", "n" } },
 					},
 				},
 			},
-			quickfile = { enabled = true },
-			scope = { enabled = true },
-			-- scroll = { enabled = true },
-			statuscolumn = { enabled = true },
-			words = { enabled = true },
-			image = { enabled = true },
-		}
-
-		return vim.tbl_deep_extend("force", opts, config)
-	end,
-	keys = function()
-		return {
-			-- {
-			-- 	"<leader>fn",
-			-- 	function()
-			-- 		if Snacks.config.picker and Snacks.config.picker.enabled then
-			-- 			Snacks.picker.notifications()
-			-- 		else
-			-- 			Snacks.notifier.show_history()
-			-- 		end
-			-- 	end,
-			-- 	desc = "Notification History",
-			-- },
-		}
-	end,
+		},
+		lazygit = {
+			win = {
+				border = "rounded",
+			},
+		},
+	},
+	keys = {
+		{
+			keymap.platform_key.cmd("e"),
+			function()
+				Snacks.picker.explorer()
+			end,
+			mode = "n",
+		},
+		{
+			keymap.platform_key.cmd("f"),
+			function()
+				Snacks.picker.files()
+			end,
+			desc = "Find Files",
+		},
+		{
+			keymap.platform_key.cmd("F"),
+			function()
+				Snacks.picker.grep()
+			end,
+			desc = "Grep",
+		},
+	},
 }

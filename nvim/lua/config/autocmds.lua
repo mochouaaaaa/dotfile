@@ -30,17 +30,3 @@ vim.api.nvim_create_autocmd("BufRead", {
 		})
 	end,
 })
-
--- Hyprlang LSP
-if vim.fn.has("unix") == 1 and vim.env.XDG_CURRENT_DESKTOP == "Hyprland" then
-	vim.api.nvim_create_autocmd({ "BufEnter", "BufWinEnter" }, {
-		pattern = { "*.hl", "hypr*.conf" },
-		callback = function(event)
-			vim.lsp.start({
-				name = "hyprlang",
-				cmd = { "hyprls" },
-				root_dir = vim.fn.getcwd(),
-			})
-		end,
-	})
-end

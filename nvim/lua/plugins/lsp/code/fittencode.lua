@@ -39,16 +39,16 @@ return {
 			fitten_code.setup(opts)
 
 			vim.keymap.set("i", "<Tab>", function()
-				if fitten_code.has_suggestions() then
-					fitten_code.accept_line()
+				if fitten_code.has_completions() then
+					fitten_code.accept("hunk")
 				else
 					vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes("<Tab>", true, false, true), "n", false)
 				end
 			end, { silent = true, desc = "fittencode accept" })
 
 			vim.keymap.set("i", utils.platform_key.cmd("e"), function()
-				if fitten_code.has_suggestions() then
-					fitten_code.dismiss_suggestions()
+				if fitten_code.has_completions() then
+					fitten_code.completion_cancel()
 				else
 					vim.api.nvim_feedkeys(
 						vim.api.nvim_replace_termcodes(utils.platform_key.cmd("e"), true, false, true),

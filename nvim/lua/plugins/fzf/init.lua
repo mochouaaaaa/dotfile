@@ -2,7 +2,6 @@ return {
 	{ import = "plugins.fzf" },
 	{
 		"ibhagwan/fzf-lua",
-		lazy = false,
 		opts = {
 			"hide", --"telescope",
 			border = "rounded",

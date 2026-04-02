@@ -13,19 +13,10 @@ return {
 					enabled = true,
 					auto_open = {
 						enabled = true,
-						trigger = false, -- 不在 insert 自动弹
+						trigger = true,
 					},
 				},
 			},
 		},
-		keys = function()
-			return {
-				{
-					"<leader>fn",
-					"<CMD>:Noice fzf<CR>",
-					desc = "Notification History",
-				},
-			}
-		end,
 	},
 }

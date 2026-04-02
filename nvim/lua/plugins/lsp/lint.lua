@@ -3,7 +3,7 @@ local M = {
 }
 
 M.opts = function(_, opts)
-	local rc = require("plugins.lsp.extra.conform")
+	local rc = require("plugins.lsp.conform")
 
 	return vim.tbl_deep_extend("force", opts, {
 		-- Event to trigger linters
@@ -21,7 +21,7 @@ M.opts = function(_, opts)
 			javascriptreact = { "eslint_d" },
 			typescriptreact = { "eslint_d" },
 
-			python = { "ruff" },
+			-- python = { "ruff" },
 			swift = { "swiftlint" },
 		},
 		linters = {
@@ -49,15 +49,15 @@ M.opts = function(_, opts)
 					end,
 				},
 			},
-			ruff = {
-				args = {
-					"check",
-					"--stdin-filepath",
-					"$FILENAME",
-					"--config",
-					rc.resolve_config("python"),
-				},
-			},
+			-- ruff = {
+			-- 	args = {
+			-- 		"check",
+			-- 		"--stdin-filepath",
+			-- 		"$FILENAME",
+			-- 		"--config",
+			-- 		rc.resolve_config("python"),
+			-- 	},
+			-- },
 			swiftlint = {
 				args = {
 					cmd = "swiftlint",

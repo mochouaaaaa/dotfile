@@ -1,10 +1,5 @@
-local common = require("util.lsp")
-
 return {
-	on_attach = function(client, bufnr)
-		common.setup(client, bufnr)
-	end,
-	capabilities = common.make_capabilities(),
+	on_attach = function(client, bufnr) end,
 	settings = {
 		Lua = {
 			cmd = { "lua-language-server" },
@@ -16,17 +11,17 @@ return {
 				enable = false,
 				defaultConfig = {
 					indent_style = "space",
-					indent_size = "4",
+					indent_size = 4,
 					quote_style = "single",
 					--   align_if_branch = false,
 					-- align_array_table = false,
 					-- align_continuous_assign_statement = false,
 					-- align_continuous_rect_table_field = false,
-					align_call_args = "false",
-					align_function_params = "false",
-					align_continuous_assign_statement = "false",
-					align_continuous_rect_table_field = "false",
-					align_array_table = "true",
+					align_call_args = false,
+					align_function_params = false,
+					align_continuous_assign_statement = false,
+					align_continuous_rect_table_field = false,
+					align_array_table = true,
 				},
 			},
 			diagnostics = {
@@ -38,7 +33,10 @@ return {
 				checkThirdParty = false,
 				ignoreDir = { ".vscode", "node_modules" },
 				-- Make the server aware of Neovim runtime files
-				library = vim.api.nvim_get_runtime_file("", true),
+				-- library = vim.api.nvim_get_runtime_file("lua", true),
+				library = {
+					vim.env.VIMRUNTIME,
+				},
 			},
 			-- Do not send telemetry data containing a randomized but unique identifier
 			telemetry = {
