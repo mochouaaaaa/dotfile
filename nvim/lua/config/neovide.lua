@@ -22,6 +22,8 @@ end
 
 function BaseConfig:config()
 	vim.g.neovide_theme = "auto"
+
+	vim.g.neovide_message_area_drag_selection = true
 end
 
 function BaseConfig:keymaps()
@@ -74,8 +76,8 @@ function BaseConfig:background()
 	vim.g.neovide_floating_z_height = 10
 	vim.g.neovide_light_angle_degrees = 45
 	vim.g.neovide_light_radius = 0
-	vim.g.neovide_floating_blur_amount_x = 2.0
-	vim.g.neovide_floating_blur_amount_y = 2.0
+	vim.g.neovide_floating_blur_amount_x = 1.0
+	vim.g.neovide_floating_blur_amount_y = 1.0
 end
 
 function BaseConfig:window_settings()
@@ -94,23 +96,24 @@ DarwinConfig.__index = DarwinConfig
 function DarwinConfig:keymaps()
 	BaseConfig.keymaps(self)
 	vim.g.neovide_input_macos_option_key_is_meta = "only_left"
+	vim.keymap.set("n", "<leader>k", "<Cmd>NeovideForceClick<CR>", { silent = true })
+end
+
+function DarwinConfig:config()
+	BaseConfig.config(self)
+	vim.g.neovide_highlight_matching_pair = true
 end
 
 function DarwinConfig:background()
 	BaseConfig.background(self)
 	vim.g.neovide_opacity = 0.75
-	vim.g.neovide_window_blurred = true
-	-- Helper function for transparency formatting
-	local alpha = function()
-		return string.format("%x", math.floor(255 * vim.g.transparency or 0.8))
-	end
-	-- g:neovide_opacity should be 0 if you want to unify transparency of content and title bar.
 	vim.g.transparency = 0.8
-	vim.g.neovide_background_color = "#1e1e2e" .. alpha()
 end
 
 function DarwinConfig:window_settings()
 	BaseConfig.window_settings(self)
+	vim.g.neovide_touch_deadzone = 5.0
+	vim.g.neovide_touch_drag_timeout = 0.7
 end
 
 local LinuxConfig = setmetatable({}, { __index = BaseConfig })
