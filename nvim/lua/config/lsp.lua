@@ -4,10 +4,9 @@ vim.lsp.enable({
 	"gopls",
 	"jsonls",
 	"cssls",
-	"marksman",
 })
 
--- vim.set_log_level("OFF")
+vim.lsp.log.set_level("OFF")
 
 vim.g.CODE = {
 	fittencode = true,
