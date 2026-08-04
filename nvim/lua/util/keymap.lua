@@ -16,6 +16,9 @@ return {
 		option = function(key)
 			return string.format("<A-%s>", key)
 		end,
+		shift = function(key)
+			return string.format("<S-%s>", key)
+		end,
 	},
 	is_mac = is_mac,
 	is_linux = function()
