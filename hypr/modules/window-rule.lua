@@ -309,7 +309,39 @@ local window_rules = {
 		},
 		workspace = "special:tg",
 	},
+	{
+		name = "wechat",
+		match = {
+			class = "discord|equibop|vesktop|whatsapp|qq|dingtalk",
+		},
+		workspace = "special:wechat",
+	},
+	{
+		name = "matrix",
+		match = {
+			class = "org.gnome.Fractal|fluffychat|Element",
+		},
+		workspace = "special:matrix",
+	},
+	{
+		name = "musci-spotify",
+		match = {
+			initial_title = "Spotify( Free)?",
+		},
+		workspace = "special:music",
+	},
+	{
+		name = "music",
+		match = {
+			class = "feishin|Spotify|Supersonic|SPlayer",
+		},
+		workspace = "special:music",
+	},
 }
+
+hl.bind("SUPER+CTRL+3", hl.dsp.workspace.toggle_special("wechat"))
+hl.bind("SUPER+CTRL+4", hl.dsp.workspace.toggle_special("matrix"))
+hl.bind("SUPER+CTRL+1", hl.dsp.workspace.toggle_special("music"))
 
 ---@diagnostic disable-next-line: param-type-mismatch
 for _, rule in ipairs(window_rules) do

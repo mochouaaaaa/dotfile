@@ -102,6 +102,8 @@ global_keymaps = {
 		hl.dsp.exec_cmd("command -v hyprshutdown >/dev/null 2>&1 && hyprshutdown || hyprctl dispatch 'hl.dsp.exit()'"),
 	},
 	{ mainMod .. " + Q", hl.dsp.window.close() },
+
+	{ mainMod .. " + CTRL + Q", hl.dsp.exec_cmd("loginctl lock-session") },
 }
 
 for _, keymaps in ipairs(global_keymaps) do
