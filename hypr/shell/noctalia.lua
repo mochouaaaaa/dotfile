@@ -31,6 +31,8 @@ if noctalia_path then
 
 	-- Core binds
 	hl.bind(mainMod .. "+comma", hl.dsp.exec_cmd(ipc .. "settings-toggle"))
+	hl.unbind(mainMod .. "+CTRL+A")
+	hl.bind(mainMod .. "+CTRL+A", hl.dsp.exec_cmd(ipc .. "screenshot-region"))
 	hl.bind("ALT + Tab", hl.dsp.exec_cmd(ipc .. "window-switcher"))
 
 	-- Media keys
