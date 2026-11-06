@@ -1,48 +1,60 @@
 [mgr]
+linemode = "size"
 show_hidden = true
+sort_by = "natural"
+visibility_rules = [{ dir = ".", hide = "^\\.DS_Store$" }]
+
 
 [opener]
 folder = [
-  { run = 'nvim "$@"', block = true, desc = "neovim" },
-  { run = 'code "$@"', orphan = true, desc = "vscode" },
-  { run = 'zeditor "$@"', orphan = true, desc = "zed" },
-  { run = 'neovide "$@"', block = true, desc = "neovide" },
-  { run = 'open "$@"', orphan = true, desc = "open" },
+  { run = 'nvim %s', block = true, desc = "neovim" },
+  { run = 'code %s', orphan = true, desc = "vscode" },
+  { run = 'zeditor %s', orphan = true, desc = "zed" },
+  { run = 'neovide %s', block = true, desc = "neovide" },
+  { run = 'open %s', desc = "open", for = "macos" },
+  { run = "xdg-open %s", for = "linux" },
 ]
+
 archive = [
-  { run = 'unar "$1"', desc = "Extract here" },
-  { run = 'ouch decompress "$1" ', orphan = true, desc = "ouch decompress" },
-  { run = '/Applications/MacZip.app/Contents/MacOS/MacZip "$1"', orphan = true, desc = "MacZip", for = "unix" },
+  { run = 'unar %s', desc = "Extract here" },
+  { run = 'ouch decompress %s', orphan = true, desc = "ouch decompress" },
+  { run = '/Applications/MacZip.app/Contents/MacOS/MacZip %s', orphan = true, desc = "MacZip", for = "macos" },
 ]
+
 text = [
-  { run = 'nvim "$@"', block = true, desc = "neovim" },
-  { run = 'code  "$@"', orphan = true, desc = "vscode" },
-  { run = 'zeditor "$@"', orphan = true, desc = "zed" },
-  { run = 'gedit "$@" ', orphan = true, desc = "gedit", for = "linux" },
-  { run = 'zathura "$@"', orphan = true, desc = "zathura", for = "linux" },
+  { run = "${EDITOR:=vi} %s", desc = "$EDITOR", block = true },
+  { run = 'code %s', orphan = true, desc = "vscode" },
+  { run = 'zeditor %s', orphan = true, desc = "zed" },
+  { run = 'gedit %s', orphan = true, desc = "gedit", for = "linux" },
 ]
+
 image = [
-  { run = 'mirage  "$@"', orphan = true, desc = "mirage", for = "linux" },
-  { run = 'chafa "$@"', orphan = true, desc = "chafa", for = "unix" },
+  { run = 'mirage %s', orphan = true, desc = "mirage", for = "linux" },
+  { run = 'chafa %s', orphan = true, desc = "chafa", for = "unix" },
 ]
 
-video = [
-  { run = 'mpv "$@" ', orphan = true, desc = "mpv" },
-  { run = '/Applications/IINA.app/Contents/MacOS/IINA "$@"', desc = "IINA", for = "unix" },
-  { run = 'ffmpeg -i "$@" -vf "fps=10" -loop 0 "$@".gif', orphan = true, desc = "change to gif" },
+
+play = [
+  { run = "mpv --force-window %s", desc = "mpv" },
+  { run = "iina --no-stdin %s", for = "macos" },
+  # { run = 'ffmpeg -i "$@" -vf "fps=10" -loop 0 "$@".gif', orphan = true, desc = "change to gif" },
+  { run = "mediainfo %s1; echo 'Press enter to exit'; read", block = true, desc = "Show media info" },
 ]
-audio = [{ run = 'mpv "$@" ', orphan = true, desc = "mpv" }]
+
 document = [
-  { run = 'open "$@"', orphan = true, desc = "open" },
-  { run = 'zathura "$@" ', orphan = true, desc = "zathura" },
-  { run = 'evince "$@" ', orphan = true, desc = "evince", for = "linux" },
+  { run = 'open %s', orphan = true, desc = "open" },
+  { run = 'zathura %s', orphan = true, desc = "zathura" },
+  { run = 'evince %s', orphan = true, desc = "evince", for = "linux" },
 ]
 
-fallback = [{ run = 'open "$@"', orphan = true, desc = "open" }]
+fallback = [{ run = 'open %s', orphan = true, desc = "open" }]
 
 [open]
 rules = [
-  { mime = "*/", use = [
+  { mime = "inode/directory", use = [
+    "folder",
+  ] },
+  { mime = "folder/local", use = [
     "folder",
   ] },
 
@@ -53,13 +65,10 @@ rules = [
     "image",
   ] },
   { mime = "video/*", use = [
-    "video",
+    "play",
   ] },
   { mime = "audio/*", use = [
-    "audio",
-  ] },
-  { mime = "application/octet-stream", use = [
-    "video",
+    "play",
   ] },
   { mime = "inode/x-empty", use = [
     "edit",
@@ -112,11 +121,11 @@ rules = [
 
 [plugin]
 prepend_previewers = [
-  { mime = "inode/directory", run = 'piper -- eza -TL=3 --color=always --icons=always --group-directories-first --no-quotes "$1"' },
+  { mime = "folder/local", run = 'piper -- eza -TL=3 --color=always --icons=always --group-directories-first --no-quotes "$1"' },
   { mime = "application/sqlite3", run = 'piper -- sqlite3 "$1" ".schema --indent"' },
 
   { url = "*.html", run = "html" },
-  { url = "*.md", run = 'piper -- CLICOLOR_FORCE=1 glow -w=$w -s=dark "$1"' },
+  { url = "*.md", run = 'piper -- CLICOLOR_FORCE=1 glow -w=$w "$1"' },
 
   { url = "*.csv", run = "duckdb" },
   { url = "*.tsv", run = "duckdb" },
@@ -133,8 +142,9 @@ prepend_previewers = [
   { mime = "application/x-rar", run = "ouch" },
   { mime = "application/x-xz", run = "ouch" },
   { mime = "application/epub+zip", run = "epub-preview" },
-  { mime = "application/octet-stream", run = "video" },
+  { mime = "application/octet-stream", run = "play" },
 ]
+
 prepend_preloaders = [
   { url = "*.csv", run = "duckdb", multi = false },
   { url = "*.tsv", run = "duckdb", multi = false },
@@ -143,6 +153,7 @@ prepend_preloaders = [
   { url = "*.db", run = "duckdb" },
   { url = "*.duckdb", run = "duckdb" },
 ]
+
 prepend_fetchers = [
   { url = "*", run = "git", group = "git" },
   { url = "*/", run = "git", group = "git" },

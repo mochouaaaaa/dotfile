@@ -31,7 +31,7 @@ end, 500, Status.RIGHT)
 
 require("full-border"):setup {
 	-- Available values: ui.Border.PLAIN, ui.Border.ROUNDED
-	type = ui.Border.ROUNDED,
+	set = ui.Border.ROUNDED,
 }
 
 require("git"):setup { order = 1500 }
