@@ -337,6 +337,13 @@ local window_rules = {
 		},
 		workspace = "special:music",
 	},
+	{
+		name = "vicinae",
+		match = {
+			class = "vicinae",
+		},
+		rounding = 10,
+	},
 }
 
 hl.bind("SUPER+CTRL+3", hl.dsp.workspace.toggle_special("wechat"))

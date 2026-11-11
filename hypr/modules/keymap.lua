@@ -50,9 +50,9 @@ global_keymaps = {
 	-- { "CTRL+SHIFT+down", hl.dsp.window.resize { x = 0 } },
 
 	-- Move/resize windows with mainMod + LMB/RMB and dragging
-	{ mainMod .. " + mouse:272", hl.dsp.window.drag(), { mouse = true } },
-	{ mainMod .. " + mouse:273", hl.dsp.window.resize(), { mouse = true } },
-	{ mainMod .. " + mouse:272", hl.dsp.window.float(), { mouse = true, click = true } },
+	-- { mainMod .. " + mouse:272", hl.dsp.window.drag(), { mouse = true } },
+	-- { mainMod .. " + mouse:273", hl.dsp.window.resize(), { mouse = true } },
+	-- { mainMod .. " + mouse:272", hl.dsp.window.float(), { mouse = true, click = true } },
 
 	-- Move/resize windows with mainMod + LMB/RMB and dragging
 	{ mainMod .. " + TAB", hl.dsp.focus { workspace = "e+1" } },
@@ -108,6 +108,17 @@ global_keymaps = {
 
 for _, keymaps in ipairs(global_keymaps) do
 	hl.bind(table.unpack(keymaps))
+end
+
+-- 新版独立的鼠标绑定（移出 global_keymaps，避免触发 exclusive 冲突）
+if hl.bind_mouse then
+	hl.bind_mouse(mainMod .. " + mouse:272", hl.dsp.window.drag())
+	hl.bind_mouse(mainMod .. " + mouse:273", hl.dsp.window.resize())
+else
+	-- 兼容部分版本如果使用特定的鼠标绑定函数
+	hl.bind(mainMod .. " + mouse:272", hl.dsp.window.drag(), { mouse = true })
+	-- hl.bind(mainMod .. " + mouse:272", hl.dsp.window.float(), { mouse = true, click = true })
+	hl.bind(mainMod .. " + mouse:273", hl.dsp.window.resize(), { mouse = true })
 end
 
 -- local closeWindowBind = hl.bind()
