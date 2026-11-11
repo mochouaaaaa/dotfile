@@ -58,6 +58,9 @@ rules = [
     "folder",
   ] },
 
+  { mime = "inode/empty", use = [
+    "text",
+  ] },
   { mime = "text/*", use = [
     "text",
   ] },
