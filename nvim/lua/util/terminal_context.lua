@@ -1,31 +1,29 @@
--- Publish Neovim's current state to Kitty/WezTerm-compatible terminals.
--- OSC 1337 SetUserVar is forwarded through tmux when allow-passthrough is on.
+-- Publish Neovim state through OSC 1337 for Kitty's native var: mappings.
+-- This works through ordinary SSH as long as the remote PTY forwards escapes.
+-- When inside tmux, wrap the OSC sequence in DCS passthrough.
 local M = {}
 
-local function set_nvim(active)
-	local sequence
-	if active then
-		-- Base64("true") = dHJ1ZQ==
-		sequence = "\27]1337;SetUserVar=IS_NVIM=dHJ1ZQ==\7"
-	else
-		-- No '=' means unset the terminal user variable.
-		sequence = "\27]1337;SetUserVar=IS_NVIM\7"
-	end
-
+local function send(sequence)
 	if vim.env.TMUX and vim.env.TMUX ~= "" then
 		sequence = "\27Ptmux;\27" .. sequence:gsub("\27", "\27\27") .. "\27\\"
 	end
 
-	io.stdout:write(sequence)
-	io.stdout:flush()
+	if vim.api.nvim_ui_send then
+		vim.api.nvim_ui_send(sequence)
+	else
+		io.stdout:write(sequence)
+		io.stdout:flush()
+	end
 end
 
 function M.enter()
-	set_nvim(true)
+	-- Base64("1") = MQ==. Kitty matches the variable by presence.
+	send("\27]1337;SetUserVar=IS_NVIM=MQ==\7")
 end
 
 function M.leave()
-	set_nvim(false)
+	-- Omitting '=' unsets the Kitty user variable.
+	send("\27]1337;SetUserVar=IS_NVIM\7")
 end
 
 return M

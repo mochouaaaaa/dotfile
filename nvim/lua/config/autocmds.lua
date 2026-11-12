@@ -31,16 +31,16 @@ vim.api.nvim_create_autocmd("BufRead", {
 	end,
 })
 
--- Keep Kitty's conditional keymaps in sync with the active Neovim process.
+-- Publish Neovim state to Kitty so conditional keymaps work locally and over SSH.
 local terminal_context = require("util.terminal_context")
 local terminal_context_group = augroup("terminal_context", { clear = true })
 
-autocmd("VimEnter", {
+autocmd({ "VimEnter", "VimResume", "UIEnter" }, {
 	group = terminal_context_group,
 	callback = terminal_context.enter,
 })
 
-autocmd("VimLeavePre", {
+autocmd({ "VimLeave", "VimSuspend" }, {
 	group = terminal_context_group,
 	callback = terminal_context.leave,
 })

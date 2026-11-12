@@ -43,58 +43,48 @@ EOF
 
 ## Unified Kitty / tmux / Neovim keymap context
 
-The Kitty keymap files use the terminal user variables `IS_TMUX` and
-`IS_NVIM` to decide whether a shortcut belongs to Kitty, tmux, or Neovim.
-The foreground process seen by Kitty is only `ssh` during an SSH session, so
-process-name detection cannot reliably identify programs running on the remote
-host.
+Kitty uses its native `--when-focus-on var:IS_NVIM` and
+`--when-focus-on var:IS_TMUX` mappings. The conditions match Kitty window user
+variables published with OSC 1337; they do not inspect environment variables or
+the local foreground process. No Python `send_key.py` kitten is needed.
 
-### Shell integration (local and remote)
+### Neovim (local and SSH)
 
-Source the existing shell integration script from the interactive shell
-startup file on **both the local machine and each SSH host**:
+The Neovim module in `nvim/lua/util/terminal_context.lua` publishes
+`IS_NVIM` on `VimEnter`, `VimResume`, and `UIEnter`, then unsets it on
+`VimLeave` and `VimSuspend`. It uses Neovim's `nvim_ui_send()` when
+available and falls back to writing the escape sequence to stdout.
 
-```sh
-source /absolute/path/to/dotfile/wezterm/scripts/wezterm.sh
-```
+This works for both ordinary `ssh` and `kitten ssh`: install the same Neovim
+configuration on the remote host and use an interactive SSH PTY. The remote
+host does **not** need tmux. Kitty receives the OSC sequence through the SSH
+terminal stream and switches to the Neovim conditional mappings.
 
-The script supports interactive Bash and Zsh. It preserves the existing
-`WEZTERM_IN_TMUX` variable and also publishes `IS_TMUX` for Kitty. When tmux
-starts, the flag is set before control enters tmux; the next prompt hook clears
-it after returning to the parent shell.
+### tmux (optional)
 
-For ordinary `ssh`, install the dotfiles on the remote host and source the
-script from that host's shell startup file. SSH transports the terminal escape
-sequences through its PTY.
-
-For `kitten ssh`, Kitty's SSH kitten can copy the script to the remote host.
-Add a host-specific rule to `~/.config/kitty/ssh.conf` (replace the local path
-with the actual checkout path):
-
-```conf
-hostname *
-copy --dest .config/dotfile/wezterm.sh /absolute/path/to/dotfile/wezterm/scripts/wezterm.sh
-```
-
-Then source `$HOME/.config/dotfile/wezterm.sh` from the remote shell startup
-file. The SSH kitten installs Kitty shell integration automatically, but
-custom dotfiles still need to be copied and sourced.
-
-### tmux
-
-Include `tmux/tmux.conf` from the existing tmux configuration:
+Only when a session uses tmux, include `tmux/tmux.conf` from the existing
+tmux configuration:
 
 ```tmux
 source-file ~/path/to/dotfile/tmux/tmux.conf
 ```
 
-The snippet enables tmux passthrough for OSC 1337 context updates and enables
-extended-key reporting. It does not replace the rest of your tmux configuration
-or change the existing `Ctrl+A` prefix.
+This enables DCS passthrough so Neovim's OSC 1337 state reaches the outer Kitty
+window, enables extended-key reporting, and forwards focus events. It does not
+replace the rest of your tmux configuration or change the existing `Ctrl+A`
+prefix.
 
-### Neovim
+### Detecting tmux
 
-Neovim publishes `IS_NVIM` on `VimEnter` and removes it on `VimLeavePre`.
-The sequence is wrapped in tmux's DCS passthrough format when Neovim runs inside
-tmux, so the outer Kitty window can switch to the Neovim keymap and restore the
-tmux/shell keymap after Neovim exits.
+The `wezterm/scripts/wezterm.sh` shell integration publishes `IS_TMUX` when
+the current shell is inside tmux and sets it before launching tmux. Source it
+from the interactive Bash/Zsh startup file on machines where you use tmux:
+
+```sh
+source /absolute/path/to/dotfile/wezterm/scripts/wezterm.sh
+```
+
+For ordinary SSH, install/source this script on the remote host only if you
+also use remote tmux. The same applies to `kitten ssh`: its built-in shell
+integration does not automatically load this custom script. If you do not use
+tmux remotely, no remote shell integration is required for `IS_NVIM`.
