@@ -4,103 +4,93 @@
 -- * override the uration of LazyVim plugins
 
 return {
-	{
-		"mrjones2014/smart-splits.nvim",
-		build = "./kitty/install-kittens.bash",
-		config = function()
-			local smart_splits = require("smart-splits")
+  {
+    "smart-splits-nvim/smart-splits.nvim",
+    version = "^3.0.0",
+    lazy = false,
+    opts = {
+      ignored_filetypes = { "nofile", "quickfix", "prompt" },
+      move = {
+        same_row = false,
+        at_edge = "split",
+      },
+      swap = {
+        move_cursor = false,
+      },
+      mux = {
+        backend = "smart-splits-backend-kitty",
+      },
+    },
+    dependencies = {
+      {
+        "smart-splits-nvim/backend-kitty",
+        main = "smart-splits-backend-kitty",
+        opts = {
+          password = "kitty",
+        },
+      },
+    },
+    config = function(_, opts)
+      local smart_splits = require("smart-splits")
+      smart_splits.setup(opts)
 
-			smart_splits.setup({
-				-- Ignored filetypes (only while resizing)
-				ignored_filetypes = {
-					"nofile",
-					"quickfix",
-					"prompt",
-				},
-				-- when moving cursor between splits left or right,
-				-- place the cursor on the same row of the *screen*
-				-- regardless of line numbers. False by default.
-				-- Can be overridden via function parameter, see Usage.
-				move_cursor_same_row = false,
-				-- whether the cursor should follow the buffer when swapping
-				-- buffers by default; it can also be controlled by passing
-				-- `{ move_cursor = true }` or `{ move_cursor = false }`
-				-- when calling the Lua function.
-				cursor_follows_swapped_bufs = false,
-				-- resize mode options
-				-- resize mode options
-				resize_mode = {
-					-- key to exit persistent resize mode
-					quit_key = "<ESC>",
-					-- keys to use for moving in resize mode
-					-- in order of left, down, up' right
-					resize_keys = { "h", "j", "k", "l" },
-					-- set to true to silence the notifications
-					-- when entering/exiting persistent resize mode
-					silent = false,
-				},
-				-- Supply a Kitty remote control password if needed,
-				-- or you can also set vim.g.smart_splits_kitty_password
-				-- see https://sw.kovidgoyal.net/kitty/conf/#opt-kitty.remote_control_password
-				kitty_password = "kitty",
-			})
-			local utils = require("util.keymap")
+      local utils = require("util.keymap")
+      vim.keymap.set({ "n", "t" }, "<C-S-k>", smart_splits.resize_up)
+      vim.keymap.set({ "n", "t" }, "<C-S-j>", smart_splits.resize_down)
+      vim.keymap.set({ "n", "t" }, "<C-S-h>", smart_splits.resize_left)
+      vim.keymap.set({ "n", "t" }, "<C-S-l>", smart_splits.resize_right)
 
-			vim.keymap.set({ "n", "t" }, "<C-S-k>", function()
-				smart_splits.resize_up()
-			end)
-			vim.keymap.set({ "n", "t" }, "<C-S-j>", function()
-				smart_splits.resize_down()
-			end)
-			vim.keymap.set({ "n", "t" }, "<C-S-h>", function()
-				smart_splits.resize_left()
-			end)
-			vim.keymap.set({ "n", "t" }, "<C-S-l>", function()
-				smart_splits.resize_right()
-			end)
+      vim.keymap.set({ "n", "t" }, utils.platform_key.cmd("k"), smart_splits.move_cursor_up)
+      vim.keymap.set({ "n", "t" }, utils.platform_key.cmd("j"), smart_splits.move_cursor_down)
+      vim.keymap.set({ "n", "t" }, utils.platform_key.cmd("h"), smart_splits.move_cursor_left)
+      vim.keymap.set({ "n", "t" }, utils.platform_key.cmd("l"), smart_splits.move_cursor_right)
 
-			vim.keymap.set({ "n", "t" }, utils.platform_key.cmd("k"), function()
-				smart_splits.move_cursor_up()
-			end)
-			vim.keymap.set({ "n", "t" }, utils.platform_key.cmd("j"), function()
-				smart_splits.move_cursor_down()
-			end)
-			vim.keymap.set({ "n", "t" }, utils.platform_key.cmd("h"), function()
-				smart_splits.move_cursor_left()
-			end)
-			vim.keymap.set({ "n", "t" }, utils.platform_key.cmd("l"), function()
-				smart_splits.move_cursor_right()
-			end)
+      -- Cmd+Ctrl+hjkl creates a Kitty pane when the Kitty remote-control
+      -- socket is available (local Kitty or kitten ssh). With ordinary SSH,
+      -- fall back to a Neovim split on the requested side.
+      local function split_pane(direction)
+        if vim.env.KITTY_LISTEN_ON and vim.env.KITTY_LISTEN_ON ~= "" then
+          local ok, kitty = pcall(require, "smart-splits-backend-kitty.kitty")
+          if ok and kitty.split(direction) then
+            return
+          end
+        end
 
-			local mux = require("smart-splits.mux").get()
-			if mux ~= nil then
-				vim.keymap.set("n", utils.platform_key.cmd("C-k"), function()
-					mux.split_pane("up")
-				end)
-				vim.keymap.set("n", utils.platform_key.cmd("C-j"), function()
-					mux.split_pane("down")
-				end)
-				vim.keymap.set("n", utils.platform_key.cmd("C-h"), function()
-					mux.split_pane("left")
-				end)
-				vim.keymap.set("n", utils.platform_key.cmd("C-l"), function()
-					mux.split_pane("right")
-				end)
-			end
-		end,
-	},
-	{
-		"NotAShelf/direnv.nvim",
-		config = function()
-			require("direnv").setup({})
+        local commands = {
+          left = "leftabove vsplit",
+          right = "rightbelow vsplit",
+          up = "aboveleft split",
+          down = "belowright split",
+        }
+        vim.cmd(commands[direction])
+      end
 
-			vim.api.nvim_create_autocmd("User", {
-				pattern = "DirenvLoaded",
-				callback = function()
-					-- Code to run after direnv environment is loaded
-					vim.notify("Direnv environment loaded!")
-				end,
-			})
-		end,
-	},
+      vim.keymap.set("n", utils.platform_key.cmd("C-h"), function()
+        split_pane("left")
+      end, { desc = "Split pane left" })
+      vim.keymap.set("n", utils.platform_key.cmd("C-l"), function()
+        split_pane("right")
+      end, { desc = "Split pane right" })
+      vim.keymap.set("n", utils.platform_key.cmd("C-k"), function()
+        split_pane("up")
+      end, { desc = "Split pane up" })
+      vim.keymap.set("n", utils.platform_key.cmd("C-j"), function()
+        split_pane("down")
+      end, { desc = "Split pane down" })
+    end,
+  },
+  {
+    "NotAShelf/direnv.nvim",
+    config = function()
+      require("direnv").setup({})
+
+      vim.api.nvim_create_autocmd("User", {
+        pattern = "DirenvLoaded",
+        callback = function()
+          -- Code to run after direnv environment is loaded
+          vim.notify("Direnv environment loaded!")
+        end,
+      })
+    end,
+  },
 }
