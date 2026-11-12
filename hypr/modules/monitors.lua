@@ -7,3 +7,10 @@ hl.monitor {
 	bitdepth = 10,
 	cm = "auto",
 }
+
+-- unscale Xwayland
+hl.config {
+	xwayland = {
+		force_zero_scaling = true,
+	},
+}

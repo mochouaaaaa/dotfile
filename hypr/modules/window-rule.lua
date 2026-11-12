@@ -1,5 +1,78 @@
 _G.opacity = 0.78
 
+local workspace_programs = {
+	["1"] = { "kitty" },
+	["2"] = { "firefox" },
+	["special:tg"] = { "io.github.kukuruzka165.materialgram", "org.telegram.desktop" },
+}
+
+hl.on("workspace.created", function(ws)
+	if not ws.is_empty then
+		return
+	end
+
+	-- use programs associated with window id by default
+	local program = ws.id and workspace_programs[tostring(ws.id)] or workspace_programs[ws.name]
+	if program == nil then
+		return
+	end
+
+	local cmd, provided_rules = table.unpack(program)
+	-- shallow-copy the rules table so we can add the workspace to it
+	local rules = {}
+	if provided_rules ~= nil then
+		for k, v in provided_rules do
+			rules[k] = v
+		end
+	end
+	-- force program to open on desired workspace, even if focus is moved to another
+	-- workspace before the program window appears
+	rules.workspace = (ws.id and tostring(ws.id) or ws.name) .. " silent"
+	-- run it!
+	hl.exec_cmd(cmd, rules)
+end)
+
+hl.on("window.open", function(w)
+	if w.class ~= "firefox" then
+		return
+	end
+	if w.initial_title ~= "Mozilla Firefox" then
+		return
+	end
+
+	local ff_windows = hl.get_windows { class = "firefox" }
+	if #ff_windows <= 1 then
+		return
+	end
+
+	hl.dispatch(hl.dsp.window.float { action = "set", window = w })
+
+	local sub
+	sub = hl.on("window.title", function(tw)
+		if tw.address ~= w.address then
+			return
+		end
+		if
+			tw.title == ""
+			or tw.title == "Mozilla Firefox"
+			or tw.title == "about:blank"
+			or tw.title:match("^about:.*Mozilla Firefox$")
+		then
+			return
+		end
+
+		sub:remove()
+
+		if tw.title:match("^Extension:") then
+			hl.dispatch(hl.dsp.window.resize { x = 800, y = 600, window = tw })
+			hl.dispatch(hl.dsp.window.center { window = tw })
+			hl.dispatch(hl.dsp.focus { window = tw })
+		else
+			hl.dispatch(hl.dsp.window.float { action = "unset", window = tw })
+		end
+	end)
+end)
+
 local window_rules = {
 	{
 		name = "opacity",
@@ -85,6 +158,16 @@ local window_rules = {
 	-- Firefox
 	{ match = { class = "firefox", title = "(我的足迹)" }, float = true },
 	{ match = { class = "firefox", title = "画中画" }, float = true },
+	{ match = { class = "firefox" }, workspace = "2" },
+
+	-- obs
+	{
+		match = { class = "com.obsproject.Studio" },
+		workspace = "3",
+		size = { "monitor_w*0.7", "monitor_h*0.8" },
+		center = true,
+		float = true,
+	},
 
 	{ match = { class = "(xfce4-appfinder)" }, float = true },
 	{ match = { class = "kitty", title = "yazi" }, float = true },
@@ -301,6 +384,10 @@ local window_rules = {
 			namespace = "hyprpicker|selection",
 		},
 		animation = "fade",
+	},
+	{
+		match = { class = "hyprland-share-picker" },
+		float = true,
 	},
 	{
 		name = "tg",

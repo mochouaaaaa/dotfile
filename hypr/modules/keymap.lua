@@ -55,8 +55,38 @@ global_keymaps = {
 	-- { mainMod .. " + mouse:272", hl.dsp.window.float(), { mouse = true, click = true } },
 
 	-- Move/resize windows with mainMod + LMB/RMB and dragging
-	{ mainMod .. " + TAB", hl.dsp.focus { workspace = "e+1" } },
-	{ mainMod .. " + SHIFT+TAB", hl.dsp.focus { workspace = "e-1" } },
+	-- { mainMod .. " + TAB", hl.dsp.focus { workspace = "e+1" } },
+	{
+		mainMod .. " + TAB",
+		function()
+			local layouts = { "scrolling", "dwindle", "master", "monocle" }
+			local workspace = hl.get_active_workspace()
+			if hl.get_active_special_workspace() then
+				workspace = hl.get_active_special_workspace()
+			end
+
+			local next_layout = "dwindle"
+
+			if not workspace then
+				return
+			end
+
+			for i = 1, #layouts do
+				if layouts[i] == workspace.tiled_layout then
+					local next_layout_idx = (i % #layouts) + 1
+					next_layout = layouts[next_layout_idx]
+					break
+				end
+			end
+
+			if workspace.special then
+				hl.workspace_rule { workspace = tostring(workspace.name), layout = next_layout }
+			else
+				hl.workspace_rule { workspace = "name:" .. tostring(workspace.name), layout = next_layout }
+			end
+		end,
+	},
+	-- { mainMod .. " + SHIFT+TAB", hl.dsp.focus { workspace = "e-1" } },
 	{ "ALT+TAB", hl.dsp.window.cycle_next() },
 
 	-- Laptop multimedia keys for volume and LCD brightness
