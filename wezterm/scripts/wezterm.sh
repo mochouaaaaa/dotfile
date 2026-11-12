@@ -442,6 +442,16 @@ __wezterm_set_user_var() {
     fi
 }
 
+# Remove a Kitty/iTerm2-compatible terminal user variable.
+# Kitty interprets SetUserVar without '=' as a request to unset the variable.
+__wezterm_unset_user_var() {
+    if [[ -z "${TMUX}" ]]; then
+        printf "\033]1337;SetUserVar=%s\007" "$1"
+    else
+        printf "\033Ptmux;\033\033]1337;SetUserVar=%s\007\033\\" "$1"
+    fi
+}
+
 # This function emits an OSC 7 sequence to inform the terminal
 # of the current working directory.  It prefers to use a helper
 # command provided by wezterm if wezterm is installed, but falls
@@ -496,11 +506,14 @@ __wezterm_user_vars_precmd() {
     __wezterm_set_user_var "WEZTERM_PROG" ""
     __wezterm_set_user_var "WEZTERM_USER" "$(id -un)"
 
-    # Indicate whether this pane is running inside tmux or not
+    # Keep the original WezTerm variable and publish a terminal-neutral
+    # context flag consumed by Kitty's conditional key mappings.
     if [[ -n "${TMUX}" ]]; then
         __wezterm_set_user_var "WEZTERM_IN_TMUX" "1"
+        __wezterm_set_user_var "IS_TMUX" "true"
     else
         __wezterm_set_user_var "WEZTERM_IN_TMUX" "0"
+        __wezterm_unset_user_var "IS_TMUX"
     fi
 
     # You may set WEZTERM_HOSTNAME to a name you want to use instead
@@ -517,8 +530,18 @@ __wezterm_user_vars_precmd() {
 }
 
 __wezterm_user_vars_preexec() {
-    # Tell wezterm the full command that is being run
+    # Tell wezterm the full command that is being run.
     __wezterm_set_user_var "WEZTERM_PROG" "$1"
+
+    # Set the flag before tmux takes over the terminal. The next prompt hook
+    # reconciles it with the actual TMUX environment after tmux exits.
+    local command="${1#${1%%[![:space:]]*}}"
+    command="${command#command }"
+    command="${command#exec }"
+    command="${command%%[[:space:]]*}"
+    if [[ "${command##*/}" == "tmux" || -n "${TMUX}" ]]; then
+        __wezterm_set_user_var "IS_TMUX" "true"
+    fi
 }
 
 # Register the various functions; take care to perform osc7 after

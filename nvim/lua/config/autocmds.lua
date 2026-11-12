@@ -30,3 +30,17 @@ vim.api.nvim_create_autocmd("BufRead", {
 		})
 	end,
 })
+
+-- Keep Kitty's conditional keymaps in sync with the active Neovim process.
+local terminal_context = require("util.terminal_context")
+local terminal_context_group = augroup("terminal_context", { clear = true })
+
+autocmd("VimEnter", {
+	group = terminal_context_group,
+	callback = terminal_context.enter,
+})
+
+autocmd("VimLeavePre", {
+	group = terminal_context_group,
+	callback = terminal_context.leave,
+})
