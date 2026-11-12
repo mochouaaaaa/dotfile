@@ -25,9 +25,6 @@ return {
       {
         "smart-splits-nvim/backend-kitty",
         main = "smart-splits-backend-kitty",
-        opts = {
-          password = "kitty",
-        },
       },
     },
     config = function(_, opts)
