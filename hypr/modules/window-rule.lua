@@ -67,6 +67,7 @@ hl.on("window.open", function(w)
 	end)
 end)
 
+-- Keep rules in one ordered list; later matches can refine earlier settings.
 local window_rules = {
 	{
 		name = "opacity",
@@ -119,17 +120,13 @@ local window_rules = {
 		center = true,
 	},
 
-	-- =====================================================================
-	-- 1. Filemanager (Thunar) 规则
-	-- =====================================================================
+	-- [01] File manager and file-operation dialogs
 	{ match = { class = "^([Tt]hunar)$", title = "^([Tt]hunar)$" }, float = true, center = true, size = { "monitor_w * 0.6", "monitor_h * 0.7" } },
 	-- Thunar replacement confirmation is a single centered floating dialog.
 	{ match = { class = "([Tt]hunar)", title = "(Confirm to replace files)" }, float = true, center = true },
 	{ match = { class = "([Tt]hunar)", title = "(File Operation Progress)" }, float = true },
 
-	-- =====================================================================
-	-- 2. 常用软件与悬浮窗规则
-	-- =====================================================================
+	-- [02] Common applications and floating windows
 	{ match = { class = "chromium-browser", title = "(雀魂麻将 - Chromium)" }, float = true },
 	-- 翻译悬浮窗 (pot)
 	{
@@ -182,9 +179,7 @@ local window_rules = {
 	{ match = { class = "^([Ff]erdium)$" }, float = true },
 	{ match = { class = "com.alibabainc.dingtalk" }, float = true },
 
-	-- =====================================================================
-	-- 3. 动态比例尺寸（Size 规则）
-	-- =====================================================================
+	-- [03] Monitor-relative window sizing
 	{ match = { class = "^(xdg-desktop-portal-gtk)$" }, size = { "monitor_w * 0.7", "monitor_h * 0.7" } },
 	{ match = { title = "(Kvantum Manager)" }, size = { "monitor_w * 0.6", "monitor_h * 0.7" } },
 	{ match = { class = "^(qt6ct)$" }, size = { "monitor_w * 0.6", "monitor_h * 0.7" } },
@@ -193,15 +188,11 @@ local window_rules = {
 	{ match = { class = "^([Ww]hatsapp-for-linux)$" }, size = { "monitor_w * 0.6", "monitor_h * 0.7" } },
 	{ match = { class = "^([Ff]erdium)$" }, size = { "monitor_w * 0.6", "monitor_h * 0.7" } },
 
-	-- =====================================================================
-	-- 4. 屏幕共享与终端组件特殊规则
-	-- =====================================================================
+	-- [04] Screen sharing and terminal helpers
 	{ match = { xwayland = 1 }, no_initial_focus = true },
 	{ match = { class = "^(ueberzugpp.*)$" }, group = "unset" },
 
-	-- =====================================================================
-	-- 5. 通用对话框/弹窗规则 (Dialogs)
-	-- =====================================================================
+	-- [05] Generic dialogs and transient windows
 	{ match = { title = "(Select|Open)( a)? (File|Folder)(s)?" }, float = true },
 	{ match = { title = "File (Operation|Upload)( Progress)?" }, float = true },
 	{ match = { title = ".* Properties" }, float = true },
@@ -210,9 +201,7 @@ local window_rules = {
 	{ match = { title = "Save As" }, float = true },
 	{ match = { title = "Library" }, float = true },
 
-	-- =====================================================================
-	-- 6. 其他特定开发/专业软件
-	-- =====================================================================
+	-- [06] Development and specialized applications
 	-- ATLauncher
 	{ match = { class = "com-atlauncher-App", title = "ATLauncher Console" }, float = true },
 	-- Autodesk Fusion 360
@@ -228,35 +217,35 @@ local window_rules = {
 		workspace = "special:todo",
 	},
 	{
-		name = "global",
+		name = "font-manager",
 		match = { class = "^font-manager$" },
 
 		float = true,
 		center = true,
 	},
 	{
-		name = "mpv-took",
+		name = "media-player",
 		match = { class = "^(mpv|com.github.rafostar.Clapper)$" },
 
 		float = true,
 		size = { "monitor_w*0.86", "monitor_h*0.86" },
 	},
 	{
-		name = "proxy-took",
+		name = "proxy-window",
 		match = { class = "^sparkle$", title = "Sparkle" },
 
 		float = true,
 		size = { "monitor_w*0.5", "monitor_h*0.8" },
 	},
 	{
-		name = "imv-took",
+		name = "image-tools",
 		match = { class = "^(imv|equibop|swappy)$" },
 
 		float = true,
 		opaque = true,
 	},
 	{
-		name = "filebrowser-took",
+		name = "file-manager",
 		match = { class = "^(org.gnome.Nautilus|pcmanfm|dolphin)$" },
 
 		float = true,
