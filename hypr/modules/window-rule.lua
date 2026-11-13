@@ -175,7 +175,6 @@ local window_rules = {
 	{ match = { class = "^([Yy]ad)$" }, float = true },
 	{ match = { class = "^(wihotspot(-gui)?)$" }, float = true },
 	{ match = { class = "^(evince)$" }, float = true },
-	{ match = { class = "^(file-roller)$" }, float = true },
 	{ match = { class = "^([Bb]aobab)$" }, float = true },
 	{ match = { title = "(Kvantum Manager)" }, float = true },
 	{ match = { class = "^([Qq]alculate-gtk)$" }, float = true },
