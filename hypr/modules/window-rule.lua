@@ -1,3 +1,5 @@
+_G.opacity = 0.78
+
 local workspace_programs = {
 	["1"] = { "kitty" },
 	["2"] = { "firefox" },
@@ -66,6 +68,13 @@ hl.on("window.open", function(w)
 end)
 
 local window_rules = {
+	{
+		name = "opacity",
+		match = {
+			fullscreen = 0,
+		},
+		opacity = _G.opacity,
+	},
 	{
 		-- Hyprland-run windowrule
 		name = "move-hyprland-run",
