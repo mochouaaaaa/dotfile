@@ -97,7 +97,7 @@ local window_rules = {
 
 		no_focus = true,
 	},
-	{ match = { float = true, xwayland = false }, center = true },
+	{ name = "center-xdg-floats", match = { float = true, xwayland = false }, center = true },
 	{
 		match = {
 			class = "^(io.github.kukuruzka165.materialgram|org.telegram.desktop)$",
@@ -107,21 +107,22 @@ local window_rules = {
 	},
 	{
 		match = {
-			class = "guifetch|yad|zenity|wev|org.gnome.FileRoller|file-roller|com.github.GradienceTeam.Gradience|feh|system-config-printer",
+			class = "^(guifetch|yad|zenity|wev|org.gnome.FileRoller|file-roller|com.github.GradienceTeam.Gradience|feh|system-config-printer)$",
 		},
 		float = true,
 	},
 	{
 		match = {
-			class = "^([Ww]hatsapp-for-linux)$|^([Ff]erdium)$",
+			class = "^([Ww]hatsapp-for-linux|[Ff]erdium)$",
 		},
+		float = true,
 		center = true,
 	},
 
 	-- =====================================================================
 	-- 1. Filemanager (Thunar) 规则
 	-- =====================================================================
-	{ match = { class = "([Tt]hunar)", title = "^([Tt]hunar)$" }, center = true, size = { 1200, 1300 } },
+	{ match = { class = "^([Tt]hunar)$", title = "^([Tt]hunar)$" }, float = true, center = true, size = { "monitor_w * 0.6", "monitor_h * 0.7" } },
 	-- Thunar replacement confirmation is a single centered floating dialog.
 	{ match = { class = "([Tt]hunar)", title = "(Confirm to replace files)" }, float = true, center = true },
 	{ match = { class = "([Tt]hunar)", title = "(File Operation Progress)" }, float = true },
@@ -143,7 +144,7 @@ local window_rules = {
 		move = { "cursor-0", "cursor-0" },
 	},
 
-	{ match = { class = "(org.telegram.desktop)", title = "(Media viewer)" }, float = true },
+	{ match = { class = "^org.telegram.desktop$", title = "(Media viewer)" }, float = true },
 	{ match = { title = "overskride" }, float = true },
 	{ match = { title = "QQ" }, float = true },
 	{ match = { title = "图片查看器" }, float = true },
@@ -215,48 +216,48 @@ local window_rules = {
 	-- ATLauncher
 	{ match = { class = "com-atlauncher-App", title = "ATLauncher Console" }, float = true },
 	-- Autodesk Fusion 360
-	{ match = { class = "fusion360\\.exe", title = "Fusion360|(Marking Menu)" }, no_blur = true },
+	{ match = { class = "^fusion360\\.exe$", title = "Fusion360|(Marking Menu)" }, no_blur = true },
 	-- JetBrains IDE 悬浮气泡焦点过滤
 	{ match = { class = "^(.*jetbrains.*)$", title = "^(win[0-9]+)$" }, no_initial_focus = true },
 
 	{
 		name = "todo",
 		match = {
-			class = "Todoist",
+			class = "^Todoist$",
 		},
 		workspace = "special:todo",
 	},
 	{
 		name = "global",
-		match = { class = "font-manager" },
+		match = { class = "^font-manager$" },
 
 		float = true,
 		center = true,
 	},
 	{
 		name = "mpv-took",
-		match = { class = "mpv|com.github.rafostar.Clapper" },
+		match = { class = "^(mpv|com.github.rafostar.Clapper)$" },
 
 		float = true,
 		size = { "monitor_w*0.86", "monitor_h*0.86" },
 	},
 	{
 		name = "proxy-took",
-		match = { class = "sparkle", title = "Sparkle" },
+		match = { class = "^sparkle$", title = "Sparkle" },
 
 		float = true,
 		size = { "monitor_w*0.5", "monitor_h*0.8" },
 	},
 	{
 		name = "imv-took",
-		match = { class = "imv|equibop|swappy" },
+		match = { class = "^(imv|equibop|swappy)$" },
 
 		float = true,
 		opaque = true,
 	},
 	{
 		name = "filebrowser-took",
-		match = { class = "^(org.gnome.Nautilus|thunar|pcmanfm|dolphin)$" },
+		match = { class = "^(org.gnome.Nautilus|pcmanfm|dolphin)$" },
 
 		float = true,
 		size = { "monitor_w*0.6", "monitor_h*0.7" },
@@ -271,7 +272,7 @@ local window_rules = {
 	},
 	{
 		name = "pulseaudio",
-		match = { class = "org.pulseaudio.pavucontrol|yad-icon-browser" },
+		match = { class = "^(org.pulseaudio.pavucontrol|yad-icon-browser)$" },
 
 		float = true,
 		size = { "monitor_w*0.6", "monitor_h*0.7" },
@@ -315,7 +316,7 @@ local window_rules = {
 	},
 	{
 		name = "steam_app",
-		match = { class = "steam_app_,[0-9]+" },
+		match = { class = "^steam_app_[0-9]+$" },
 
 		rounding = 10,
 		float = true,
@@ -332,7 +333,7 @@ local window_rules = {
 	},
 	{
 		name = "Bitwarden-rule",
-		match = { class = "Bitwarden", title = "Bitwarden" },
+		match = { class = "^Bitwarden$", title = "Bitwarden" },
 
 		float = true,
 		size = { "monitor_w*0.6", "monitor_h*0.7" },
@@ -354,7 +355,7 @@ local window_rules = {
 	},
 	{
 		name = "com-group_finity-mascot-Main",
-		match = { class = "com-group_finity-mascot-Main" },
+		match = { class = "^com-group_finity-mascot-Main$" },
 
 		float = true,
 		no_blur = true,
@@ -370,7 +371,7 @@ local window_rules = {
 		animation = "fade",
 	},
 	{
-		match = { class = "hyprland-share-picker" },
+		match = { class = "^hyprland-share-picker$" },
 		float = true,
 	},
 	{
@@ -383,19 +384,19 @@ local window_rules = {
 	{
 		name = "wechat",
 		match = {
-			class = "discord|equibop|vesktop|whatsapp|qq|dingtalk",
+			class = "^(discord|equibop|vesktop|whatsapp|qq|dingtalk)$",
 		},
 		workspace = "special:wechat",
 	},
 	{
 		name = "matrix",
 		match = {
-			class = "org.gnome.Fractal|fluffychat|Element",
+			class = "^(org.gnome.Fractal|fluffychat|Element)$",
 		},
 		workspace = "special:matrix",
 	},
 	{
-		name = "musci-spotify",
+		name = "spotify-title",
 		match = {
 			initial_title = "Spotify( Free)?",
 		},
@@ -404,7 +405,7 @@ local window_rules = {
 	{
 		name = "music",
 		match = {
-			class = "feishin|Spotify|Supersonic|SPlayer",
+			class = "^(feishin|Spotify|Supersonic|SPlayer)$",
 		},
 		workspace = "special:music",
 	},
