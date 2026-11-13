@@ -31,7 +31,8 @@ local function cycle_workspace_layout()
 	}
 end
 
--- Use a per-user runtime socket instead of a shared /tmp path.\nlocal global_keymaps = {
+-- Use a per-user runtime socket instead of a shared /tmp path.
+local global_keymaps = {
 	{ mainMod .. "+CTRL+T", hl.dsp.exec_cmd("kitty --single-instance --listen-on=unix:$XDG_RUNTIME_DIR/kitty") },
 	{ mainMod .. "+CTRL+E", hl.dsp.exec_cmd("nautilus") },
 	{ mainMod .. "+CTRL+F", hl.dsp.window.float() },
