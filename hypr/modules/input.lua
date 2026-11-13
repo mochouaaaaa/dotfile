@@ -18,7 +18,7 @@ hl.config {
 		touchpad = {
 			clickfinger_behavior = true,
 			middle_button_emulation = true,
-			["tap-to-click"] = true,
+			tap_to_click = true,
 			drag_lock = false,
 			drag_3fg = 1,
 			natural_scroll = true,
@@ -43,14 +43,11 @@ hl.config {
 		scroll_event_delay = 0,
 	},
 
-	gestures = {
-		workspace_swipe = true,
-		workspace_swipe_distance = 700,
-		workspace_swipe_fingers = 4,
-		workspace_swipe_cancel_ratio = 0.15,
-		workspace_swipe_min_speed_to_force = 5,
-		workspace_swipe_direction_lock = true,
-		workspace_swipe_direction_lock_threshold = 10,
-		workspace_swipe_create_new = false,
-	},
+}
+
+-- Hyprland 0.51+ replaced workspace_swipe_* with the gesture system.
+hl.gesture {
+	fingers = 4,
+	direction = "horizontal",
+	action = "workspace",
 }
