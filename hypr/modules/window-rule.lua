@@ -122,9 +122,9 @@ local window_rules = {
 	-- 1. Filemanager (Thunar) 规则
 	-- =====================================================================
 	{ match = { class = "([Tt]hunar)", title = "^([Tt]hunar)$" }, center = true, size = { 1200, 1300 } },
-	{ match = { class = "([Tt]hunar)", title = "(Confirm to replace files)" }, center = true },
+	-- Thunar replacement confirmation is a single centered floating dialog.
+	{ match = { class = "([Tt]hunar)", title = "(Confirm to replace files)" }, float = true, center = true },
 	{ match = { class = "([Tt]hunar)", title = "(File Operation Progress)" }, float = true },
-	{ match = { class = "([Tt]hunar)", title = "(Confirm to replace files)" }, float = true },
 
 	-- =====================================================================
 	-- 2. 常用软件与悬浮窗规则
