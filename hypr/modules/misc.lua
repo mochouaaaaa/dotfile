@@ -14,7 +14,8 @@ hl.config {
 		lockdead_screen_delay = 1500,
 
 		-- vfr = true,
-		vrr = 1,
+		-- Enable adaptive sync only for fullscreen content; avoids desktop-wide VRR quirks.
+		vrr = 2,
 
 		animate_manual_resizes = false,
 		animate_mouse_windowdragging = false,
