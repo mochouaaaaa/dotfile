@@ -1,16 +1,7 @@
-local function is_nvidia()
-	-- lspci may report NVIDIA as a 3D controller on hybrid-GPU systems.
-	local handle = io.popen("lspci 2>/dev/null")
-	if not handle then
-		return false
-	end
-
-	local result = handle:read("*a") or ""
-	handle:close()
-	return result:lower():match("nvidia") ~= nil
-end
-
-if is_nvidia() then
+-- NVIDIA-specific overrides are opt-in. Merely having an NVIDIA GPU (e.g.
+-- alongside AMD/Intel graphics) must not force every application onto NVIDIA.
+-- Set HYPR_NVIDIA=1 in the session environment only when this is intended.
+if os.getenv("HYPR_NVIDIA") == "1" then
 	hl.env("LIBVA_DRIVER_NAME", "nvidia")
 	hl.env("__GLX_VENDOR_LIBRARY_NAME", "nvidia")
 	hl.env("GBM_BACKEND", "nvidia-drm")
