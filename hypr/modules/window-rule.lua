@@ -9,12 +9,16 @@ hl.on("workspace.created", function(ws)
 		return
 	end
 
-	local programs = ws.id and workspace_programs[tostring(ws.id)] or workspace_programs[ws.name]
+	-- Special workspaces must be addressed by name (e.g. "special:tg"),
+	-- not by their internal numeric ID.
+	local is_special = ws.name and ws.name:match("^special:") ~= nil
+	local workspace_key = is_special and ws.name or (ws.id and tostring(ws.id)) or ws.name
+	local programs = workspace_programs[workspace_key]
 	if not programs then
 		return
 	end
 
-	local target = (ws.id and tostring(ws.id) or ws.name) .. " silent"
+	local target = (is_special and ws.name or tostring(ws.id or ws.name)) .. " silent"
 	for _, cmd in ipairs(programs) do
 		hl.exec_cmd(cmd, { workspace = target })
 	end
