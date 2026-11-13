@@ -64,7 +64,7 @@ local global_keymaps = {
 	{ "CTRL+ALT+UP", hl.dsp.window.swap { direction = "up" } },
 	{ "CTRL+ALT+DOWN", hl.dsp.window.swap { direction = "down" } },
 
-	{ mainMod .. "+TAB", cycle_workspace_layout },
+	{ mainMod .. " + tab", cycle_workspace_layout },
 	{ "ALT+TAB", hl.dsp.window.cycle_next() },
 
 	-- Keep one owner for media keys. Noctalia no longer rebinds these.
