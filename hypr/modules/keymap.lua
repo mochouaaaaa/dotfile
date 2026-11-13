@@ -24,9 +24,14 @@ local function cycle_workspace_layout()
 		end
 	end
 
-	local ws_name = tostring(workspace.name)
+	-- Regular workspaces are reliably selected by ID. Special workspaces
+	-- must be selected by name because their IDs are not stable.
+	local selector = workspace.special
+		and tostring(workspace.name)
+		or tostring(workspace.id)
+
 	hl.workspace_rule {
-		workspace = workspace.special and ws_name or ("name:" .. ws_name),
+		workspace = selector,
 		layout = next_layout,
 	}
 end

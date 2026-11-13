@@ -3,7 +3,7 @@ _G.opacity = 0.78
 local workspace_programs = {
 	["1"] = { "kitty" },
 	["2"] = { "firefox" },
-	["special:tg"] = { "io.github.kukuruzka165.materialgram", "org.telegram.desktop" },
+	["special:tg"] = { "materialgram" },
 }
 
 hl.on("workspace.created", function(ws)
@@ -121,7 +121,12 @@ local window_rules = {
 	},
 
 	-- [01] File manager and file-operation dialogs
-	{ match = { class = "^([Tt]hunar)$", title = "^([Tt]hunar)$" }, float = true, center = true, size = { "monitor_w * 0.6", "monitor_h * 0.7" } },
+	{
+		match = { class = "^([Tt]hunar)$", title = "^([Tt]hunar)$" },
+		float = true,
+		center = true,
+		size = { "monitor_w * 0.6", "monitor_h * 0.7" },
+	},
 	-- Thunar replacement confirmation is a single centered floating dialog.
 	{ match = { class = "^([Tt]hunar)$", title = "(Confirm to replace files)" }, float = true, center = true },
 	{ match = { class = "^([Tt]hunar)$", title = "(File Operation Progress)" }, float = true },
@@ -169,7 +174,10 @@ local window_rules = {
 	{ match = { class = "^(eog)$" }, float = true }, -- image viewer
 
 	-- 系统/网络组件
-	{ match = { class = "^(nm-applet|nm-connection-editor|blueman-manager|\\.blueman-manager-wrapped)$" }, float = true },
+	{
+		match = { class = "^(nm-applet|nm-connection-editor|blueman-manager|\\.blueman-manager-wrapped)$" },
+		float = true,
+	},
 	{ match = { class = "^([Yy]ad)$" }, float = true },
 	{ match = { class = "^(wihotspot(-gui)?)$" }, float = true },
 	{ match = { class = "^(evince)$" }, float = true },
