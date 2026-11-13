@@ -34,7 +34,7 @@ hl.on("window.open", function(w)
 		return
 	end
 
-	local ff_windows = hl.get_windows { class = "firefox" }
+	local ff_windows = hl.get_windows { class = "^firefox$" }
 	if #ff_windows <= 1 then
 		return
 	end
@@ -123,7 +123,7 @@ local window_rules = {
 	-- [01] File manager and file-operation dialogs
 	{ match = { class = "^([Tt]hunar)$", title = "^([Tt]hunar)$" }, float = true, center = true, size = { "monitor_w * 0.6", "monitor_h * 0.7" } },
 	-- Thunar replacement confirmation is a single centered floating dialog.
-	{ match = { class = "([Tt]hunar)", title = "(Confirm to replace files)" }, float = true, center = true },
+	{ match = { class = "^([Tt]hunar)$", title = "(Confirm to replace files)" }, float = true, center = true },
 	{ match = { class = "([Tt]hunar)", title = "(File Operation Progress)" }, float = true },
 
 	-- [02] Common applications and floating windows
@@ -131,13 +131,13 @@ local window_rules = {
 	-- 翻译悬浮窗 (pot)
 	{
 		match = {
-			class = "^(pot|.pot-wrapped)$",
+			class = "^(pot|\\.pot-wrapped)$",
 			title = "(Translate|Translator|OCR|PopClip|Screenshot Translate|Config)",
 		},
 		float = true,
 	},
 	{
-		match = { class = "(pot|.pot-wrapped)", title = "(Translator|PopClip|Screenshot Translate) " },
+		match = { class = "^(pot|\\.pot-wrapped)$", title = "(Translator|PopClip|Screenshot Translate) " },
 		move = { "cursor-0", "cursor-0" },
 	},
 
@@ -145,7 +145,7 @@ local window_rules = {
 	{ match = { title = "overskride" }, float = true },
 	{ match = { title = "QQ" }, float = true },
 	{ match = { title = "图片查看器" }, float = true },
-	{ match = { class = "(VirtualBox)" }, float = true },
+	{ match = { class = "^VirtualBox$" }, float = true },
 
 	-- Firefox
 	{ match = { class = "firefox", title = "(我的足迹)" }, float = true },
@@ -154,18 +154,18 @@ local window_rules = {
 
 	-- obs
 	{
-		match = { class = "com.obsproject.Studio" },
+		match = { class = "^com.obsproject.Studio$" },
 		workspace = "3",
 		size = { "monitor_w*0.7", "monitor_h*0.8" },
 		center = true,
 		float = true,
 	},
 
-	{ match = { class = "(xfce4-appfinder)" }, float = true },
-	{ match = { class = "kitty", title = "yazi" }, float = true },
-	{ match = { class = "([Zz]oom|onedriver|onedriver-launcher)$" }, float = true },
-	{ match = { class = "(xdg-desktop-portal-gtk)" }, float = true },
-	{ match = { class = "(codium|codium-url-handler|VSCodium)", title = "(Add Folder to Workspace)" }, float = true },
+	{ match = { class = "^xfce4-appfinder$" }, float = true },
+	{ match = { class = "^kitty$", title = "yazi" }, float = true },
+	{ match = { class = "^([Zz]oom|onedriver|onedriver-launcher)$" }, float = true },
+	{ match = { class = "^xdg-desktop-portal-gtk$" }, float = true },
+	{ match = { class = "^(codium|codium-url-handler|VSCodium)$", title = "(Add Folder to Workspace)" }, float = true },
 	{ match = { class = "^(eog)$" }, float = true }, -- image viewer
 
 	-- 系统/网络组件
@@ -177,7 +177,7 @@ local window_rules = {
 	{ match = { title = "(Kvantum Manager)" }, float = true },
 	{ match = { class = "^([Qq]alculate-gtk)$" }, float = true },
 	{ match = { class = "^([Ff]erdium)$" }, float = true },
-	{ match = { class = "com.alibabainc.dingtalk" }, float = true },
+	{ match = { class = "^com.alibabainc.dingtalk$" }, float = true },
 
 	-- [03] Monitor-relative window sizing
 	{ match = { class = "^(xdg-desktop-portal-gtk)$" }, size = { "monitor_w * 0.7", "monitor_h * 0.7" } },
@@ -203,7 +203,7 @@ local window_rules = {
 
 	-- [06] Development and specialized applications
 	-- ATLauncher
-	{ match = { class = "com-atlauncher-App", title = "ATLauncher Console" }, float = true },
+	{ match = { class = "^com-atlauncher-App$", title = "ATLauncher Console" }, float = true },
 	-- Autodesk Fusion 360
 	{ match = { class = "^fusion360\\.exe$", title = "Fusion360|(Marking Menu)" }, no_blur = true },
 	-- JetBrains IDE 悬浮气泡焦点过滤
@@ -253,7 +253,7 @@ local window_rules = {
 	},
 	{
 		name = "gnome-settings",
-		match = { class = "org.gnome.Settings|gnome-.*|org.gnome.*|io.missioncenter.MissionCenter" },
+		match = { class = "^(org\\.gnome\\.Settings|gnome-.*|org\\.gnome\\..*|io\\.missioncenter\\.MissionCenter)$" },
 
 		float = true,
 		size = { "monitor_w*0.7", "monitor_h*0.8" },
@@ -269,7 +269,7 @@ local window_rules = {
 	},
 	{
 		name = "nwg-look",
-		match = { class = "nwg-look" },
+		match = { class = "^nwg-look$" },
 
 		float = true,
 		size = { "50%", "60%" },
@@ -277,7 +277,7 @@ local window_rules = {
 	},
 	{
 		name = "flameshot",
-		match = { class = "flameshot" },
+		match = { class = "^flameshot$" },
 
 		pin = true,
 		move = { 0, 0 },
@@ -285,7 +285,7 @@ local window_rules = {
 	},
 	{
 		name = "screen_sharing",
-		match = { class = "xwaylandvideobridge" },
+		match = { class = "^xwaylandvideobridge$" },
 
 		opacity = "0.0 override",
 		no_anim = true,
@@ -315,7 +315,7 @@ local window_rules = {
 	{
 		name = "steam_app-list",
 		match = {
-			class = "steam",
+			class = "^steam$",
 			title = "Friends List",
 		},
 		float = true,
@@ -330,7 +330,7 @@ local window_rules = {
 	},
 	{
 		name = "Authenticator",
-		match = { class = "com.belmoussaoui.Authenticator" },
+		match = { class = "^com.belmoussaoui.Authenticator$" },
 		float = true,
 		no_screen_share = true,
 	},
@@ -366,7 +366,7 @@ local window_rules = {
 	{
 		name = "tg",
 		match = {
-			class = "org.telegram.desktop|io.github.kukuruzka165.materialgram",
+			class = "^(org.telegram.desktop|io.github.kukuruzka165.materialgram)$",
 		},
 		workspace = "special:tg",
 	},
@@ -401,7 +401,7 @@ local window_rules = {
 	{
 		name = "vicinae",
 		match = {
-			class = "vicinae",
+			class = "^vicinae$",
 		},
 		rounding = 10,
 	},
