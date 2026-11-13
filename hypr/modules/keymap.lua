@@ -6,8 +6,33 @@ hl.config {
 	},
 }
 
-local global_keymaps = {
-	{ mainMod .. "+CTRL+T", hl.dsp.exec_cmd("kitty --single-instance --listen-on=unix:/tmp/my-socket") },
+-- Cycle the active regular or special workspace through the supported layouts.
+local workspace_layouts = { "scrolling", "dwindle", "master", "monocle" }
+
+local function cycle_workspace_layout()
+	local workspace = hl.get_active_special_workspace() or hl.get_active_workspace()
+	if not workspace then
+		return
+	end
+
+	local current = workspace.tiled_layout
+	local next_layout = workspace_layouts[1]
+	for i, layout in ipairs(workspace_layouts) do
+		if layout == current then
+			next_layout = workspace_layouts[(i % #workspace_layouts) + 1]
+			break
+		end
+	end
+
+	local ws_name = tostring(workspace.name)
+	hl.workspace_rule {
+		workspace = workspace.special and ws_name or ("name:" .. ws_name),
+		layout = next_layout,
+	}
+end
+
+-- Use a per-user runtime socket instead of a shared /tmp path.\nlocal global_keymaps = {
+	{ mainMod .. "+CTRL+T", hl.dsp.exec_cmd("kitty --single-instance --listen-on=unix:$XDG_RUNTIME_DIR/kitty") },
 	{ mainMod .. "+CTRL+E", hl.dsp.exec_cmd("nautilus") },
 	{ mainMod .. "+CTRL+F", hl.dsp.window.float() },
 	{ mainMod .. "+G", hl.dsp.group.toggle() },
@@ -38,34 +63,7 @@ local global_keymaps = {
 	{ "CTRL+ALT+UP", hl.dsp.window.swap { direction = "up" } },
 	{ "CTRL+ALT+DOWN", hl.dsp.window.swap { direction = "down" } },
 
-	{
-		mainMod .. "+TAB",
-		function()
-			local layouts = { "scrolling", "dwindle", "master", "monocle" }
-			local workspace = hl.get_active_workspace()
-			if hl.get_active_special_workspace() then
-				workspace = hl.get_active_special_workspace()
-			end
-			if not workspace then
-				return
-			end
-
-			local next_layout = "dwindle"
-			for i = 1, #layouts do
-				if layouts[i] == workspace.tiled_layout then
-					next_layout = layouts[(i % #layouts) + 1]
-					break
-				end
-			end
-
-			local ws_name = tostring(workspace.name)
-			if workspace.special then
-				hl.workspace_rule { workspace = ws_name, layout = next_layout }
-			else
-				hl.workspace_rule { workspace = "name:" .. ws_name, layout = next_layout }
-			end
-		end,
-	},
+	{ mainMod .. "+TAB", cycle_workspace_layout },
 	{ "ALT+TAB", hl.dsp.window.cycle_next() },
 
 	-- Keep one owner for media keys. Noctalia no longer rebinds these.
