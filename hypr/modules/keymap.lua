@@ -16,7 +16,7 @@ local function cycle_workspace_layout()
 	end
 
 	local current = workspace.tiled_layout
-	local next_layout = workspace_layouts[1]
+	local next_layout = "dwindle"
 	for i, layout in ipairs(workspace_layouts) do
 		if layout == current then
 			next_layout = workspace_layouts[(i % #workspace_layouts) + 1]
