@@ -25,12 +25,13 @@ local global_keymaps = {
 	{ "ALT+K", hl.dsp.focus { direction = "up" } },
 	{ "ALT+J", hl.dsp.focus { direction = "down" } },
 
-	-- Compositor resize uses SUPER+SHIFT+HJKL. Terminal resize remains
-	-- CTRL+SHIFT+HJKL as documented by the unified terminal keymap.
-	{ mainMod .. "+SHIFT+H", hl.dsp.window.resize { x = -50, y = 0, relative = true }, { repeating = true } },
-	{ mainMod .. "+SHIFT+L", hl.dsp.window.resize { x = 50, y = 0, relative = true }, { repeating = true } },
-	{ mainMod .. "+SHIFT+K", hl.dsp.window.resize { x = 0, y = -50, relative = true }, { repeating = true } },
-	{ mainMod .. "+SHIFT+J", hl.dsp.window.resize { x = 0, y = 50, relative = true }, { repeating = true } },
+	-- Compositor window resize: SUPER + SHIFT + HJKL.
+	-- Use the canonical spaced key syntax from the Hyprland Lua examples.
+	-- Terminal/TUI resize remains CTRL + SHIFT + HJKL.
+	{ mainMod .. " + SHIFT + h", hl.dsp.window.resize({ x = -50, y = 0, relative = true }), { repeating = true } },
+	{ mainMod .. " + SHIFT + l", hl.dsp.window.resize({ x = 50, y = 0, relative = true }), { repeating = true } },
+	{ mainMod .. " + SHIFT + k", hl.dsp.window.resize({ x = 0, y = -50, relative = true }), { repeating = true } },
+	{ mainMod .. " + SHIFT + j", hl.dsp.window.resize({ x = 0, y = 50, relative = true }), { repeating = true } },
 
 	{ "CTRL+ALT+LEFT", hl.dsp.window.swap { direction = "left" } },
 	{ "CTRL+ALT+RIGHT", hl.dsp.window.swap { direction = "right" } },
