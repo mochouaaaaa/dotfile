@@ -24,7 +24,6 @@ local global_envs = {
 	QT_QPA_PLATFORM = "wayland;xcb",
 	ELECTRON_OZONE_PLATFORM_HINT = "auto",
 	MOZ_ENABLE_WAYLAND = "1",
-	MOZ_WEBRENDER = "1",
 
 	GDK_DPI_SCALE = "1",
 
@@ -34,7 +33,6 @@ local global_envs = {
 
 	QT_QPA_PLATFORMTHEME = "gtk3",
 	QT_WAYLAND_DISABLE_WINDOWDECORATION = "1",
-	QT_AUTO_SCREEN_SCALE_FACTOR = "1",
 
 	-- fcitx5
 	XMODIFIERS = "@im=fcitx",
@@ -43,12 +41,6 @@ local global_envs = {
 
 	-- Java applications under wlroots/Wayland
 	_JAVA_AWT_WM_NONREPARENTING = "1",
-
-	-- Ozone
-	OZONE_PLATFORM = "wayland",
-
-	-- KVM
-	WLR_RENDERER_ALLOW_SOFTWARE = "1",
 }
 
 -- global_envs is a string-keyed map; ipairs() would silently skip it.
