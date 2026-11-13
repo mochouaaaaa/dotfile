@@ -4,12 +4,10 @@ local mode_n = { "n" }
 local mode_v = { "v" }
 local mode_i = { "i" }
 local mode_c = { "c" }
-local mode_t = { "t" }
 local mode_nv = { "n", "v" }
 local mode_ni = { "n", "i" }
 local opt_n = { noremap = true }
 local opt_ns = { noremap = true, silent = true }
-local opt_nb = { noremap = true, buffer = true }
 
 vim.g.kitty_navigator_enable_stack_layout = true
 vim.g.kitty_navigator_no_mappings = 1
@@ -87,11 +85,9 @@ local mappings = {
 }
 
 for _, mapping in ipairs(mappings) do
+	local opts = vim.tbl_extend("force", {}, mapping.opt or opt_n)
 	if mapping.desc then
-		if not mapping.opt then
-			mapping.opt = opt_n
-		end
-		mapping.opt.desc = mapping.desc
+		opts.desc = mapping.desc
 	end
-	vim.keymap.set(mapping.mode or "n", mapping.from, mapping.to, mapping.opt or {})
+	vim.keymap.set(mapping.mode or "n", mapping.from, mapping.to, opts)
 end

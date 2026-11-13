@@ -1,6 +1,38 @@
 # neovim
 
-**_treesitter 和 language 使用 nix安装,默认使用Mason管理,当存在IS_NIX为1时,则禁用Mason使用nix安装的_**
+**Tree-sitter 插件与 parser 由 Nix 安装；LSP、formatter 等外部工具在非 Nix 环境下由 Mason 管理。设置 `IS_NIX=1` 后禁用 Mason。Lazy/LazyVim 不负责安装或更新 Tree-sitter。**
+
+## Nix 集成
+
+在 Home Manager / NixOS 的 Neovim 插件列表中安装 Tree-sitter 与所需 grammar（使用与 Neovim 相同的 nixpkgs）：
+
+```nix
+programs.neovim.plugins = with pkgs.vimPlugins; [
+  (nvim-treesitter.withPlugins (p: with p; [
+    bash
+    c
+    cpp
+    css
+    go
+    html
+    javascript
+    json
+    lua
+    markdown
+    markdown_inline
+    nix
+    python
+    rust
+    toml
+    typescript
+    vim
+    vimdoc
+    yaml
+  ]))
+];
+```
+
+也可以将 `nvim-treesitter.withPlugins (...)` 替换为 `nvim-treesitter.withAllGrammars` 安装全部可用 grammar。Lazy 配置会保留 Nix 的 `packpath` 并执行 `packloadall`，使 Nix 安装的 start plugin 正常加载。
 
 ### Lsp
 

@@ -130,6 +130,20 @@ opt.undodir = vim.fn.expand("$HOME/.cache/nvim/undo")
 opt.backupdir = vim.fn.expand("$HOME/.cache/nvim/backup")
 opt.viewdir = vim.fn.expand("$HOME/.cache/nvim/view")
 
+local cache_dirs = {
+	vim.fn.expand("$HOME/.cache/nvim/undo"),
+	vim.fn.expand("$HOME/.cache/nvim/backup"),
+	vim.fn.expand("$HOME/.cache/nvim/view"),
+}
+
+opt.undodir = cache_dirs[1]
+opt.backupdir = cache_dirs[2]
+opt.viewdir = cache_dirs[3]
+
+for _, dir in ipairs(cache_dirs) do
+	vim.fn.mkdir(dir, "p")
+end
+
 -- Misc
 opt.history = 1000
 opt.wildignorecase = true
@@ -152,6 +166,5 @@ o.foldlevel = 99
 vim.g.markdown_recommended_style = 0
 
 vim.g.lazyvim_python_lsp = "ty"
-vim.g.lazyvim_picker = "fzf"
--- vim.g.snacks_animate = false
 vim.g.lazyvim_picker = "snacks"
+-- vim.g.snacks_animate = false

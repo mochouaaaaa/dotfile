@@ -34,6 +34,9 @@ require("lazy").setup({
 			},
 		},
 
+		-- Tree-sitter is provided by Nix, not Lazy/LazyVim.
+		{ "nvim-treesitter/nvim-treesitter", enabled = false },
+
 		-- custom plugins
 		{ import = "plugins" },
 
@@ -53,6 +56,8 @@ require("lazy").setup({
 	},
 	checker = { enabled = false }, -- 自动检查插件更新
 	performance = {
+		-- Preserve Nix-installed start packages on packpath.
+		reset_packpath = false,
 		rtp = {
 			disabled_plugins = {
 				"gzip", -- "matchit",
@@ -66,3 +71,6 @@ require("lazy").setup({
 		},
 	},
 })
+
+-- Lazy disables native package loading; load Nix-managed start plugins explicitly.
+vim.cmd("packloadall")

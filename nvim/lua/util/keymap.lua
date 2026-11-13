@@ -1,5 +1,5 @@
 -- 判断系统类型
-function is_mac()
+local function is_mac()
 	return vim.fn.has("mac") == 1
 end
 

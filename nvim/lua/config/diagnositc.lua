@@ -14,25 +14,3 @@ vim.diagnostic.config({
 	update_in_insert = false,
 	severity_sort = true,
 })
-
-vim.api.nvim_create_autocmd("LspAttach", {
-	group = vim.api.nvim_create_augroup("lsp_attach_auto_diag", { clear = true }),
-	callback = function(args)
-		-- the buffer where the lsp attached
-		---@type number
-		local buffer = args.buf
-
-		-- create the autocmd to show diagnostics
-		vim.api.nvim_create_autocmd({ "CursorHold", "CursorHoldI" }, {
-			group = vim.api.nvim_create_augroup("float_diagnostic", { clear = true }),
-			buffer = buffer,
-			callback = function()
-				-- vim.diagnostic.open_float(nil, { focus = false })
-				vim.diagnostic.config({
-					virtual_text = false,
-					float = false,
-				})
-			end,
-		})
-	end,
-})

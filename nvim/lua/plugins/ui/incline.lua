@@ -148,20 +148,15 @@ return {
 			local diffs = get_git_diff(buf, props.focused)
 
 			local color_group = props.focused and focused or unfocused
-			local icon = { filetype_icon, group = props.focused and nil or unfocused }
-			local separator = (#diagnostics > 0 and #diffs > 0) and { separator_char .. " ", group = color_group } or ""
+			local icon = filetype_icon and { filetype_icon, group = props.focused and nil or unfocused } or {}
 			local filename_separator = (#diagnostics > 0 or #diffs > 0)
 					and { " " .. separator_char .. " ", group = color_group }
 				or ""
 
 			local filename_component =
-				{ icon, { filetype_icon and " " or "" }, { filename, group = color }, filename_separator }
+				{ icon, { filetype_icon and " " or "" }, { filename, group = color_group }, filename_separator }
 
-			if vim.bo[props.buf].buflisted then
-				filename_component = {}
-			end
-
-			return { {}, { diagnostics }, {}, { diffs } }
+			return { filename_component, diagnostics, diffs }
 			-- return { {}, { diagnostics }, { separator }, { diffs } }
 		end,
 	},

@@ -83,7 +83,7 @@ function M.resolve_config(type)
 end
 
 function M.opts(_, opts)
-	local prettier_config = M.resolve_config("prettierd")
+	local prettier_config = M.resolve_config("prettier")
 
 	return vim.tbl_deep_extend("force", opts, {
 		formatters = {
@@ -109,6 +109,7 @@ function M.opts(_, opts)
 
 			go = { "goimports-reviser", "gofumpt" },
 			rust = { "rustfmt" },
+			python = { "ruff_fix", "ruff_format" },
 
 			-- JavaScript
 			javascript = { "prettierd" },

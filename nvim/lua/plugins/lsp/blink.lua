@@ -1,13 +1,13 @@
 local keymap = require("util.keymap")
 
-select_next = function(cmp)
+local function select_next(cmp)
 	return cmp.select_next({ auto_insert = false })
 end
-select_prev = function(cmp)
+local function select_prev(cmp)
 	return cmp.select_prev({ auto_insert = false })
 end
 
-cancel = function(cmp)
+local function cancel(cmp)
 	if cmp.is_visible() then
 		return cmp.cancel()
 	end

@@ -1,7 +1,7 @@
 local M = {
 	{
 		"MeanderingProgrammer/render-markdown.nvim",
-		dependencies = { "nvim-treesitter/nvim-treesitter", "nvim-mini/mini.nvim" }, -- if you use the mini.nvim suite
+		dependencies = { "nvim-mini/mini.nvim" }, -- Tree-sitter is provided by Nix
 		ft = { "markdown", "md", "norg" },
 		---@module 'render-markdown'
 		---@type render.md.UserConfig
