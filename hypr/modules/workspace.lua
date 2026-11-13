@@ -1,11 +1,12 @@
 local mainMod = "SUPER"
 
--- Keep SUPER+1..6 available to Kitty/WezTerm window switching.
--- Workspace navigation uses SUPER+ALT+1..6 instead.
+-- Keep the original SUPER+1..6 workspace navigation.
+-- Terminal-specific window switching should use a different, non-conflicting
+-- shortcut in the terminal configuration rather than changing workspace keys.
 for i = 1, 6 do
 	local key = i % 10
-	hl.bind(mainMod .. "+ALT+" .. key, hl.dsp.focus { workspace = i })
-	hl.bind(mainMod .. "+ALT+SHIFT+" .. key, hl.dsp.window.move { workspace = i })
+	hl.bind(mainMod .. "+" .. key, hl.dsp.focus { workspace = i })
+	hl.bind(mainMod .. "+SHIFT+" .. key, hl.dsp.window.move { workspace = i })
 end
 
 hl.bind(mainMod .. "+SHIFT+U", hl.dsp.window.move { workspace = "special" })

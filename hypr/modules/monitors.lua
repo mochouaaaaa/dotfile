@@ -1,10 +1,10 @@
--- Use the monitor's preferred mode instead of hard-coding a 4K mode.
--- Override this module per-host when a fixed refresh rate, scale, or position is needed.
+-- Restore the existing monitor configuration.
 hl.monitor {
 	output = "DP-1",
-	mode = "preferred",
-	position = "auto",
-	scale = 1,
+	mode = "3840x2160@60",
+	position = "0x0",
+	scale = 1.5,
+	bitdepth = 10,
 	cm = "auto",
 }
 
