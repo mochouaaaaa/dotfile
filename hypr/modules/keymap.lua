@@ -24,7 +24,7 @@ end
 
 global_keymaps = {
 
-	{ mainMod .. "+ CTRL+T", hl.dsp.exec_cmd("kitty --single-instance") },
+	{ mainMod .. "+ CTRL+T", hl.dsp.exec_cmd("kitty --single-instance --listen-on=unix:/tmp/my-socket") },
 	{ mainMod .. "+ CTRL+E", hl.dsp.exec_cmd("nautilus") },
 
 	{ mainMod .. "+ CTRL+F", hl.dsp.window.float() },
