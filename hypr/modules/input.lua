@@ -1,14 +1,14 @@
 hl.config {
 	input = {
-		kb_layout = "cn",
+		kb_layout = "us",
 		kb_variant = "",
 		kb_model = "",
-		-- kb_options = "caps:swapescape",
+		-- Keep XKB layout predictable; Chinese input is provided by fcitx5.
 		kb_rules = "",
 		repeat_rate = 40,
 		repeat_delay = 200,
 
-		sensitivity = 0, -- mouse sensitivity
+		sensitivity = 0,
 		numlock_by_default = true,
 		left_handed = false,
 		follow_mouse = 1,
@@ -16,22 +16,20 @@ hl.config {
 		float_switch_override_focus = false,
 
 		touchpad = {
-			clickfinger_behavior = true, -- 两指右键
+			clickfinger_behavior = true,
 			middle_button_emulation = true,
-			-- ["tap-to-click"] = true,
+			["tap-to-click"] = true,
 			drag_lock = false,
-			drag_3fg = 1, -- 三指拖动 0.50
+			drag_3fg = 1,
 			natural_scroll = true,
 			disable_while_typing = true,
 			scroll_factor = 1.15,
 		},
 
-		-- below for devices with touchdevice ie. touchscreen
 		touchdevice = {
 			enabled = true,
 		},
 
-		-- below is for table see link above for proper variables
 		tablet = {
 			transform = 0,
 			left_handed = 0,
@@ -46,13 +44,13 @@ hl.config {
 	},
 
 	gestures = {
-		-- workspace_swipe = true,
+		workspace_swipe = true,
 		workspace_swipe_distance = 700,
-		-- workspace_swipe_fingers = "$workSpaceSwipeFingers", -- 4
+		workspace_swipe_fingers = 4,
 		workspace_swipe_cancel_ratio = 0.15,
 		workspace_swipe_min_speed_to_force = 5,
 		workspace_swipe_direction_lock = true,
 		workspace_swipe_direction_lock_threshold = 10,
-		workspace_swipe_create_new = true,
+		workspace_swipe_create_new = false,
 	},
 }

@@ -8,5 +8,6 @@ require("modules.group")
 require("modules.general")
 require("modules.animations")
 require("modules.window-rule")
+require("modules.shell")
 
 require("shell.noctalia")

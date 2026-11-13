@@ -88,3 +88,18 @@ For ordinary SSH, install/source this script on the remote host only if you
 also use remote tmux. The same applies to `kitten ssh`: its built-in shell
 integration does not automatically load this custom script. If you do not use
 tmux remotely, no remote shell integration is required for `IS_NVIM`.
+
+
+## Hyprland keymap notes
+
+The compositor deliberately leaves the terminal's unified shortcuts unbound:
+- `SUPER+HJKL`: terminal/TUI navigation (for example TUIOS)
+- `SUPER+CTRL+HJKL`: terminal pane splitting
+- `CTRL+SHIFT+HJKL`: terminal pane resizing
+- `SUPER+1..6`: terminal window selection
+- `SUPER+ENTER`: terminal pane/window maximize
+
+Hyprland uses `ALT+HJKL` for compositor focus, `SUPER+SHIFT+HJKL` for
+compositor window resizing, and `SUPER+ALT+1..6` / `SUPER+ALT+SHIFT+1..6`
+for workspace focus / moving a window. This avoids global compositor binds
+stealing keystrokes from terminal applications.

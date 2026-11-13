@@ -1,5 +1,3 @@
-_G.opacity = 0.78
-
 local workspace_programs = {
 	["1"] = { "kitty" },
 	["2"] = { "firefox" },
@@ -11,25 +9,15 @@ hl.on("workspace.created", function(ws)
 		return
 	end
 
-	-- use programs associated with window id by default
-	local program = ws.id and workspace_programs[tostring(ws.id)] or workspace_programs[ws.name]
-	if program == nil then
+	local programs = ws.id and workspace_programs[tostring(ws.id)] or workspace_programs[ws.name]
+	if not programs then
 		return
 	end
 
-	local cmd, provided_rules = table.unpack(program)
-	-- shallow-copy the rules table so we can add the workspace to it
-	local rules = {}
-	if provided_rules ~= nil then
-		for k, v in provided_rules do
-			rules[k] = v
-		end
+	local target = (ws.id and tostring(ws.id) or ws.name) .. " silent"
+	for _, cmd in ipairs(programs) do
+		hl.exec_cmd(cmd, { workspace = target })
 	end
-	-- force program to open on desired workspace, even if focus is moved to another
-	-- workspace before the program window appears
-	rules.workspace = (ws.id and tostring(ws.id) or ws.name) .. " silent"
-	-- run it!
-	hl.exec_cmd(cmd, rules)
 end)
 
 hl.on("window.open", function(w)
@@ -74,13 +62,6 @@ hl.on("window.open", function(w)
 end)
 
 local window_rules = {
-	{
-		name = "opacity",
-		match = {
-			fullscreen = 0,
-		},
-		opacity = _G.opacity,
-	},
 	{
 		-- Hyprland-run windowrule
 		name = "move-hyprland-run",
@@ -185,7 +166,6 @@ local window_rules = {
 	{ match = { class = "^([Bb]aobab)$" }, float = true },
 	{ match = { title = "(Kvantum Manager)" }, float = true },
 	{ match = { class = "^([Qq]alculate-gtk)$" }, float = true },
-	{ match = { class = "^([Bb]aobab)$" }, float = true },
 	{ match = { class = "^([Ff]erdium)$" }, float = true },
 	{ match = { class = "com.alibabainc.dingtalk" }, float = true },
 
@@ -292,14 +272,6 @@ local window_rules = {
 		float = true,
 		size = { "50%", "60%" },
 		center = true,
-	},
-	{
-		name = "flameshot",
-		match = { class = "flameshot" },
-
-		pin = true,
-		move = { 0, 0 },
-		suppress_event = "fullscreen",
 	},
 	{
 		name = "flameshot",

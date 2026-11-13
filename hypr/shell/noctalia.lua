@@ -33,17 +33,9 @@ if noctalia_path then
 	hl.bind(mainMod .. "+comma", hl.dsp.exec_cmd(ipc .. "settings-toggle"))
 	hl.unbind(mainMod .. "+CTRL+A")
 	hl.bind(mainMod .. "+CTRL+A", hl.dsp.exec_cmd(ipc .. "screenshot-region"))
-	hl.bind("ALT + Tab", hl.dsp.exec_cmd(ipc .. "window-switcher"))
+	hl.unbind("ALT+TAB")
+	hl.bind("ALT+TAB", hl.dsp.exec_cmd(ipc .. "window-switcher"))
 
-	-- Media keys
-	hl.bind("XF86AudioRaiseVolume", hl.dsp.exec_cmd(ipc .. "volume-up"))
-	hl.bind("XF86AudioLowerVolume", hl.dsp.exec_cmd(ipc .. "volume-down"))
-	hl.bind("XF86AudioMute", hl.dsp.exec_cmd(ipc .. "volume-mute"))
-	hl.bind("XF86AudioPlay", hl.dsp.exec_cmd("media playPause"))
-	hl.bind("XF86AudioPrev", hl.dsp.exec_cmd("media previous"))
-	hl.bind("XF86AudioNext", hl.dsp.exec_cmd("media next"))
-	hl.bind("XF86MonBrightnessUp", hl.dsp.exec_cmd(ipc .. "brightness-up"))
-	hl.bind("XF86MonBrightnessDown", hl.dsp.exec_cmd(ipc .. "brightness-down"))
 
 	hl.window_rule {
 		match = { class = "dev.noctalia.Noctalia" },

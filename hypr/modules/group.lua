@@ -1,6 +1,5 @@
 hl.config {
 	group = {
-
 		col = {
 			border_active = "rgba(255,255,255,0.35)",
 			border_inactive = "rgba(255,255,255,0.15)",
@@ -9,7 +8,7 @@ hl.config {
 		},
 
 		groupbar = {
-			font_family = "${config.profiles.fonts.default}",
+			-- Let Hyprland use the configured system font.
 			font_size = 15,
 			gradients = true,
 			gradient_round_only_edges = false,
@@ -18,7 +17,6 @@ hl.config {
 			indicator_height = 0,
 			gaps_in = 3,
 			gaps_out = 3,
-
 			text_color = "rgb(ffffff)",
 			col = {
 				active = "rgba(007aff59)",
