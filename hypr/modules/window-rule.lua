@@ -79,7 +79,7 @@ local window_rules = {
 	{
 		-- Hyprland-run windowrule
 		name = "move-hyprland-run",
-		match = { class = "hyprland-run" },
+		match = { class = "^hyprland-run$" },
 
 		move = "20 monitor_h-120",
 		float = true,
@@ -124,10 +124,10 @@ local window_rules = {
 	{ match = { class = "^([Tt]hunar)$", title = "^([Tt]hunar)$" }, float = true, center = true, size = { "monitor_w * 0.6", "monitor_h * 0.7" } },
 	-- Thunar replacement confirmation is a single centered floating dialog.
 	{ match = { class = "^([Tt]hunar)$", title = "(Confirm to replace files)" }, float = true, center = true },
-	{ match = { class = "([Tt]hunar)", title = "(File Operation Progress)" }, float = true },
+	{ match = { class = "^([Tt]hunar)$", title = "(File Operation Progress)" }, float = true },
 
 	-- [02] Common applications and floating windows
-	{ match = { class = "chromium-browser", title = "(雀魂麻将 - Chromium)" }, float = true },
+	{ match = { class = "^chromium-browser$", title = "(雀魂麻将 - Chromium)" }, float = true },
 	-- 翻译悬浮窗 (pot)
 	{
 		match = {
@@ -148,9 +148,9 @@ local window_rules = {
 	{ match = { class = "^VirtualBox$" }, float = true },
 
 	-- Firefox
-	{ match = { class = "firefox", title = "(我的足迹)" }, float = true },
-	{ match = { class = "firefox", title = "画中画" }, float = true },
-	{ match = { class = "firefox" }, workspace = "2" },
+	{ match = { class = "^firefox$", title = "(我的足迹)" }, float = true },
+	{ match = { class = "^firefox$", title = "画中画" }, float = true },
+	{ match = { class = "^firefox$" }, workspace = "2" },
 
 	-- obs
 	{
@@ -169,7 +169,7 @@ local window_rules = {
 	{ match = { class = "^(eog)$" }, float = true }, -- image viewer
 
 	-- 系统/网络组件
-	{ match = { class = "^(nm-applet|nm-connection-editor|blueman-manager|.blueman-manager-wrapped)$" }, float = true },
+	{ match = { class = "^(nm-applet|nm-connection-editor|blueman-manager|\\.blueman-manager-wrapped)$" }, float = true },
 	{ match = { class = "^([Yy]ad)$" }, float = true },
 	{ match = { class = "^(wihotspot(-gui)?)$" }, float = true },
 	{ match = { class = "^(evince)$" }, float = true },
