@@ -43,8 +43,13 @@ local global_keymaps = {
 	{ mainMod .. "+CTRL+F", hl.dsp.window.float() },
 	{ mainMod .. "+G", hl.dsp.group.toggle() },
 
-	{ mainMod .. "+CTRL+A", hl.dsp.exec_cmd("grimblast -n -o -e 5000 --freeze copysave area") },
-	{ mainMod .. "+CTRL+S", hl.dsp.exec_cmd("grimblast -n -o -e 5000 --freeze copysave active") },
+	-- HyprCapture: interactive region and window screenshots.
+	{ mainMod .. " + CTRL + a", function()
+		hl.plugin.hyprcapture.open("region")
+	end },
+	{ mainMod .. " + CTRL + s", function()
+		hl.plugin.hyprcapture.open("window")
+	end },
 
 	{ "CTRL+ALT+RETURN", hl.dsp.window.fullscreen() },
 	{ "CTRL+SHIFT+R", hl.dsp.layout("colresize +conf") },
