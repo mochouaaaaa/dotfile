@@ -7,6 +7,8 @@ hl.config {
 			save = true,
 			save_dir = "$XDG_PICTURES_DIR/Screenshots",
 			record_save_dir = "$XDG_VIDEOS_DIR/hyprland",
+			notification_backend = "system",
+			screenshot_notification = true,
 		},
 	},
 }
