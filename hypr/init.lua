@@ -2,6 +2,7 @@
 require("modules.monitors")
 require("modules.envs")
 require("modules.input")
+require("modules.hyprcapture")
 
 -- Core compositor behavior and visual configuration.
 require("modules.misc")
