@@ -98,6 +98,11 @@ local window_rules = {
 
 		no_focus = true,
 	},
+	{
+		name = "global-float",
+		match = { class = "org.remmina.Remmina" },
+		float = true,
+	},
 	{ name = "center-xdg-floats", match = { float = true, xwayland = false }, center = true },
 	{
 		match = {
