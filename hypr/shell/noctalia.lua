@@ -31,11 +31,10 @@ if noctalia_path then
 
 	-- Core binds
 	hl.bind(mainMod .. "+comma", hl.dsp.exec_cmd(ipc .. "settings-toggle"))
-	hl.unbind(mainMod .. "+CTRL+A")
-	hl.bind(mainMod .. "+CTRL+A", hl.dsp.exec_cmd(ipc .. "screenshot-region"))
-	hl.unbind("ALT+TAB")
-	hl.bind("ALT+TAB", hl.dsp.exec_cmd(ipc .. "window-switcher"))
-
+	-- hl.unbind(mainMod .. "+CTRL+A")
+	-- hl.bind(mainMod .. "+CTRL+A", hl.dsp.exec_cmd(ipc .. "screenshot-region"))
+	-- hl.unbind("ALT+TAB")
+	-- hl.bind("ALT+TAB", hl.dsp.exec_cmd(ipc .. "window-switcher"))
 
 	hl.window_rule {
 		match = { class = "dev.noctalia.Noctalia" },

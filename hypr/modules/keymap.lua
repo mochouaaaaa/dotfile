@@ -26,9 +26,7 @@ local function cycle_workspace_layout()
 
 	-- Regular workspaces are reliably selected by ID. Special workspaces
 	-- must be selected by name because their IDs are not stable.
-	local selector = workspace.special
-		and tostring(workspace.name)
-		or tostring(workspace.id)
+	local selector = workspace.special and tostring(workspace.name) or tostring(workspace.id)
 
 	hl.workspace_rule {
 		workspace = selector,
@@ -44,12 +42,11 @@ local global_keymaps = {
 	{ mainMod .. "+G", hl.dsp.group.toggle() },
 
 	-- HyprCapture: interactive region and window screenshots.
-	{ mainMod .. " + CTRL + a", function()
-		hl.plugin.hyprcapture.open("region")
-	end },
-	{ mainMod .. " + CTRL + s", function()
-		hl.plugin.hyprcapture.open("window")
-	end },
+	{ mainMod .. " + CTRL + a", function() hl.plugin.hyprcapture.open_editor("region", { clipboard = true }) end },
+	{
+		mainMod .. " + CTRL + s",
+		function() hl.plugin.hyprcapture.open("window", { clipboard = true }) end,
+	},
 
 	{ "CTRL+ALT+RETURN", hl.dsp.window.fullscreen() },
 	{ "CTRL+SHIFT+R", hl.dsp.layout("colresize +conf") },
@@ -64,10 +61,10 @@ local global_keymaps = {
 	-- Compositor window resize: SUPER + SHIFT + HJKL.
 	-- Use the canonical spaced key syntax from the Hyprland Lua examples.
 	-- Terminal/TUI resize remains CTRL + SHIFT + HJKL.
-	{ mainMod .. " + SHIFT + h", hl.dsp.window.resize({ x = -50, y = 0, relative = true }), { repeating = true } },
-	{ mainMod .. " + SHIFT + l", hl.dsp.window.resize({ x = 50, y = 0, relative = true }), { repeating = true } },
-	{ mainMod .. " + SHIFT + k", hl.dsp.window.resize({ x = 0, y = -50, relative = true }), { repeating = true } },
-	{ mainMod .. " + SHIFT + j", hl.dsp.window.resize({ x = 0, y = 50, relative = true }), { repeating = true } },
+	{ mainMod .. " + SHIFT + h", hl.dsp.window.resize { x = -50, y = 0, relative = true }, { repeating = true } },
+	{ mainMod .. " + SHIFT + l", hl.dsp.window.resize { x = 50, y = 0, relative = true }, { repeating = true } },
+	{ mainMod .. " + SHIFT + k", hl.dsp.window.resize { x = 0, y = -50, relative = true }, { repeating = true } },
+	{ mainMod .. " + SHIFT + j", hl.dsp.window.resize { x = 0, y = 50, relative = true }, { repeating = true } },
 
 	{ "CTRL+ALT+LEFT", hl.dsp.window.swap { direction = "left" } },
 	{ "CTRL+ALT+RIGHT", hl.dsp.window.swap { direction = "right" } },
@@ -78,10 +75,26 @@ local global_keymaps = {
 	{ "ALT+TAB", hl.dsp.window.cycle_next() },
 
 	-- Keep one owner for media keys. Noctalia no longer rebinds these.
-	{ "XF86AudioRaiseVolume", hl.dsp.exec_cmd("wpctl set-volume -l 1 @DEFAULT_AUDIO_SINK@ 5%+"), { locked = true, repeating = true } },
-	{ "XF86AudioLowerVolume", hl.dsp.exec_cmd("wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%-"), { locked = true, repeating = true } },
-	{ "XF86AudioMute", hl.dsp.exec_cmd("wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle"), { locked = true, repeating = true } },
-	{ "XF86AudioMicMute", hl.dsp.exec_cmd("wpctl set-mute @DEFAULT_AUDIO_SOURCE@ toggle"), { locked = true, repeating = true } },
+	{
+		"XF86AudioRaiseVolume",
+		hl.dsp.exec_cmd("wpctl set-volume -l 1 @DEFAULT_AUDIO_SINK@ 5%+"),
+		{ locked = true, repeating = true },
+	},
+	{
+		"XF86AudioLowerVolume",
+		hl.dsp.exec_cmd("wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%-"),
+		{ locked = true, repeating = true },
+	},
+	{
+		"XF86AudioMute",
+		hl.dsp.exec_cmd("wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle"),
+		{ locked = true, repeating = true },
+	},
+	{
+		"XF86AudioMicMute",
+		hl.dsp.exec_cmd("wpctl set-mute @DEFAULT_AUDIO_SOURCE@ toggle"),
+		{ locked = true, repeating = true },
+	},
 	{ "XF86MonBrightnessUp", hl.dsp.exec_cmd("brightnessctl -e4 -n2 set 5%+"), { locked = true, repeating = true } },
 	{ "XF86MonBrightnessDown", hl.dsp.exec_cmd("brightnessctl -e4 -n2 set 5%-"), { locked = true, repeating = true } },
 	{ "XF86AudioNext", hl.dsp.exec_cmd("playerctl next"), { locked = true } },
@@ -89,7 +102,12 @@ local global_keymaps = {
 	{ "XF86AudioPlay", hl.dsp.exec_cmd("playerctl play-pause"), { locked = true } },
 	{ "XF86AudioPrev", hl.dsp.exec_cmd("playerctl previous"), { locked = true } },
 
-	{ mainMod .. "+M", hl.dsp.exec_cmd("if command -v hyprshutdown >/dev/null 2>&1; then hyprshutdown; else hyprctl dispatch exit; fi") },
+	{
+		mainMod .. "+M",
+		hl.dsp.exec_cmd(
+			"if command -v hyprshutdown >/dev/null 2>&1; then hyprshutdown; else hyprctl dispatch exit; fi"
+		),
+	},
 	{ mainMod .. "+Q", hl.dsp.window.close() },
 	{ mainMod .. "+CTRL+Q", hl.dsp.exec_cmd("loginctl lock-session") },
 }
