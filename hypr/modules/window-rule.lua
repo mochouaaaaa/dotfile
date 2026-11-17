@@ -100,7 +100,7 @@ local window_rules = {
 	},
 	{
 		name = "global-float",
-		match = { class = "org.remmina.Remmina|wemeetapp" },
+		match = { class = "org.remmina.Remmina|wemeetapp|.virt-manager-wrapped" },
 		float = true,
 	},
 	{ name = "center-xdg-floats", match = { float = true, xwayland = false }, center = true },

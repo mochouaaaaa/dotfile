@@ -45,7 +45,7 @@ local global_keymaps = {
 	{ mainMod .. " + CTRL + a", function() hl.plugin.hyprcapture.open_editor("region", { clipboard = true }) end },
 	{
 		mainMod .. " + CTRL + s",
-		function() hl.plugin.hyprcapture.open("window", { clipboard = true }) end,
+		function() hl.plugin.hyprcapture.open_editor("window", { clipboard = true }) end,
 	},
 
 	{ "CTRL+ALT+RETURN", hl.dsp.window.fullscreen() },
