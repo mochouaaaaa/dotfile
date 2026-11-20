@@ -126,10 +126,13 @@ M.setup = function(color_overrides)
 				return global_overrides(colors)
 			end,
 		},
+		float = {
+			transparent = true, -- enable transparent floating windows
+			solid = false, -- use solid styling for floating windows, see |winborder|
+		},
 		transparent_background = not vim.g.neovide_enabled,
 		term_colors = true,
 		auto_integrations = true,
-		-- default_integrations = false,
 		integrations = {
 			blink_cmp = {
 				style = "bordered",
@@ -172,9 +175,6 @@ M.setup = function(color_overrides)
 			rainbow_delimiters = true,
 			treesitter = true,
 			treesitter_context = false,
-			telescope = {
-				enabled = true,
-			},
 
 			navic = { enabled = true, custom_bg = "NONE" },
 			-- leap               = true,

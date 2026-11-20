@@ -6,6 +6,6 @@ return {
 	enabled = true,
 	config = function()
 		require("plugins.ui.theme.mode").setup()
-		vim.cmd.colorscheme("catppuccin")
+		vim.cmd.colorscheme("catppuccin-nvim")
 	end,
 }
