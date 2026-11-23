@@ -29,6 +29,7 @@ text = [
 ]
 
 image = [
+  { run = "kitty icat %s, orphan = true", desc = "kitty icat" },
   { run = 'mirage %s', orphan = true, desc = "mirage", for = "linux" },
   { run = 'chafa %s', orphan = true, desc = "chafa", for = "unix" },
 ]
