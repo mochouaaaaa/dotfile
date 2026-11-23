@@ -9,6 +9,7 @@ return {
 		},
 		image = {
 			enabled = true,
+			math = { enabled = false },
 		},
 		picker = {
 			ui_select = true,

@@ -17,6 +17,12 @@ local global_overrides = function(colors)
 			link = "Normal",
 			-- bg = colors.base,
 		},
+		InclineNormal = {
+			bg = "NONE",
+		},
+		InclineNormalNC = {
+			bg = "NONE",
+		},
 		TermCursor = {
 			link = "Cursor",
 		},
@@ -131,9 +137,11 @@ return {
 		},
 		transparent_background = not vim.g.neovide_enabled,
 		term_colors = true,
+		integrations = {
+			navic = { custom_bg = "NONE" },
+		},
 	},
 	config = function(_, opts)
 		require("catppuccin").setup(opts)
-		-- vim.cmd.colorscheme("catppuccin-nvim")
 	end,
 }

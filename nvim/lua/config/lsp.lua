@@ -9,7 +9,7 @@ vim.lsp.enable({
 vim.lsp.log.set_level("OFF")
 
 vim.g.CODE = {
-	fittencode = true,
+	fittencode = false,
 	codeium = false,
 	copilot = false,
 }

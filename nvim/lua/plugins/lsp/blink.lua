@@ -38,7 +38,7 @@ local M = {
 		},
 		fuzzy = { implementation = "lua" },
 		sources = {
-			default = { "lsp", "path", "snippets", "buffer" },
+			default = { "lsp", "path", "snippets", "buffer", "lazydev" },
 			providers = {
 				cmdline = {
 					min_keyword_length = function(ctx)
@@ -47,6 +47,10 @@ local M = {
 						end
 						return 0
 					end,
+				},
+				lazydev = {
+					name = "LazyDev",
+					module = "lazydev.integrations.blink",
 				},
 			},
 		},

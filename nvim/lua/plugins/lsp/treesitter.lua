@@ -7,5 +7,6 @@ return {
 		if is_nix then
 			opts.ensure_installed = {}
 		end
+		return opts
 	end,
 }

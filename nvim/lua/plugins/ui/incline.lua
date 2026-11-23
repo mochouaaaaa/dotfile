@@ -4,11 +4,29 @@ local focused = "Identifier"
 
 local lazy_icons = require("lazyvim.config").icons
 
--- 获取诊断标签
+local diag_order = { "Error", "Warn", "Info", "Hint" }
+local git_order = {
+	{ key = "added", icon = lazy_icons.git.added, hl = "GitSignsAdd" },
+	{ key = "changed", icon = lazy_icons.git.modified, hl = "GitSignsChange" },
+	{ key = "removed", icon = lazy_icons.git.removed, hl = "GitSignsDelete" },
+}
+
+local edgy_titles = {
+	["neotest-output-panel"] = "neotest",
+	["neotest-summary"] = "neotest",
+	noice = "noice",
+	Trouble = "trouble",
+	trouble = "trouble",
+	OverseerList = "overseer",
+	Outline = "outline",
+	["copilot-chat"] = "copilot-chat",
+	codecompanion = "codecompanion",
+}
+
 local function get_diagnostic_label(buf, is_focused)
-	local icons = lazy_icons.diagnostics
 	local labels = {}
-	for severity, icon in pairs(icons) do
+	for _, severity in ipairs(diag_order) do
+		local icon = lazy_icons.diagnostics[severity]
 		local n = #vim.diagnostic.get(buf, { severity = vim.diagnostic.severity[string.upper(severity)] })
 		if n > 0 then
 			labels[#labels + 1] = {
@@ -20,20 +38,16 @@ local function get_diagnostic_label(buf, is_focused)
 	return labels
 end
 
--- 获取 git diff 标签
 local function get_git_diff(buf, is_focused)
-	local git_icons = lazy_icons.git
-	local icons = { removed = git_icons.removed, changed = git_icons.modified, added = git_icons.added }
-	local highlight = { removed = "GitSignsDelete", changed = "GitSignsChange", added = "GitSignsAdd" }
 	local labels = {}
 	local ok, signs = pcall(vim.api.nvim_buf_get_var, buf, "gitsigns_status_dict")
-	if ok then
-		for name, icon in pairs(icons) do
-			local count = tonumber(signs[name]) or 0
+	if ok and signs then
+		for _, item in ipairs(git_order) do
+			local count = tonumber(signs[item.key]) or 0
 			if count > 0 then
 				labels[#labels + 1] = {
-					icon .. count .. " ",
-					group = is_focused and highlight[name] or unfocused,
+					item.icon .. count .. " ",
+					group = is_focused and item.hl or unfocused,
 				}
 			end
 		end
@@ -41,73 +55,26 @@ local function get_git_diff(buf, is_focused)
 	return labels
 end
 
--- ToggleTerm 显示 ID
-local function get_toggleterm_id(buf, is_focused)
-	local id = " " .. vim.fn.bufname(buf):sub(-1) .. " "
-	return { { id, group = is_focused and "FloatTitle" or "Title" } }
-end
+local function get_special_title(props)
+	local buf = props.buf
+	local ft = vim.bo[buf].filetype
+	local group = props.focused and "FloatTitle" or "Title"
 
-local function is_toggleterm(buf)
-	return vim.bo[buf].filetype == "toggleterm"
-end
-
--- Edgy 文件类型
-local edgy_filetypes = {
-	"neotest-output-panel",
-	"neotest-summary",
-	"noice",
-	"Trouble",
-	"OverseerList",
-	"Outline",
-	"ogpt-popup",
-	"ogpt-parameters-window",
-	"ogpt-template",
-	"ogpt-sessions",
-	"ogpt-system-window",
-	"ogpt-window",
-	"ogpt-selection",
-	"ogpt-instruction",
-	"ogpt-input",
-	"trouble",
-	"copilot-chat",
-	"codecompanion",
-}
-
-local edgy_titles = {
-	["neotest-output-panel"] = "neotest",
-	["neotest-summary"] = "neotest",
-	noice = "noice",
-	Trouble = "trouble",
-	OverseerList = "overseer",
-	Outline = "outline",
-	["ogpt-popup"] = "ogpt-popup",
-	["ogpt-parameters-window"] = "ogpt-parameters-window",
-	["ogpt-template"] = "ogpt-template",
-	["ogpt-sessions"] = "ogpt-sessions",
-	["ogpt-system-window"] = "ogpt-system-window",
-	["ogpt-window"] = "ogpt-window",
-	["ogpt-selection"] = "ogpt-selection",
-	["ogpt-instruction"] = "ogpt-instruction",
-	["ogpt-input"] = "ogpt-input",
-}
-
-local function is_edgy(buf)
-	return vim.tbl_contains(edgy_filetypes, vim.bo[buf].filetype)
-end
-
-local function get_trouble_name(win)
-	local win_trouble = vim.w[win].trouble
-	return win_trouble and win_trouble.mode or "trouble"
-end
-
--- 获取标题
-local function get_title(props)
-	local filetype = vim.bo[props.buf].filetype
-	local name = edgy_titles[filetype] or filetype
-	if filetype == "trouble" then
-		name = get_trouble_name(props.win)
+	if ft == "toggleterm" then
+		local id = vim.b[buf].toggle_number or vim.fn.bufname(buf):match("#(%d+)$") or ""
+		return { { "  " .. id .. " ", group = group } }
 	end
-	return { { " " .. name .. " ", group = props.focused and "FloatTitle" or "Title" } }
+
+	local name = edgy_titles[ft] or (ft:match("^ogpt%-") and ft)
+	if name then
+		if ft == "trouble" then
+			local win_trouble = vim.w[props.win].trouble
+			name = win_trouble and win_trouble.mode or "trouble"
+		end
+		return { { " " .. name .. " ", group = group } }
+	end
+
+	return nil
 end
 
 return {
@@ -123,41 +90,49 @@ return {
 			},
 			overlap = { borders = true, statusline = true, tabline = false, winbar = true },
 		},
-		hide = { cursorline = false },
-		ignore = { buftypes = {}, filetypes = { "neo-tree", "dashboard" }, unlisted_buffers = false },
+		hide = { cursorline = true },
+		ignore = {
+			buftypes = {},
+			filetypes = { "neo-tree", "dashboard", "snacks_dashboard" },
+			unlisted_buffers = false,
+		},
 		render = function(props)
+			local devicons = require("nvim-web-devicons")
+
 			if vim.api.nvim_win_get_config(0).relative ~= "" then
 				return nil
 			end
 
+			local special = get_special_title(props)
+			if special then
+				return special
+			end
+
 			local buf = props.buf
-			local filename = vim.fn.fnamemodify(vim.fn.bufname(buf), ":t")
+			local filename = vim.fn.fnamemodify(vim.api.nvim_buf_get_name(buf), ":t")
 			if filename == "" then
 				return nil
 			end
 
-			if is_toggleterm(buf) then
-				return get_toggleterm_id(buf, props.focused)
-			end
-			if is_edgy(buf) then
-				return get_title(props)
-			end
-
-			local filetype_icon, filetype_color = require("nvim-web-devicons").get_icon_color(filename)
 			local diagnostics = get_diagnostic_label(buf, props.focused)
 			local diffs = get_git_diff(buf, props.focused)
+			local modified = vim.bo[buf].modified
 
 			local color_group = props.focused and focused or unfocused
-			local icon = filetype_icon and { filetype_icon, group = props.focused and nil or unfocused } or {}
-			local filename_separator = (#diagnostics > 0 or #diffs > 0)
-					and { " " .. separator_char .. " ", group = color_group }
-				or ""
+			local has_extra = (#diagnostics > 0 or #diffs > 0)
 
-			local filename_component =
-				{ icon, { filetype_icon and " " or "" }, { filename, group = color_group }, filename_separator }
-
-			return { filename_component, diagnostics, diffs }
-			-- return { {}, { diagnostics }, { separator }, { diffs } }
+			local ft_icon, ft_color = devicons.get_icon_color(filename)
+			return {
+				{ (ft_icon or "") .. " ", guifg = ft_color, guibg = "none" },
+				{
+					filename .. (modified and " ●" or ""),
+					gui = modified and "bold,italic" or "bold",
+					group = color_group,
+				},
+				has_extra and { " " .. separator_char .. " ", group = color_group } or "",
+				diagnostics,
+				diffs,
+			}
 		end,
 	},
 }

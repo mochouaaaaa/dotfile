@@ -19,5 +19,8 @@ vim.filetype.add({
 	pattern = {
 		["gitlab.*%.txt"] = "markdown",
 		["github.*%.txt"] = "markdown",
+		[".*/docker%-compose.*%.ya?ml"] = "yaml.docker-compose",
+		[".*/%.gitlab%-ci%.ya?ml"] = "yaml.gitlab",
+		[".*/values%.ya?ml"] = "yaml.helm-values",
 	},
 })

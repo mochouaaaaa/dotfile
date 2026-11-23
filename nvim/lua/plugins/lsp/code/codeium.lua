@@ -4,13 +4,10 @@ local utils = require("util.keymap")
 
 return {
 	"Exafunction/windsurf.nvim",
-	dependencies = {
-		"nvim-lua/plenary.nvim",
-		"hrsh7th/nvim-cmp",
-	},
 	enabled = false,
 	config = function()
 		require("codeium").setup({
+			-- "https://windsurf.com/vim-show-auth-token?redirect_uri=vim-show-auth-token"
 			config_path = os.getenv("XDG_DATA_HOME") .. "/nvim/codeium/config",
 			bin_path = os.getenv("XDG_DATA_HOME") .. "/nvim/codeium/bin",
 			detect_proxy = true,
@@ -33,10 +30,10 @@ return {
 			workspace_root = {
 				use_lsp = true,
 			},
-			wrapper = {
-				"steam-run",
-				"/nix/store/y6hkqiyjprl5wcxixrxad6njnxn44nxg-codeium-1.46.3/bin/codeium_language_server",
-			},
+			-- wrapper = {
+			-- 	"steam-run",
+			-- 	"/nix/store/brbznykjnc4kwa4ck3avawk3cd1d5p79-codeium-2.12.5/bin/codeium_language_server",
+			-- },
 		})
 	end,
 	-- config = function()

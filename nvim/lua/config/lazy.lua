@@ -30,12 +30,9 @@ require("lazy").setup({
 			"LazyVim/LazyVim",
 			import = "lazyvim.plugins",
 			opts = {
-				colorscheme = "catppuccin",
+				colorscheme = "catppuccin-nvim",
 			},
 		},
-
-		-- Tree-sitter is provided by Nix, not Lazy/LazyVim.
-		{ "nvim-treesitter/nvim-treesitter", enabled = false },
 
 		-- custom plugins
 		{ import = "plugins" },

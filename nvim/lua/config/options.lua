@@ -167,4 +167,8 @@ vim.g.markdown_recommended_style = 0
 
 vim.g.lazyvim_python_lsp = "ty"
 vim.g.lazyvim_picker = "snacks"
+vim.g.lazyvim_rust_diagnostics = "rust-analyzer"
+vim.g.lazyvim_ts_lsp = "vtsls"
+vim.g.lazyvim_prettier_needs_config = false
+vim.g.lazyvim_picker = "fzf"
 -- vim.g.snacks_animate = false
