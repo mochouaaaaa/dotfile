@@ -12,7 +12,7 @@ hl.config {
 		numlock_by_default = true,
 		left_handed = false,
 		follow_mouse = 1,
-		mouse_refocus = 0,
+		mouse_refocus = false,
 		float_switch_override_focus = false,
 
 		touchpad = {
@@ -32,7 +32,7 @@ hl.config {
 
 		tablet = {
 			transform = 0,
-			left_handed = 0,
+			left_handed = false,
 		},
 	},
 
@@ -42,7 +42,6 @@ hl.config {
 		pass_mouse_when_bound = false,
 		scroll_event_delay = 0,
 	},
-
 }
 
 -- Hyprland 0.51+ replaced workspace_swipe_* with the gesture system.

@@ -9,6 +9,13 @@ return {
 		},
 		servers = {
 			statix = { enabled = false },
+
+			["*"] = {
+				keys = {
+					-- Disable a keymap
+					{ "gd", false },
+				},
+			},
 		},
 	},
 }

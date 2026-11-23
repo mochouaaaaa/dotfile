@@ -19,7 +19,7 @@ if noctalia_path then
 			blur = {
 				ignore_opacity = false,
 				passes = 4,
-				size = 2,
+				size = 3,
 				vibrancy = 0.28,
 				vibrancy_darkness = 0.14,
 			},
@@ -40,6 +40,17 @@ if noctalia_path then
 		match = { class = "dev.noctalia.Noctalia" },
 		float = true,
 		size = { 1080, 920 },
+	}
+
+	hl.layer_rule {
+		name = "noctalia",
+		match = {
+			namespace = "^noctalia-(bar-.+|notification|dock|panel|attached-panel|osd|widgets|window-switcher)$",
+		},
+		no_anim = true,
+		ignore_alpha = 0.5,
+		blur = true,
+		blur_popups = true,
 	}
 else
 	print("Noctalia is not installed.")

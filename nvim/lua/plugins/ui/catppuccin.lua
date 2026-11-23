@@ -1,5 +1,3 @@
-local M = {}
-
 local global_overrides = function(colors)
 	local result = {
 
@@ -108,86 +106,34 @@ local global_overrides = function(colors)
 	return result
 end
 
-M.all = function(colors)
-	return global_overrides(colors)
-end
-
-M.setup = function(color_overrides)
-	require("catppuccin").setup({
+return {
+	"catppuccin/nvim",
+	name = "catppuccin",
+	priority = 1000,
+	lazy = false,
+	enabled = true,
+	opts = {
 		compile_path = vim.fn.stdpath("cache") .. "/catppuccin",
 		flavour = "auto",
 		background = { -- :h background
 			light = "latte",
 			dark = "mocha",
 		},
-		color_overrides = color_overrides or {},
+		color_overrides = {},
+		float = {
+			transparent = true, -- enable transparent floating windows
+			solid = false, -- use solid styling for floating windows, see |winborder|
+		},
 		highlight_overrides = {
 			all = function(colors)
 				return global_overrides(colors)
 			end,
 		},
-		float = {
-			transparent = true, -- enable transparent floating windows
-			solid = false, -- use solid styling for floating windows, see |winborder|
-		},
 		transparent_background = not vim.g.neovide_enabled,
 		term_colors = true,
-		auto_integrations = true,
-		integrations = {
-			blink_cmp = {
-				style = "bordered",
-			},
-			blink_indent = true,
-			copilot_vim = true,
-			dap = true,
-			dap_ui = true,
-			dashboard = true,
-			flash = false,
-			fzf = true,
-			notifier = true,
-			noice = true,
-			neotree = false,
-			gitsigns = true,
-			markdown = true,
-			render_markdown = true,
-			headlines = true,
-			telekasten = true,
-			ts_rainbow2 = false,
-			lsp_trouble = true,
-			native_lsp = {
-				enabled = true,
-				virtual_text = {
-					errors = { "italic" },
-					hints = { "italic" },
-					warnings = { "italic" },
-					information = { "italic" },
-				},
-				underlines = {
-					errors = { "underline" },
-					hints = { "underline" },
-					warnings = { "underline" },
-					information = { "underline" },
-				},
-				inlay_hints = {
-					background = true,
-				},
-			},
-			rainbow_delimiters = true,
-			treesitter = true,
-			treesitter_context = false,
-
-			navic = { enabled = true, custom_bg = "NONE" },
-			-- leap               = true,
-			mason = false,
-			indent_blankline = {
-				enable = true,
-				colored_indent_levels = true,
-			},
-			window_picker = true,
-			which_key = true,
-			symbols_outline = false,
-		},
-	})
-end
-
-return M
+	},
+	config = function(_, opts)
+		require("catppuccin").setup(opts)
+		-- vim.cmd.colorscheme("catppuccin-nvim")
+	end,
+}

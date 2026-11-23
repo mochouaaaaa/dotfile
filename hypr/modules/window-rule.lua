@@ -70,11 +70,9 @@ end)
 -- Keep rules in one ordered list; later matches can refine earlier settings.
 local window_rules = {
 	{
-		name = "opacity",
-		match = {
-			fullscreen = 0,
-		},
-		opacity = _G.opacity,
+		name = "global-opacity",
+		match = { fullscreen = 0 },
+		opacity = string.format("%.2f override %.2f override %.2f override", _G.opacity, _G.opacity, _G.opacity),
 	},
 	{
 		-- Hyprland-run windowrule
@@ -416,7 +414,7 @@ local window_rules = {
 		match = {
 			class = "^vicinae$",
 		},
-		rounding = 10,
+		rounding = 8,
 	},
 }
 

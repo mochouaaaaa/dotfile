@@ -3,12 +3,11 @@ hl.config {
 		disable_hyprland_logo = true,
 		disable_splash_rendering = true,
 		disable_hyprland_guiutils_check = true,
-		-- disable_hyprland_qtutils_check = true,
 		-- 禁用吞噬模式
 		-- 它会导致neovim使用yazi查看图片出现问题, kitty打开其他Tui程序覆盖问题
-		-- enable_swallow = true
-		-- swallow_regex = ^(kitty)$
-		-- swallow_exception_regex = "^(kitty|yazi)$"
+		-- enable_swallow = true,
+		-- swallow_regex = "^(kitty)$",
+		-- swallow_exception_regex = "^(kitty|yazi)$",
 		initial_workspace_tracking = 0,
 		disable_autoreload = false,
 		lockdead_screen_delay = 1500,

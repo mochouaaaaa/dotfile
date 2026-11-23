@@ -25,11 +25,6 @@ local global_envs = {
 	QT_QPA_PLATFORMTHEME = "gtk3",
 	QT_WAYLAND_DISABLE_WINDOWDECORATION = "1",
 
-	-- fcitx5
-	XMODIFIERS = "@im=fcitx",
-	GTK_IM_MODULE = "fcitx",
-	QT_IM_MODULE = "wayland",
-
 	-- Java applications under wlroots/Wayland
 	_JAVA_AWT_WM_NONREPARENTING = "1",
 }

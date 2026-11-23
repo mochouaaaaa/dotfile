@@ -33,18 +33,38 @@ hl.config {
 
 		blur = {
 			enabled = true,
-			size = 6,
-			passes = 4,
-			ignore_opacity = true,
-			new_optimizations = true,
+			-- size = 4,
+			-- passes = 3,
+			-- ignore_opacity = false,
+			-- new_optimizations = true,
 			special = true,
 			popups = true,
+			-- xray = false,
 
-			noise = 0.02,
-			contrast = 1.1,
-			vibrancy = 0.2,
-			vibrancy_darkness = 0.3,
+			-- noise = 0.02,
+			-- contrast = 1.1,
+			-- vibrancy = 0.2,
+			-- vibrancy_darkness = 0.3,
+
+			-- 模糊强度
+			size = 4,
+			passes = 3,
+
+			-- 透明度
+			ignore_opacity = true,
+
+			-- 性能
+			new_optimizations = true,
 			xray = false,
+
+			-- 玻璃质感
+			brightness = 0.78,
+			contrast = 1.15,
+			noise = 0.015,
+
+			-- 色彩保留
+			vibrancy = 0.18,
+			vibrancy_darkness = 0.25,
 		},
 		shadow = {
 			enabled = true,
