@@ -1,7 +1,4 @@
 return {
-	on_attach = function(client, bufnr)
-		vim.lsp.codelens.enable()
-	end,
 	settings = {
 		ty = {
 			inlayHints = {
