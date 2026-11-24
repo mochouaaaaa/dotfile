@@ -13,18 +13,18 @@ local noctalia_path = get_command_path("noctalia")
 if noctalia_path then
 	require("noctalia")
 
-	hl.config {
+	hl.config({
 		decoration = {
 			rounding = 14,
 			blur = {
-				ignore_opacity = false,
+				-- ignore_opacity = false,
 				passes = 4,
-				size = 3,
-				vibrancy = 0.28,
-				vibrancy_darkness = 0.14,
+				size = 2,
+				-- vibrancy = 0.28,
+				-- vibrancy_darkness = 0.14,
 			},
 		},
-	}
+	})
 
 	local ipc = "noctalia msg "
 	local mainMod = "SUPER"
@@ -35,14 +35,16 @@ if noctalia_path then
 	-- hl.bind(mainMod .. "+CTRL+A", hl.dsp.exec_cmd(ipc .. "screenshot-region"))
 	-- hl.unbind("ALT+TAB")
 	-- hl.bind("ALT+TAB", hl.dsp.exec_cmd(ipc .. "window-switcher"))
+	hl.bind("XF86MonBrightnessUp", hl.dsp.exec_cmd(ipc .. "brightness-up 1"), { locked = true, repeating = true })
+	hl.bind("XF86MonBrightnessDown", hl.dsp.exec_cmd(ipc .. "brightness-down 1"), { locked = true, repeating = true })
 
-	hl.window_rule {
+	hl.window_rule({
 		match = { class = "dev.noctalia.Noctalia" },
 		float = true,
 		size = { 1080, 920 },
-	}
+	})
 
-	hl.layer_rule {
+	hl.layer_rule({
 		name = "noctalia",
 		match = {
 			namespace = "^noctalia-(bar-.+|notification|dock|panel|attached-panel|osd|widgets|window-switcher)$",
@@ -51,7 +53,7 @@ if noctalia_path then
 		ignore_alpha = 0.5,
 		blur = true,
 		blur_popups = true,
-	}
+	})
 else
 	print("Noctalia is not installed.")
 end
