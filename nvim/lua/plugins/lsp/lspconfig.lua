@@ -16,6 +16,28 @@ return {
 					{ "gd", false },
 				},
 			},
+			nil_ls = {
+				settings = {
+					formatting = {
+						command = "nixfmt",
+					},
+					diagnostics = {
+						excludedFiles = {
+							"result",
+						},
+					},
+					nix = {
+						binary = "nix",
+						maxMemoryMB = 2560,
+
+						flake = {
+							autoArchive = false,
+							autoEvalInputs = false,
+							nixpkgsInputName = "nixpkgs",
+						},
+					},
+				},
+			},
 		},
 	},
 }
